@@ -1,0 +1,25 @@
+{
+    "name": "netred/user",
+    "description": "",
+    "authors": [
+        {
+            "name": "Alejandro Mendez",
+            "email": "almendez@netred.cl"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\User\\Providers\\UserServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\User\\": ""
+        }
+    }
+}

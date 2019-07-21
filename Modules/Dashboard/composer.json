@@ -1,0 +1,25 @@
+{
+    "name": "netred/dashboard",
+    "description": "",
+    "authors": [
+        {
+            "name": "Alejandro Mendez",
+            "email": "almendez@netred.cl"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Dashboard\\Providers\\DashboardServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Dashboard\\": ""
+        }
+    }
+}

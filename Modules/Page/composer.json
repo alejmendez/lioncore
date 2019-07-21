@@ -1,0 +1,25 @@
+{
+    "name": "netred/page",
+    "description": "",
+    "authors": [
+        {
+            "name": "Alejandro Mendez",
+            "email": "almendez@netred.cl"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Page\\Providers\\PageServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Page\\": ""
+        }
+    }
+}

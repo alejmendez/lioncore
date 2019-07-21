@@ -1,0 +1,25 @@
+{
+    "name": "netred/setting",
+    "description": "",
+    "authors": [
+        {
+            "name": "Alejandro Mendez",
+            "email": "almendez@netred.cl"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Setting\\Providers\\SettingServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Setting\\": ""
+        }
+    }
+}
