@@ -14,9 +14,11 @@
 /public/*.js
 /public/*.js.map
 .env
+.env.backup
 .idea
 .phpunit.result.cache
 composer.lock
+package-lock.json
 Homestead.json
 Homestead.yaml
 npm-debug.log

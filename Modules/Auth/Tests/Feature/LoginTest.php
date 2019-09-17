@@ -17,16 +17,16 @@ class AuthenticationTest extends TestCase
 
         User::whereEmail('test2@netred.cl')->delete();
 
-        $usuario = User::firstOrNew([
-            'email'    => 'test@netred.cl',
+        $user = User::firstOrNew([
+            'email' => 'test@netred.cl',
         ]);
 
-        $usuario->fill([
+        $user->fill([
             'name'     => 'test',
             'password' => '1234',
         ]);
 
-        $usuario->save();
+        $user->save();
     }
 
     /** @test */
