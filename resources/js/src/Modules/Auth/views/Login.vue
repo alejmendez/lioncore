@@ -92,6 +92,12 @@
     </div>
 </template>
 
+<style scope>
+.h-100 {
+    height: 100vh !important;
+}
+</style>
+
 <script>
 
     import Slick from 'vue-slick';
