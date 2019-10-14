@@ -17,8 +17,11 @@ Route::prefix('v1')->name('auth.')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('login', 'AuthController@login')->name('login');
         Route::post('register', 'AuthController@register')->name('register');
-        Route::post('logout', 'AuthController@logout')->name('logout');
-        Route::post('refresh', 'AuthController@refresh')->name('refresh');
+        Route::get('refresh', 'AuthController@refresh')->name('refresh');
+
+        Route::group(['middleware' => 'auth:api'], function(){
+            Route::get('logout', 'AuthController@logout')->name('logout');
+            Route::post('user', 'AuthController@user')->name('user');
+        });
     });
-    Route::post('user', 'AuthController@user')->name('user');
 });

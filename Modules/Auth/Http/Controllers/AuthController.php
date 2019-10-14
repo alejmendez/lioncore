@@ -15,13 +15,11 @@ use Modules\Core\Http\Controllers\BaseController;
  */
 class AuthController extends BaseController
 {
-    /**
-     * Constructor de clase, se aplica middleware 'auth:api'
-     * a todos los metodos menos a login y register
-     */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', [
+            'except' => ['login', 'register']
+        ]);
     }
 
     /**
