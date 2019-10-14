@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import './plugins/vuetify'
+import i18n from './plugins/i18n'
 import router from './router'
 import 'es6-promise/auto'
 import axios from 'axios'
@@ -33,6 +34,7 @@ Vue.component('apps-layout', Apps);
 
 new Vue({
   el: '#app',
+  i18n,
   router,
   template: '<App/>',
   components: { App }
