@@ -23,7 +23,7 @@ class AuthenticationTest extends TestCase
 
         $user->fill([
             'name'     => 'test',
-            'password' => '1234',
+            'password' => '12345678',
         ]);
 
         $user->save();
@@ -35,7 +35,7 @@ class AuthenticationTest extends TestCase
         $response = $this->post('api/v1/auth/register', [
             'name'     => 'test2',
             'email'    => 'test2@netred.cl',
-            'password' => '1234',
+            'password' => '12345678',
         ]);
 
         // $response->dumpHeaders();
@@ -56,7 +56,7 @@ class AuthenticationTest extends TestCase
         $response = $this->post('api/v1/auth/register', [
             'name'     => Str::random(20),
             'email'    => 'test@netred.cl',
-            'password' => '1234',
+            'password' => '12345678',
         ]);
 
         // $response->dumpHeaders();
@@ -74,7 +74,7 @@ class AuthenticationTest extends TestCase
     {
         $response = $this->post('api/v1/auth/login', [
             'email'    => 'test@netred.cl',
-            'password' => '1234'
+            'password' => '12345678'
         ]);
 
         $response
