@@ -18,6 +18,7 @@ Route::prefix('v1')->name('auth.')->group(function () {
         Route::post('login', 'AuthController@login')->name('login');
         Route::post('register', 'AuthController@register')->name('register');
         Route::get('refresh', 'AuthController@refresh')->name('refresh');
+        Route::get('current/user', 'AuthController@currentUser')->name('current.user');
 
         Route::group(['middleware' => 'auth:api'], function(){
             Route::get('logout', 'AuthController@logout')->name('logout');

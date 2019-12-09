@@ -70,4 +70,9 @@ class User extends Authenticatable implements JWTSubject, Auditable
             $this->attributes['password'] = bcrypt($password);
         }
     }
+
+    public function person()
+    {
+        return $this->hasOne('Modules\User\Person');
+    }
 }

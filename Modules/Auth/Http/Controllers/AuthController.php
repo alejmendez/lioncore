@@ -124,6 +124,13 @@ class AuthController extends BaseController
     {
         return $this->respondWithToken(auth()->refresh());
     }
+
+    public function currentUser()
+    {
+        return response()->json([
+            'user' => auth()->user(),
+        ], 200);
+    }
     /**
      * Get the token array structure.
      *
