@@ -3,6 +3,8 @@
 namespace Modules\Auth\Http\Controllers;
 
 use Illuminate\Http\Request;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 use Modules\User\Models\User;
 use Modules\Core\Http\Controllers\BaseController;
@@ -59,10 +61,16 @@ class AuthController extends BaseController
     {
         $credentials = request(['email', 'password']);
         $rememberMe = request('rememberMe', false);
-        if (!$token = auth()->attempt($credentials, $rememberMe)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        $jwt_token = null;
+
+        if (!$jwt_token = JWTAuth::attempt($credentials)) {
+            return response()->json([
+                'error' => 'Unauthorized',
+                'message' => __('Correo o contraseña no válidos.')
+            ], 401);
         }
-        return $this->respondWithToken($token);
+
+        return $this->respondWithToken($jwt_token);
     }
     /**
      * Get the authenticated User.
@@ -86,8 +94,26 @@ class AuthController extends BaseController
      */
     public function logout()
     {
+        $this->validate(request()->all(), [
+            'token' => 'required'
+        ]);
+
+        try {
+            JWTAuth::invalidate(request('token'));
+            return  response()->json([
+                'status' => 'ok',
+                'message' => __('Cierre de sesión exitoso.')
+            ]);
+        } catch (JWTException  $exception) {
+            return  response()->json([
+                'status' => 'unknown_error',
+                'message' => __('Al usuario no se le pudo cerrar la sesión.')
+            ], 500);
+        }
         auth()->logout();
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json([
+            'message' => __('Successfully logged out')
+        ]);
     }
     /**
      * Refresh a token.

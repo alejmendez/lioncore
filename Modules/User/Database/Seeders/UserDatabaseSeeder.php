@@ -18,11 +18,26 @@ class UserDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        User::truncate();
-        User::create([
+        // User::truncate();
+
+        $user = User::create([
             'email' => 'admin@test.cl',
             'password' => '1234',
             'name' => 'Administrator',
+            'verification_token' => '',
+            'email_verified_at' => now(),
         ]);
+
+        $roleAdmin = Role::findByName('admin');
+        $user->assignRole($roleAdmin);
+
+        $user = User::create([
+            'email' => 'alejmendez.87@gmail.com',
+            'password' => 'cq43351la',
+            'name' => 'Alejandro Méndez',
+            'verification_token' => '',
+            'email_verified_at' => now(),
+        ]);
+        $user->assignRole($roleAdmin);
     }
 }
