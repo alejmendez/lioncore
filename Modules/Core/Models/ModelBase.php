@@ -4,24 +4,10 @@ namespace Modules\Core\Models;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+use Modules\Core\Models\AutoGenerateUuid;
 
-class ModelBase extends Model
+class ModelBase extends Model implements Auditable
 {
-    public $incrementing = false;
-
-    protected $keyType = 'string';
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function($model){
-            $model->{$model->getKeyName()} = self::getUuid();
-        });
-    }
-
-    protected static function getUuid()
-    {
-        return (string) Str::uuid();
-    }
+    use \OwenIt\Auditing\Auditable, AutoGenerateUuid;
 }

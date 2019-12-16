@@ -11,7 +11,22 @@ trait AutoGenerateUuid
         parent::boot();
 
         static::creating(function($model){
-            $model->{$model->getKeyName()} = (string) Str::uuid();
+            $model->{$model->getKeyName()} = self::getUuid();
         });
+    }
+
+    public function getIncrementing()
+    {
+        return false;
+    }
+
+    public function getKeyType()
+    {
+        return 'string';
+    }
+
+    protected static function getUuid()
+    {
+        return (string) Str::uuid();
     }
 }

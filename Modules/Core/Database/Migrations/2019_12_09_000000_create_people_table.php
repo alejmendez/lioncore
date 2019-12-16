@@ -13,9 +13,9 @@ class CreatePeopleTable extends Migration
     public function up()
     {
         Schema::create('people', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('id')->unique()->primary('id');
 
-            $table->string('dni', 15)->unique();
+            $table->string('dni', 15);
             $table->string('first_name', 80)->nullable();
             $table->string('last_name', 80)->nullable();
             $table->string('address', 80)->nullable();
@@ -44,7 +44,7 @@ class CreatePeopleTable extends Migration
             $table->string('military_component', 80)->nullable();
             $table->string('military_rank', 80)->nullable();
 
-            $table->integer('number_children', 80)->nullable();
+            // $table->smallInteger('number_children', 80)->default(0);
             $table->string('spouse_works', 80)->nullable();
             $table->string('observation', 255)->nullable();
 
@@ -54,11 +54,6 @@ class CreatePeopleTable extends Migration
             $table->string('blood_type', 5)->nullable();
             $table->string('file_number', 80)->nullable();
             $table->string('management', 80)->nullable();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

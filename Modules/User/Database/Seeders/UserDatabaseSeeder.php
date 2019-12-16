@@ -5,6 +5,8 @@ namespace Modules\User\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
+use Modules\Core\Models\Person;
+use Modules\Role\Models\Role;
 use Modules\User\Models\User;
 
 class UserDatabaseSeeder extends Seeder
@@ -20,10 +22,16 @@ class UserDatabaseSeeder extends Seeder
 
         // User::truncate();
 
-        $user = User::create([
+        $person = Person::create([
+            'dni' => '19',
+            'first_name' => 'Administrador',
             'email' => 'admin@test.cl',
+        ]);
+
+        $user = User::create([
+            'person_id' => $person->id,
+            'email' => $person->email,
             'password' => '1234',
-            'name' => 'Administrator',
             'verification_token' => '',
             'email_verified_at' => now(),
         ]);
@@ -31,10 +39,15 @@ class UserDatabaseSeeder extends Seeder
         $roleAdmin = Role::findByName('admin');
         $user->assignRole($roleAdmin);
 
-        $user = User::create([
+        $person = Person::create([
+            'dni' => '266046677',
+            'first_name' => 'Alejandro Méndez',
             'email' => 'alejmendez.87@gmail.com',
+        ]);
+        $user = User::create([
+            'person_id' => $person->id,
+            'email' => $person->email,
             'password' => 'cq43351la',
-            'name' => 'Alejandro Méndez',
             'verification_token' => '',
             'email_verified_at' => now(),
         ]);
