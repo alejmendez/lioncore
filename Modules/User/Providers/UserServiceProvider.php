@@ -5,6 +5,11 @@ namespace Modules\User\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
+use Modules\User\Models\User;
+use Modules\User\Repositories\UserRepository;
+use Modules\User\Repositories\Eloquent\EloquentUserRepository;
+use Modules\User\Repositories\Cache\CacheUserDecorator;
+
 class UserServiceProvider extends ServiceProvider
 {
     /**
@@ -29,6 +34,20 @@ class UserServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->registerBindings();
+    }
+
+    private function registerBindings()
+    {
+        $this->app->bind(UserRepository::class, function () {
+            $repository = new EloquentUserRepository(new User());
+
+            if (! config('app.cache')) {
+                return $repository;
+            }
+
+            return new CacheUserDecorator($repository);
+        });
     }
 
     /**

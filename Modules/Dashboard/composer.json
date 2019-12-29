@@ -1,10 +1,10 @@
 {
-    "name": "netred/dashboard",
+    "name": "lioncore/dashboard",
     "description": "",
     "authors": [
         {
             "name": "Alejandro Mendez",
-            "email": "almendez@netred.cl"
+            "email": "almendez@gmail.cl"
         }
     ],
     "extra": {
@@ -13,7 +13,7 @@
                 "Modules\\Dashboard\\Providers\\DashboardServiceProvider"
             ],
             "aliases": {
-                
+
             }
         }
     },

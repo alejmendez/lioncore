@@ -5,6 +5,11 @@ namespace Modules\Core\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
+use Modules\Core\Models\Person;
+use Modules\Core\Repositories\PersonRepository;
+use Modules\Core\Repositories\Eloquent\EloquentPersonRepository;
+use Modules\Core\Repositories\Cache\CachePersonDecorator;
+
 class CoreServiceProvider extends ServiceProvider
 {
     /**
@@ -29,6 +34,20 @@ class CoreServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->registerBindings();
+    }
+
+    private function registerBindings()
+    {
+        $this->app->bind(PersonRepository::class, function () {
+            $repository = new EloquentPersonRepository(new Person());
+
+            if (! config('app.cache')) {
+                return $repository;
+            }
+
+            return new CachePersonDecorator($repository);
+        });
     }
 
     /**

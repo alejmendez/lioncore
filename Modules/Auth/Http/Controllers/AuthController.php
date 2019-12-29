@@ -8,17 +8,21 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 use Modules\User\Models\User;
 use Modules\Core\Http\Controllers\BaseController;
+use Modules\User\Repositories\UserRepository;
 
 /**
  * Controlador de todo el flujo de autenticacion del sistema en base a JWT
  *
- * @author Alejandro Méndez <almendez@netred.cl>
+ * @author Alejandro Méndez <almendez@gmail.cl>
  * @category Controller
  */
 class AuthController extends BaseController
 {
-    public function __construct()
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
     {
+        $this->userRepository = $userRepository;
         $this->middleware('auth:api', [
             'except' => ['login', 'register']
         ]);
@@ -32,7 +36,7 @@ class AuthController extends BaseController
     public function register(Request $request)
     {
         try {
-            $user = User::create([
+            $user = $this->userRepository->create([
                 'email'    => $request->email,
                 'password' => $request->password,
                 'name'     => $request->name,
