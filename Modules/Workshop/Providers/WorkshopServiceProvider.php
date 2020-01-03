@@ -3,35 +3,23 @@
 namespace Modules\Workshop\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Core\Events\BuildingSidebar;
-use Modules\Core\Events\LoadingBackendTranslations;
-use Modules\Core\Services\Composer;
-use Modules\Core\Traits\CanGetSidebarClassForModule;
-use Modules\Core\Traits\CanPublishConfiguration;
-use Modules\Workshop\Console\EntityScaffoldCommand;
-use Modules\Workshop\Console\ModuleScaffoldCommand;
-use Modules\Workshop\Console\ThemeScaffoldCommand;
-use Modules\Workshop\Console\UpdateModuleCommand;
-use Modules\Workshop\Events\Handlers\RegisterWorkshopSidebar;
-use Modules\Workshop\Manager\StylistThemeManager;
-use Modules\Workshop\Manager\ThemeManager;
-use Modules\Workshop\Scaffold\Module\Generators\EntityGenerator;
-use Modules\Workshop\Scaffold\Module\Generators\FilesGenerator;
-use Modules\Workshop\Scaffold\Module\Generators\ValueObjectGenerator;
-use Modules\Workshop\Scaffold\Module\ModuleScaffold;
-use Modules\Workshop\Scaffold\Theme\ThemeGeneratorFactory;
-use Modules\Workshop\Scaffold\Theme\ThemeScaffold;
-use Nwidart\Modules\Contracts\RepositoryInterface;
+use Illuminate\Database\Eloquent\Factory;
 
 class WorkshopServiceProvider extends ServiceProvider
 {
-    use CanPublishConfiguration, CanGetSidebarClassForModule;
     /**
-     * Indicates if loading of the provider is deferred.
+     * Boot the application events.
      *
-     * @var bool
+     * @return void
      */
-    protected $defer = false;
+    public function boot()
+    {
+        $this->registerTranslations();
+        $this->registerConfig();
+        $this->registerViews();
+        $this->registerFactories();
+        $this->loadMigrationsFrom(module_path('Workshop', 'Database/Migrations'));
+    }
 
     /**
      * Register the service provider.
@@ -40,103 +28,79 @@ class WorkshopServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerCommands();
-        $this->bindThemeManager();
+        $this->app->register(RouteServiceProvider::class);
+    }
 
-        $this->app['events']->listen(
-            BuildingSidebar::class,
-            $this->getSidebarClassForModule('workshop', RegisterWorkshopSidebar::class)
+    /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([
+            module_path('Workshop', 'Config/config.php') => config_path('workshop.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            module_path('Workshop', 'Config/config.php'), 'workshop'
         );
-
-        $this->app['events']->listen(LoadingBackendTranslations::class, function (LoadingBackendTranslations $event) {
-            $event->load('workshop', array_dot(trans('workshop::workshop')));
-            $event->load('modules', array_dot(trans('workshop::modules')));
-            $event->load('themes', array_dot(trans('workshop::themes')));
-        });
-
-        app('router')->bind('module', function ($module) {
-            return app(RepositoryInterface::class)->find($module);
-        });
-        app('router')->bind('theme', function ($theme) {
-            return app(ThemeManager::class)->find($theme);
-        });
-    }
-
-    public function boot()
-    {
-        $this->publishConfig('workshop', 'permissions');
-        $this->publishConfig('workshop', 'config');
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     /**
-     * Register artisan commands
+     * Register views.
+     *
+     * @return void
      */
-    private function registerCommands()
+    public function registerViews()
     {
-        $this->registerModuleScaffoldCommand();
-        $this->registerUpdateCommand();
-        $this->registerThemeScaffoldCommand();
+        $viewPath = resource_path('views/modules/workshop');
 
-        $this->commands([
-            'command.lioncore.module.scaffold',
-            'command.lioncore.module.update',
-            'command.lioncore.theme.scaffold',
-            EntityScaffoldCommand::class,
-        ]);
+        $sourcePath = module_path('Workshop', 'Resources/views');
+
+        $this->publishes([
+            $sourcePath => $viewPath
+        ],'views');
+
+        $this->loadViewsFrom(array_merge(array_map(function ($path) {
+            return $path . '/modules/workshop';
+        }, \Config::get('view.paths')), [$sourcePath]), 'workshop');
     }
 
     /**
-     * Register the scaffold command
+     * Register translations.
+     *
+     * @return void
      */
-    private function registerModuleScaffoldCommand()
+    public function registerTranslations()
     {
-        $this->app->singleton('lioncore.module.scaffold', function ($app) {
-            return new ModuleScaffold(
-                $app['files'],
-                $app['config'],
-                new EntityGenerator($app['files'], $app['config']),
-                new ValueObjectGenerator($app['files'], $app['config']),
-                new FilesGenerator($app['files'], $app['config'])
-            );
-        });
+        $langPath = resource_path('lang/modules/workshop');
 
-        $this->app->singleton('command.lioncore.module.scaffold', function ($app) {
-            return new ModuleScaffoldCommand($app['lioncore.module.scaffold']);
-        });
+        if (is_dir($langPath)) {
+            $this->loadTranslationsFrom($langPath, 'workshop');
+        } else {
+            $this->loadTranslationsFrom(module_path('Workshop', 'Resources/lang'), 'workshop');
+        }
     }
 
     /**
-     * Register the update module command
+     * Register an additional directory of factories.
+     *
+     * @return void
      */
-    private function registerUpdateCommand()
+    public function registerFactories()
     {
-        $this->app->singleton('command.lioncore.module.update', function ($app) {
-            return new UpdateModuleCommand(new Composer($app['files'], base_path()));
-        });
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
+            app(Factory::class)->load(module_path('Workshop', 'Database/factories'));
+        }
     }
 
     /**
-     * Register the theme scaffold command
+     * Get the services provided by the provider.
+     *
+     * @return array
      */
-    private function registerThemeScaffoldCommand()
+    public function provides()
     {
-        $this->app->singleton('lioncore.theme.scaffold', function ($app) {
-            return new ThemeScaffold(new ThemeGeneratorFactory(), $app['files']);
-        });
-
-        $this->app->singleton('command.lioncore.theme.scaffold', function ($app) {
-            return new ThemeScaffoldCommand($app['lioncore.theme.scaffold']);
-        });
-    }
-
-    /**
-     * Bind the theme manager
-     */
-    private function bindThemeManager()
-    {
-        $this->app->singleton(ThemeManager::class, function ($app) {
-            return new StylistThemeManager($app['files']);
-        });
+        return [];
     }
 }

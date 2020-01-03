@@ -29,7 +29,7 @@ class EloquentUserRepository extends EloquentBaseRepository implements UserRepos
 
     public function create($data)
     {
-        $person = $this->personRepository->create([]);
+        $person = $this->personRepository->create($data);
         $data['person_id'] = $person->id;
         $user = $this->model->create($data);
         return $user;

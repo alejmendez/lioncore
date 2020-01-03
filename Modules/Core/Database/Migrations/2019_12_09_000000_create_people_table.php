@@ -26,7 +26,7 @@ class CreatePeopleTable extends Migration
             $table->string('mobile_phone', 15)->nullable();
             $table->string('email', 80)->nullable();
             $table->string('nationality', 80)->nullable();
-            //$table->string('rif', 80)->nullable();
+
             $table->string('gender', 2)->nullable();
             $table->decimal('height', 5, 2)->nullable();
             $table->decimal('weight', 5, 2)->nullable();
@@ -39,12 +39,12 @@ class CreatePeopleTable extends Migration
             $table->string('country', 80)->nullable();
             $table->string('state', 80)->nullable();
             $table->string('municipality', 80)->nullable();
-
             $table->string('parish', 80)->nullable();
+
             $table->string('military_component', 80)->nullable();
             $table->string('military_rank', 80)->nullable();
 
-            // $table->smallInteger('number_children', 80)->default(0);
+            $table->smallInteger('number_children', 80)->default(0);
             $table->string('spouse_works', 80)->nullable();
             $table->string('observation', 255)->nullable();
 

@@ -7,7 +7,6 @@ use Modules\Core\Models\ModelBase;
 class Person extends ModelBase
 {
     protected $fillable = [
-        'user_id',
         'dni',
         'first_name',
         'last_name',
@@ -18,7 +17,6 @@ class Person extends ModelBase
         'mobile_phone',
         'email',
         'nationality',
-        // 'rif',
         'gender',
         'height',
         'weight',
