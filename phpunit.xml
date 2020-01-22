@@ -18,6 +18,7 @@
             <directory suffix="Test.php">./Modules/Page/Tests/Unit</directory>
             <directory suffix="Test.php">./Modules/Setting/Tests/Unit</directory>
             <directory suffix="Test.php">./Modules/User/Tests/Unit</directory>
+            <directory suffix="Test.php">./Modules/Workshop/Tests/Unit</directory>
         </testsuite>
 
         <testsuite name="Feature">
@@ -29,6 +30,7 @@
             <directory suffix="Test.php">./Modules/Page/Tests/Feature</directory>
             <directory suffix="Test.php">./Modules/Setting/Tests/Feature</directory>
             <directory suffix="Test.php">./Modules/User/Tests/Feature</directory>
+            <directory suffix="Test.php">./Modules/User/Workshop/Feature</directory>
         </testsuite>
     </testsuites>
     <filter>
