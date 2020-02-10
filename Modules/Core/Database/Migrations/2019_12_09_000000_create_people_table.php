@@ -44,7 +44,7 @@ class CreatePeopleTable extends Migration
             $table->string('military_component', 80)->nullable();
             $table->string('military_rank', 80)->nullable();
 
-            $table->smallInteger('number_children', 80)->default(0);
+            $table->smallInteger('number_children')->default(0);
             $table->string('spouse_works', 80)->nullable();
             $table->string('observation', 255)->nullable();
 

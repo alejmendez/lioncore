@@ -1,5 +1,7 @@
 <?php
 
 return [
-    'name' => 'Workshop'
+    'name' => 'Workshop',
+    'pathCrudDefInModules' => 'CrudDef',
+    'extCrudDef' => 'json',
 ];

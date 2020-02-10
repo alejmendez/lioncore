@@ -2,11 +2,9 @@
 
 namespace Modules\Workshop\Tests\Feature;
 
-use Log;
-use Exception;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Workshop\Tests\BaseWorkshopTest as TestCase;
+
+use Modules\Workshop\Generators\GeneratorCrud;
 
 class WorkshopTest extends TestCase
 {
@@ -16,8 +14,22 @@ class WorkshopTest extends TestCase
     }
 
     /** @test */
-    public function it_will_register_a_user()
+    public function getAllJsonsOfModules()
     {
+        $generatorCrud = new GeneratorCrud("", "");
 
+        $allModelsFiles = $this->invokeMethod($generatorCrud, 'getAllModelsFiles');
+
+        dump($allModelsFiles);
+    }
+
+    /** @test */
+    public function getJsonContent()
+    {
+        $generatorCrud = new GeneratorCrud("", "");
+
+        $jsonContentAll = $this->invokeMethod($generatorCrud, 'getJsonContent', [false]);
+
+        dump($allModelsFiles);
     }
 }

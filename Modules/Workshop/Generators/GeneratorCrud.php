@@ -1,12 +1,26 @@
 <?php
 
 namespace Modules\Workshop\Generators;
-use  Modules\Workshop\Generators\Interfaces\Generator;
+
+use File;
+use Module;
+
+use Modules\Workshop\Generators\Interfaces\Generator;
+use Modules\Workshop\Console\GenerateGrud;
+use Modules\Workshop\Generators\Entities\ModelCrud;
+
+use Illuminate\Support\Str;
+use Maklad\Permission\Models\Role;
+use Maklad\Permission\Models\Permission;
+
+use App\Models\Form;
+use App\Models\Field;
 
 class GeneratorCrud implements Generator
 {
-    public $models;
-    public $module;
+    protected $models;
+    protected $module;
+    protected $console;
 
     protected $nameModel = '';
     protected $id;
@@ -15,18 +29,18 @@ class GeneratorCrud implements Generator
     protected $pathCrudDef = 'CrudDef';
     protected $inDB = false;
 
-    public function __construct(String $models, String $module)
+    public function __construct(String $models, String $module, GenerateGrud $console = null)
     {
-        $this->models = $models;
-        $this->module = $module;
-
-        $this->initVars();
+        $this->console = $console;
+        $this->initVars($models, $module);
     }
 
-    public function initVars()
+    public function initVars(String $models, String $module)
     {
-        $this->models = explode(',', $this->models);
+        $this->models = explode(',', $models);
         $this->models = array_map('trim', $this->models);
+
+        $this->module = $module;
 
         if (count($this->models) == 1) {
             if ($this->models[0] == '') {
@@ -44,7 +58,7 @@ class GeneratorCrud implements Generator
 
             $this->generateMigration($jsonContent);
             $this->generateModel($jsonContent);
-            // $this->generateFormRequest($jsonContent);
+            $this->generateFormRequest($jsonContent);
             $this->generateController($jsonContent);
             $this->generatePermissions($jsonContent);
             $this->generateViewVue($jsonContent);
@@ -55,70 +69,46 @@ class GeneratorCrud implements Generator
 
     protected function getAllModelsFiles()
     {
-        $modules = Module::all();
-        $filesList = [];
-
-        foreach ($modules as $module) {
-            $files = File::allFiles($module->getPath() . '/' . $this->pathCrudDef);
-            foreach ($files as $class) {
-                if (!preg_match('/.json$/i', $class->getBasename())) {
-                    continue;
-                }
-                $filesList[$module->getName()][] = str_replace('.json', '', $class->getBasename());
-            }
-        }
-
-        return $filesList;
+        return ModelCrud::getAllModelsFiles();
     }
 
     protected function getJsonContent($nameModel)
     {
+        $model = null;
+        $files = $this->getAllModelsFiles();
         if (!$nameModel) {
-            $filesList = $this->getAllModelsFiles();
-            $filesList[] = "exit()";
-            $nameModel = $this->choice(__('What model do I use?'), $filesList, 0);
+            $filesList = [];
+            $exit = "exit()";
 
-            if ($nameModel == end($filesList)) {
-                $this->info(__('goodbye'));
-                exit;
+            foreach ($files as $file) {
+                $filesList[] = $file->getName();
+            }
+
+            $filesList[] = $exit;
+            $nameModel = $this->choice(__('What model do I use?'), $filesList);
+
+            if ($nameModel == $exit) {
+                $this->exit();
             }
         }
 
-        $this->nameModel = ucfirst(str_singular(strtolower($nameModel)));
-        $this->info(__('Using the model') . ': ' . $nameModel);
+        if (!isset($files[$nameModel])) {
+            return false;
+        }
 
-        $fileSelectContent = $this->loadModel($nameModel);
+        $model = $files[$nameModel];
+        $this->info(__('Using the model') . ': ' . $model->getName());
 
+        $fileSelectContent = $this->loadModel($model);
+        dd($fileSelectContent);
         return $fileSelectContent;
     }
 
-    protected function loadModel($nameModel)
+    protected function loadModel($model)
     {
-        $fileSelect = $this->pathCrudDef . '/' . $nameModel . '.json';
-        $fileSelectContent = File::get($fileSelect);
-
-        $fileSelectContent = collect(json_decode($fileSelectContent, true))
-            ->map(function($ele) {
-                 if (isset($ele['model'])) {
-                    $this->dataModel = $ele;
-                    $this->module = ucwords(strtolower($ele['module']));
-                    $this->title = $ele['title'];
-                    $this->inDB = $ele['inDB'];
-                    return false;
-                }
-
-                if ($ele['name'] == 'id') {
-                    $this->id = $ele;
-                    return false;
-                }
-
-                return $ele;
-            })
-            ->reject(function ($ele) {
-                return $ele === false;
-            });
-
-        return $fileSelectContent;
+        $fileSelectContent = File::get($model->getPath());
+        $jsonContent = json_decode($fileSelectContent, true);
+        return $jsonContent;
     }
 
     protected function generateMigration($jsonContent)
@@ -435,7 +425,7 @@ class GeneratorCrud implements Generator
 
             $translationsContent = json_encode($json, JSON_PRETTY_PRINT);
             $translationsContent = str_replace('    ', '  ', $translationsContent);
-            //dd($translationsContent);
+
             File::put($translationsPath, $translationsContent);
         }
     }
@@ -447,5 +437,50 @@ class GeneratorCrud implements Generator
     protected function getMigrationPath()
     {
         return $this->laravel->databasePath().DIRECTORY_SEPARATOR.'migrations';
+    }
+
+    /**
+     * Give the user a single choice from an array of answers.
+     *
+     * @param  string  $question
+     * @param  array  $choices
+     * @param  string|null  $default
+     * @param  mixed|null  $attempts
+     * @param  bool|null  $multiple
+     * @return string
+     */
+    public function choice($question, array $choices, $default = null, $attempts = null, $multiple = null)
+    {
+        return $this->console->choice($question, $choices, $default, $attempts, $multiple);
+    }
+
+    /**
+     * Write a string as information output.
+     *
+     * @param  string  $string
+     * @param  int|string|null  $verbosity
+     * @return void
+     */
+    public function info($string, $verbosity = null)
+    {
+        $this->console->info($string, $verbosity);
+    }
+
+    /**
+     * Write a string as error output.
+     *
+     * @param  string  $string
+     * @param  int|string|null  $verbosity
+     * @return void
+     */
+    public function error($string, $verbosity = null)
+    {
+        $this->console->error($string, $verbosity);
+    }
+
+    public function exit()
+    {
+        $this->info(__('goodbye'));
+        exit;
     }
 }

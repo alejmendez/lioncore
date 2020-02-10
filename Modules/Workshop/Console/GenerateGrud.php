@@ -10,14 +10,9 @@ use Modules\Workshop\Generators\GeneratorCrud;
 
 class GenerateGrud extends Command
 {
-    /**
-     * The console command name.
-     *
-     * @var string
-     */
-    protected $name = 'workshop:generate-crud
+    protected $signature  = 'workshop:generate-crud
                         {nameModel? : Name of the model}
-                        {--module=? : Name of the module}';
+                        {module? : Name of the module}';
 
     /**
      * The console command description.
@@ -43,10 +38,10 @@ class GenerateGrud extends Command
      */
     public function handle()
     {
-        $models = $this->argument('nameModel');
-        $module = $this->argument('module');
+        $models = (String) $this->argument('nameModel');
+        $module = (String) $this->argument('module');
 
-        $generatorCrud = new GeneratorCrud($models, $module);
+        $generatorCrud = new GeneratorCrud($models, $module, $this);
         $generatorCrud->run();
     }
 }

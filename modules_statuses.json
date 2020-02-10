@@ -7,5 +7,6 @@
     "Menu": true,
     "Page": true,
     "Setting": true,
-    "User": true
+    "User": true,
+    "Workshop": true
 }

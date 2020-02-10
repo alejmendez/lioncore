@@ -11,7 +11,7 @@ use Modules\Core\Http\Controllers\BaseController;
 use Modules\User\Repositories\UserRepository;
 
 /**
- * Controlador de todo el flujo de autenticacion del sistema en base a JWT
+ * Controlador el flujo de autenticacion del sistema en base a JWT
  *
  * @author Alejandro Méndez <almendez@gmail.cl>
  * @category Controller
@@ -64,7 +64,6 @@ class AuthController extends BaseController
     public function login()
     {
         $credentials = request(['email', 'password']);
-        $rememberMe = request('rememberMe', false);
         $jwt_token = null;
 
         if (!$jwt_token = JWTAuth::attempt($credentials)) {
