@@ -10,23 +10,49 @@ class Migration extends Generator
 {
     public function generate()
     {
-        if ($this->json->inDB) {
-            $generator->migrationDB();
+        if ($this->json['inDB']) {
+            $this->migrationDB();
             return;
         }
 
-        $generator->migrationFile();
+        $this->migrationFile();
     }
 
     public function migrationFile()
     {
+        $fields = $this->getFields();
+        $idField = $this->json['id'] ?? 'id';
+        $id = $fields->firstWhere('name', $idField);
+
+        $fields = $fields->reject(function ($ele) use($idField) {
+            return $ele['name'] == $idField;
+        })->map(function($field) {
+            $fieldStr = '$table->' . $field['type'] . '(' . $field['name'];
+            if (isset($field['length'])) {
+                $fieldStr .= ', ' . $field['length'];
+            }
+            $fieldStr .= ')';
+
+            if (isset($field['validations']) && !Str::contains($field['validations'], 'required')) {
+                $fieldStr .= '->nullable()';
+            }
+            if (isset($field['default'])) {
+                if (is_string($field['default'])) {
+                    $field['default'] = "'" . $field['default'] . "'";
+                }
+                $fieldStr .= '->default(' . $field['default'] . ')';
+            }
+            $fieldStr .= ';';
+            return $fieldStr;
+        });
+
         $contents = $this->view('scaffolding.migration', [
-            'id' => $this->id,
+            'id' => $id,
             'nameModel' => $this->getNameModel(),
-            'jsonContent' => $this->getFields()
+            'jsonContent' => $fields
         ]);
 
-        $date = $this->dataModel['dateMigration'] ?? date('Y_m_d_His');
+        $date = $this->json['dateMigration'] ?? date('Y_m_d_His');
         $nameFile = $date . "_create_" . Str::plural(strtolower($this->getNameModel())) . "_table.php";
         $pathFile = $this->modulePath(['Database', 'Migrations', $nameFile]);
 

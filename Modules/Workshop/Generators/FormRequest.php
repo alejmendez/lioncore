@@ -2,11 +2,20 @@
 
 namespace Modules\Workshop\Generators;
 
+use Str;
+
 class FormRequest extends Generator
 {
     protected function generate()
     {
-        $json = $this->getFields()->reject(function ($value, $key) {
+        $json = $this->getFields()->map(function($field){
+            if ($field['type'] == 'string' && !Str::contains($field['validations'], 'max')) {
+                $field['validations'] = explode(',', $field['validations']);
+                $field['validations'][] = 'max:' . $field['length'];
+                $field['validations'] = implode(',', $field['validations']);
+            }
+            return $field;
+        })->reject(function ($value, $key) {
             return $value['name'] == 'id' || $value['validations'] == '';
         });
 

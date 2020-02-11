@@ -3,18 +3,19 @@
 namespace Modules\Workshop\Generators;
 
 use File;
-use Module;
 
 use Modules\Workshop\Generators\Interfaces\Generator;
 use Modules\Workshop\Console\GenerateGrud;
 use Modules\Workshop\Generators\Entities\ModelCrud;
 
-use Illuminate\Support\Str;
-use Maklad\Permission\Models\Role;
-use Maklad\Permission\Models\Permission;
-
-use App\Models\Form;
-use App\Models\Field;
+use Modules\Workshop\Generators\Migration;
+use Modules\Workshop\Generators\Model;
+use Modules\Workshop\Generators\FormRequest;
+use Modules\Workshop\Generators\Controller;
+use Modules\Workshop\Generators\Permission;
+use Modules\Workshop\Generators\View;
+use Modules\Workshop\Generators\Route;
+use Modules\Workshop\Generators\Translation;
 
 class GeneratorCrud implements Generator
 {

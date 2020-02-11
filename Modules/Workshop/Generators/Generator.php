@@ -30,7 +30,7 @@ abstract class Generator
 
     protected function getFields()
     {
-        return $this->json['fields'];
+        return collect($this->json['fields']);
     }
 
     protected function view($view, $data)

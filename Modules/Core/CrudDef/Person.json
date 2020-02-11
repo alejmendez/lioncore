@@ -2,8 +2,8 @@
     "model": "Person",
     "module": "core",
     "title": "Person",
-    "dateMigration": "2019_02_01_000000",
-    "inDB": true,
+    "dateMigration": "2019_12_09_000000",
+    "inDB": false,
     "fields": [
         {
             "name": "id",
@@ -19,10 +19,10 @@
         {
             "name": "dni",
             "type": "string",
-            "length": 80,
+            "length": 15,
             "label" : "dni",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true,
@@ -34,7 +34,7 @@
             "length": 80,
             "label" : "First name",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -45,7 +45,7 @@
             "length": 80,
             "label" : "Last name",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -56,18 +56,17 @@
             "length": 80,
             "label" : "Address",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
         },
         {
             "name": "birthdate",
-            "type": "string",
-            "length": 80,
+            "type": "date",
             "label" : "Birthdate",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -75,10 +74,10 @@
         {
             "name": "civil_status",
             "type": "string",
-            "length": 80,
+            "length": 20,
             "label" : "Civil status",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -86,10 +85,10 @@
         {
             "name": "room_telephone",
             "type": "string",
-            "length": 80,
+            "length": 15,
             "label" : "Room telephone",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -97,10 +96,10 @@
         {
             "name": "mobile_phone",
             "type": "string",
-            "length": 80,
+            "length": 15,
             "label" : "Mobile phone",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -111,7 +110,7 @@
             "length": 80,
             "label" : "Email",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -122,18 +121,7 @@
             "length": 80,
             "label" : "nationality",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
-            "searchable": true,
-            "inForm": true,
-            "inList": true
-        },
-        {
-            "name": "rif",
-            "type": "string",
-            "length": 80,
-            "label" : "Rif",
-            "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -141,32 +129,32 @@
         {
             "name": "gender",
             "type": "string",
-            "length": 80,
+            "length": 2,
             "label" : "Gender",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
         },
         {
             "name": "height",
-            "type": "string",
-            "length": 80,
+            "type": "decimal",
+            "length": "5, 2",
             "label" : "Height",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
         },
         {
             "name": "weight",
-            "type": "string",
-            "length": 80,
+            "type": "decimal",
+            "length": "5, 2",
             "label" : "Weight",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -174,10 +162,10 @@
         {
             "name": "shirt_size",
             "type": "string",
-            "length": 80,
+            "length": 2,
             "label" : "Shirt size",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -185,10 +173,10 @@
         {
             "name": "size_pants",
             "type": "string",
-            "length": 80,
+            "length": 2,
             "label" : "Size Pants",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -196,10 +184,10 @@
         {
             "name": "shoe_size",
             "type": "string",
-            "length": 80,
+            "length": 2,
             "label" : "Shoe Size",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -210,7 +198,7 @@
             "length": 80,
             "label" : "Profession",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -221,7 +209,7 @@
             "length": 80,
             "label" : "Academic level",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -232,7 +220,7 @@
             "length": 80,
             "label" : "country",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -243,7 +231,7 @@
             "length": 80,
             "label" : "State",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -254,7 +242,7 @@
             "length": 80,
             "label" : "Municipality",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -265,7 +253,7 @@
             "length": 80,
             "label" : "Parish",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -276,7 +264,7 @@
             "length": 80,
             "label" : "Military component",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -287,19 +275,19 @@
             "length": 80,
             "label" : "Military rank",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
         },
         {
             "name": "number_children",
-            "type": "string",
-            "length": 80,
+            "type": "smallInteger",
             "label" : "Number of children",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
+            "default": 0,
             "inForm": true,
             "inList": true
         },
@@ -309,7 +297,7 @@
             "length": 80,
             "label" : "Spouse works",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -317,10 +305,10 @@
         {
             "name": "observation",
             "type": "string",
-            "length": 80,
+            "length": 255,
             "label" : "Observation",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -328,10 +316,10 @@
         {
             "name": "photos",
             "type": "string",
-            "length": 80,
+            "length": 255,
             "label" : "Photos",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -342,7 +330,7 @@
             "length": 80,
             "label" : "Turn",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -353,7 +341,7 @@
             "length": 80,
             "label" : "Schedule",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -361,10 +349,10 @@
         {
             "name": "blood_type",
             "type": "string",
-            "length": 80,
+            "length": 5,
             "label" : "Blood type",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -375,7 +363,7 @@
             "length": 80,
             "label" : "File number",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -386,7 +374,7 @@
             "length": 80,
             "label" : "Management",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true
@@ -397,7 +385,7 @@
             "length": 80,
             "label" : "Organization",
             "htmlType": "text",
-            "validations": "required,min:3,max:80",
+            "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true

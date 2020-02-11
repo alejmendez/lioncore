@@ -13,11 +13,10 @@ class Create{{ ucwords(str_plural($nameModel)) }}Table extends Migration
     public function up()
     {
         Schema::create('{{ str_plural(strtolower($nameModel)) }}', function (Blueprint $table) {
-            $table->uuid('{{ $id['name'] }}');
-            $table->primary('{{ $id['name'] }}');
+            $table->uuid('{{ $id['name'] }}')->unique()->primary('{{ $id['name'] }}');
 
-            @foreach ($this->json as $field)
-$table->{{ $field['type'] }}('{{ $field['name'] }}'{{ isset($field['length']) ? ', ' . $field['length'] : '' }});
+            @foreach ($jsonContent as $field)
+{!! $field !!}
             @endforeach
 
             $table->timestamps();
