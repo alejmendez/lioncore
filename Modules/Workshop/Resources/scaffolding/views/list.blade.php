@@ -15,7 +15,7 @@
         :loading="loading"
         class="elevation-1">
         <template slot="items" slot-scope="props">
-          @foreach ($jsonContent as $ele)
+          @foreach ($this->json as $ele)
             <td>@{{ props.item.<?php echo $ele['name']; ?> }}</td>
           @endforeach
           <td class="justify-center layout px-0">

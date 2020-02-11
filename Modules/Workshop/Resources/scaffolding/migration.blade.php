@@ -16,7 +16,7 @@ class Create{{ ucwords(str_plural($nameModel)) }}Table extends Migration
             $table->uuid('{{ $id['name'] }}');
             $table->primary('{{ $id['name'] }}');
 
-            @foreach ($jsonContent as $field)
+            @foreach ($this->json as $field)
 $table->{{ $field['type'] }}('{{ $field['name'] }}'{{ isset($field['length']) ? ', ' . $field['length'] : '' }});
             @endforeach
 

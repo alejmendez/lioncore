@@ -23,7 +23,7 @@ class {{ ucwords($nameModel) }}Request extends FormRequest
     public function rules()
     {
         return [
-        @foreach ($jsonContent as $field)
+        @foreach ($this->json as $field)
     "{{ $field['name'] }}" => {!! json_encode($field['validations']) !!},
         @endforeach
 ];

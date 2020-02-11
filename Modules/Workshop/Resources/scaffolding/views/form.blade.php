@@ -5,7 +5,7 @@
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text>
-      @foreach ($jsonContent as $ele)
+      @foreach ($this->json as $ele)
 <{{ $ele['htmlType'] }}-input
         :form="form"
         :label="$t('{{ $ele['label'] }}')"
@@ -45,7 +45,7 @@ export default {
   name: '{{ strtolower(str_plural($nameModel)) }}-form-view',
   data: () => ({
     form: new Form({
-      @foreach ($jsonContent as $ele)
+      @foreach ($this->json as $ele)
       {{ $ele['name'] }}: '',
       @endforeach
     }),

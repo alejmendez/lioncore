@@ -35,7 +35,7 @@ class {{ ucwords($nameModel) }}Controller extends BaseController
     const selectAll = {!! $fieldsSelect !!};
 
     protected $validations = [
-        @foreach ($jsonContent as $field)
+        @foreach ($this->json as $field)
     "{{ $field['name'] }}" => {!! json_encode($field['validations']) !!},
         @endforeach
 ];
