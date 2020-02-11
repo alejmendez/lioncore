@@ -6,24 +6,22 @@ class Model extends Generator
 {
     protected function generate()
     {
-        $this->info(__('Generating Model'));
-
-        $fillable = $this->json->pluck('fieldInput.name')->reject(function ($value, $key) {
+        $fields = $this->getFields();
+        $fillable = $fields->pluck('fieldInput.name')->reject(function ($value, $key) {
             return $value == 'id';
         })->map(function ($name) {
             return "'$name'";
         })->implode(',');
 
-        $contents = view('scaffolding.model', [
-            'nameModel'   => $this->nameModel,
+        $contents = $this->view('scaffolding.model', [
+            'nameModel'   => $this->getNameModel(),
             'fillable'    => $fillable,
-            'jsonContent' => $this->json
-        ])->render();
+            'jsonContent' => $fields
+        ]);
 
-        $contents = "<?php\n" . $contents;
-        $nameFile = ucwords($this->nameModel) . ".php";
-        $pathFile = app_path('Models') . DIRECTORY_SEPARATOR . $nameFile;
+        $nameFile = ucwords($this->getNameModel()) . ".php";
+        $pathFile = $this->modulePath(['Models', $nameFile]);
 
-        File::put($pathFile, $contents);
+        $this->writeFilePhp($pathFile, $contents);
     }
 }

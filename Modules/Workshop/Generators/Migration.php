@@ -2,6 +2,10 @@
 
 namespace Modules\Workshop\Generators;
 
+use Str;
+use Modules\Core\Models\Form;
+use Modules\Core\Models\Field;
+
 class Migration extends Generator
 {
     public function generate()
@@ -16,33 +20,32 @@ class Migration extends Generator
 
     public function migrationFile()
     {
-        $contents = view('scaffolding.migration', [
+        $contents = $this->view('scaffolding.migration', [
             'id' => $this->id,
-            'nameModel' => $this->nameModel,
-            'jsonContent' => $this->json
-        ])->render();
+            'nameModel' => $this->getNameModel(),
+            'jsonContent' => $this->getFields()
+        ]);
 
-        $contents = "<?php\n" . $contents;
         $date = $this->dataModel['dateMigration'] ?? date('Y_m_d_His');
-        $nameFile = $date . "_create_" . Str::plural(strtolower($this->nameModel)) . "_table.php";
-        $pathFile = $this->getMigrationPath() . DIRECTORY_SEPARATOR . $nameFile;
+        $nameFile = $date . "_create_" . Str::plural(strtolower($this->getNameModel())) . "_table.php";
+        $pathFile = $this->modulePath(['Database', 'Migrations', $nameFile]);
 
-        File::put($pathFile, $contents);
+        $this->writeFilePhp($pathFile, $contents);
     }
 
     public function migrationDB()
     {
-        $form = Form::whereName(strtolower($this->nameModel))->first();
+        $form = Form::whereName(strtolower($this->getNameModel()))->first();
         if (!$form) {
             $form = Form::create([
-                'name' => strtolower($this->nameModel)
+                'name' => strtolower($this->getNameModel())
             ]);
         }
 
         $form->fields()->forcedelete();
         $fields = [];
 
-        foreach ($this->json as $field) {
+        foreach ($this->getFields() as $field) {
             $fields[] = Field::create($field);
         }
 

@@ -6,19 +6,18 @@ class FormRequest extends Generator
 {
     protected function generate()
     {
-        $json = $this->json->reject(function ($value, $key) {
+        $json = $this->getFields()->reject(function ($value, $key) {
             return $value['name'] == 'id' || $value['validations'] == '';
         });
 
-        $contents = view('scaffolding.formRequest', [
-            'nameModel' => $this->nameModel,
+        $contents = $this->view('scaffolding.formRequest', [
+            'nameModel' => $this->getNameModel(),
             'jsonContent' => $json
-        ])->render();
+        ]);
 
-        $contents = "<?php\n" . $contents;
-        $nameFile = ucwords($this->nameModel) . "Request.php";
-        $pathFile = app_path('Http/Requests') . DIRECTORY_SEPARATOR . $nameFile;
+        $nameFile = ucwords($this->getNameModel()) . "Request.php";
+        $pathFile = $this->modulePath(['Http', 'Requests', $nameFile]);
 
-        File::put($pathFile, $contents);
+        $this->writeFilePhp($pathFile, $contents);
     }
 }

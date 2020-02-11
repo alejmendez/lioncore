@@ -2,11 +2,14 @@
 
 namespace Modules\Workshop\Generators;
 
+use Modules\Role\Models\Permission as PermissionModel;
+use Modules\Role\Models\Role;
+
 class Permission extends Generator
 {
     protected function generate()
     {
-        $permission = strtolower($this->nameModel);
+        $permission = strtolower($this->getNameModel());
 
         $permissions = [
             $permission,
@@ -17,10 +20,10 @@ class Permission extends Generator
         ];
 
         try {
-            Permission::findByName($permission);
+            PermissionModel::findByName($permission);
 
             foreach ($permissions as $permission) {
-                Permission::create([
+                PermissionModel::create([
                     'name'       => $permission,
                     'guard_name' => 'api'
                 ]);

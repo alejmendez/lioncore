@@ -4,54 +4,49 @@ namespace Modules\Workshop\Generators;
 
 class View extends Generator
 {
+    const PATHVIEW = 'scaffolding.views';
+
     protected function generate()
     {
-        $this->generateViewList();
-        $this->generateViewForm();
+        $this->generateView('list');
+        $this->generateView('form');
     }
 
-    protected function generateViewList()
+    protected function generateView($viewName)
     {
-        $fieldsSelect = $this->json->pluck('fieldInput.name')
+        $contents = $this->view(self::PATHVIEW . '.' . $viewName, $this->getData());
+
+        $path = $this->getPath();
+        $pathFile = $path . '/' . $viewName . '.vue';
+
+        $this->writeFile($pathFile, $contents);
+    }
+
+    protected function getData()
+    {
+        $fields = $this->getFields();
+        $fieldsSelect = $fields->pluck('fieldInput.name')
             ->map(function ($name) {
                 return "'$name'";
             })->implode(',');
 
-        $contents = view('scaffolding.views.list', [
+        return [
             'title' => $this->title,
-            'module' => $this->module,
-            'nameModel' => $this->nameModel,
-            'jsonContent' => $this->json,
+            'module' => $this->getModuleName(),
+            'nameModel' => $this->getNameModel(),
+            'jsonContent' => $fields,
             'fieldsSelect' => $fieldsSelect
-        ])->render();
+        ];
+    }
 
-        $path = resource_path('assets/js/pages/' . ucwords($this->module) . '/' . strtolower(str_plural($this->nameModel)));
-        $pathFile = $path . '/list.vue';
+    protected function getPath()
+    {
+        $path = resource_path('assets/js/pages/' . ucwords($this->getModuleName()) . '/' . strtolower(str_plural($this->getNameModel())));
 
         if (!is_dir($path)) {
             @mkdir($path, 0777, true);
         }
 
-        File::put($pathFile, $contents);
-    }
-
-    protected function generateViewForm()
-    {
-        $fieldsSelect = $this->json->pluck('fieldInput.name')
-            ->map(function ($name) {
-                return "'$name'";
-            })->implode(',');
-
-        $contents = view('scaffolding.views.form', [
-            'title' => $this->title,
-            'module' => $this->module,
-            'nameModel' => $this->nameModel,
-            'jsonContent' => $this->json,
-            'fieldsSelect' => $fieldsSelect
-        ])->render();
-
-        $pathFile = resource_path('assets/js/pages/' . ucwords($this->module) . '/' . strtolower(str_plural($this->nameModel)) . '/form.vue');
-
-        File::put($pathFile, $contents);
+        return $path;
     }
 }

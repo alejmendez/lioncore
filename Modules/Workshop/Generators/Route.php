@@ -13,10 +13,10 @@ class Route extends Generator
         $posApiResources    = 0;
         $posApiResourcesEnd = 0;
 
-        $nameRoute      = strtolower($this->nameModel);
-        $nameController = ucwords($this->nameModel) . "Controller";
+        $nameRoute      = strtolower($this->getNameModel());
+        $nameController = ucwords($this->getNameModel()) . "Controller";
         $newContent     = "'$nameRoute' => '{}\{$nameController}',";
-        $newContent     = "'" . $nameRoute . "' => '" . $this->module . "\\" . $nameController . "',";
+        $newContent     = "'" . $nameRoute . "' => '" . $this->getModuleName() . "\\" . $nameController . "',";
         $addNewContent  = true;
 
         foreach ($routeContent as $line => $content) {
@@ -39,7 +39,7 @@ class Route extends Generator
             array_splice($routeContent, $posApiResourcesEnd, 0, ["        $newContent"]);
             $routeContent = implode("\r\n", $routeContent);
 
-            File::put($routePath, $routeContent);
+            $this->writeFile($routePath, $routeContent);
         }
 
         // Route Vue
@@ -50,7 +50,7 @@ class Route extends Generator
         $posApiResources = 0;
         $posApiResourcesEnd = 0;
 
-        $nameRoute = strtolower($this->nameModel);
+        $nameRoute = strtolower($this->getNameModel());
         $nameRoutePlural = str_plural($nameRoute);
         $newContent =  "    { path: '/$nameRoutePlural', name: '$nameRoutePlural', component: require('~/pages/core/$nameRoutePlural/list.vue') },\r\n";
         $newContent .= "    { path: '/$nameRoute/:id?', name: '$nameRoute', component: require('~/pages/core/$nameRoutePlural/form.vue') },";
@@ -77,7 +77,7 @@ class Route extends Generator
             array_splice($routeContent, $posApiResourcesEnd, 0, [$newContent]);
             $routeContent = implode("\r\n", $routeContent);
 
-            File::put($routePath, $routeContent);
+            $this->writeFile($routePath, $routeContent);
         }
     }
 }
