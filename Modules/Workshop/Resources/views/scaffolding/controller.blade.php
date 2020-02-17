@@ -1,42 +1,54 @@
 
-namespace App\Http\Controllers\Core;
+namespace Modules\{{ $json['module'] }}\Http\Controllers;
 
 // Control Base
 use App\Http\Controllers\Controller as BaseController;
 
 // Traits
-use App\Traits\ApiResponse;
-use App\Traits\RestControllerTrait;
+use Modules\core\Traits\ApiResponse;
 
 // Request
 use Illuminate\Http\Request;
-use App\Http\Request\{{ ucwords($nameModel) }}Request;
+use Modules\{{ $json['module'] }}\Http\Request\{{ ucwords($nameModel) }}Request;
 
 // Modelos
-use App\Models\{{ ucwords($nameModel) }};
+use Modules\{{ $json['module'] }}\Models\{{ ucwords($nameModel) }};
 
-/**
- * Controlador de usuarios
- *
- * {{ '@' }}category Controller
- * {{ '@' }}package  App\Http\Controllers\Core
- * {{ '@' }}author   Alejandro Méndez <alejmendez.87@gmail.com>
- * {{ '@' }}license  http://www.opensource.org/licenses/mit-license.html MIT
- * {{ '@' }}link     http://url.com
- */
+use DataTables;
+
 class {{ ucwords($nameModel) }}Controller extends BaseController
 {
-    use RestControllerTrait, ApiResponse;
+    use ApiResponse;
 
-    const MODEL = 'App\Models\{{ ucwords($nameModel) }}';
-    const PERMISSION = '{{ strtolower($nameModel) }}';
+    public function index()
+    {
+        return DataTables::of({{ ucwords($nameModel) }}::query())->make(true);
+    }
 
-    const selectOne = {!! $fieldsSelect !!};
-    const selectAll = {!! $fieldsSelect !!};
+    public function show($id)
+    {
+        $instance = {{ ucwords($nameModel) }}::findOrFail($id);
+        return $this->showResponse($instance);
+    }
 
-    protected $validations = [
-        @foreach ($this->json as $field)
-    "{{ $field['name'] }}" => {!! json_encode($field['validations']) !!},
-        @endforeach
-];
+    public function store({{ ucwords($nameModel) }}Request $request)
+    {
+        $instance = {{ ucwords($nameModel) }}::create($request->all());
+        return $this->createdResponse($instance);
+    }
+
+    public function update({{ ucwords($nameModel) }}Request $request, $id)
+    {
+        $instance = {{ ucwords($nameModel) }}::findOrFail($id);
+        $instance->fill($request->all());
+        $instance->save();
+        return $this->showResponse($instance);
+    }
+
+    public function destroy($id)
+    {
+        $instance = {{ ucwords($nameModel) }}::findOrFail($id);
+        $instance->delete();
+        return $this->deletedResponse();
+    }
 }

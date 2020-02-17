@@ -23,13 +23,6 @@ class GeneratorCrud implements Generator
     protected $module;
     protected $console;
 
-    protected $nameModel = '';
-    protected $id;
-    protected $dataModel;
-    protected $title;
-    protected $pathCrudDef = 'CrudDef';
-    protected $inDB = false;
-
     public function __construct(String $models, String $module, GenerateGrud $console = null)
     {
         $this->console = $console;
@@ -57,11 +50,11 @@ class GeneratorCrud implements Generator
         foreach ($this->models as $model) {
             $json = $this->getJsonContent($model);
 
-            $this->generateMigration($json);
+            // $this->generateMigration($json);
             // $this->generateModel($json);
             // $this->generateFormRequest($json);
             // $this->generateController($json);
-            // $this->generatePermissions($json);
+            $this->generatePermissions($json);
             // $this->generateViewVue($json);
             // $this->generateRoute($json);
             // $this->generateTranslations($json);
@@ -109,6 +102,12 @@ class GeneratorCrud implements Generator
     {
         $fileSelectContent = File::get($model->getPath());
         $json = json_decode($fileSelectContent, true);
+
+        if (!isset($json['id'])) {
+            $id = collect($json['fields'])->firstWhere('primary', true);
+            $json['id'] = $id ? $id['name'] : 'id';
+        }
+
         return $json;
     }
 

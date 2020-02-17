@@ -4,7 +4,7 @@ namespace Modules\Workshop\Generators;
 
 class Route extends Generator
 {
-    protected function generate()
+    public function generate()
     {
         $routePath    = base_path('routes\api.php');
         $routeContent = file_get_contents($routePath);
@@ -19,6 +19,7 @@ class Route extends Generator
         $newContent     = "'" . $nameRoute . "' => '" . $this->getModuleName() . "\\" . $nameController . "',";
         $addNewContent  = true;
 
+        //->middleware('auth');
         foreach ($routeContent as $line => $content) {
             if (strpos($content, 'Route::apiResources(') !== false) {
                 $posApiResources = $line;

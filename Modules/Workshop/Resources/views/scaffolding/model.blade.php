@@ -1,15 +1,12 @@
+namespace Modules\{{ $json['module'] }}\Models;
 
-namespace App\Models;
+use Modules\Core\Models\ModelBase;
 
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-class {{ ucwords($nameModel) }} extends Momodel implements Auditable
+class {{ ucwords($nameModel) }} extends ModelBase
 {
-    use \OwenIt\Auditing\Auditable, SoftDeletes;
-
-    protected $guarded = [
-        'id', 'created_at', 'updated_at', 'deleted_at'
+    protected $fillable = [
+        @foreach ($fillable as $field)
+{!! $field !!},
+        @endforeach
     ];
 }

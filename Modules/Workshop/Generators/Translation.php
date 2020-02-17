@@ -7,7 +7,7 @@ class Translation extends Generator
     protected $module;
     protected $nameModel;
 
-    protected function generate()
+    public function generate()
     {
         $lenguajes = [
             app()->getLocale(),

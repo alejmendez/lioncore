@@ -4,19 +4,20 @@ namespace Modules\Workshop\Generators;
 
 class Model extends Generator
 {
-    protected function generate()
+    public function generate()
     {
         $fields = $this->getFields();
-        $fillable = $fields->pluck('fieldInput.name')->reject(function ($value, $key) {
-            return $value == 'id';
-        })->map(function ($name) {
-            return "'$name'";
-        })->implode(',');
+        $fillable = $fields->reject(function ($field) {
+            return $field['name'] == 'id';
+        })->map(function ($field) {
+            return "'" . $field['name'] . "'";
+        });
 
         $contents = $this->view('scaffolding.model', [
-            'nameModel'   => $this->getNameModel(),
-            'fillable'    => $fillable,
-            'jsonContent' => $fields
+            'nameModel' => $this->getNameModel(),
+            'fillable'  => $fillable,
+            'fields'    => $fields,
+            'json'      => $this->json,
         ]);
 
         $nameFile = ucwords($this->getNameModel()) . ".php";

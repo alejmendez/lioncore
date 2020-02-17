@@ -15,6 +15,7 @@ use Illuminate\Database\QueryException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 use App\Traits\ApiResponse;
 
@@ -80,7 +81,7 @@ class Handler extends ExceptionHandler
             return $this->errorResponse('No existe ninguna instancia de ' . $modelo . ' con el id especificado', 404);
         } elseif ($exception instanceof AuthenticationException) {
             return $this->unauthenticated($request, $exception);
-        } elseif ($exception instanceof AuthorizationException) {
+        } elseif ($exception instanceof AuthorizationException || $exception instanceof UnauthorizedException) {
             return $this->errorResponse('No posee permisos para ejecutar esta acción', 403);
         } elseif ($exception instanceof NotFoundHttpException) {
             return $this->errorResponse('No se encontró la URL especificada', 404);

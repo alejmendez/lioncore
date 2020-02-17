@@ -6,7 +6,7 @@ class View extends Generator
 {
     const PATHVIEW = 'scaffolding.views';
 
-    protected function generate()
+    public function generate()
     {
         $this->generateView('list');
         $this->generateView('form');

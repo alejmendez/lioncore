@@ -7,7 +7,7 @@ use Modules\Role\Models\Role;
 
 class Permission extends Generator
 {
-    protected function generate()
+    public function generate()
     {
         $permission = strtolower($this->getNameModel());
 

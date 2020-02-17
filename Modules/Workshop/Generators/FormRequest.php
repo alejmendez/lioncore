@@ -6,13 +6,17 @@ use Str;
 
 class FormRequest extends Generator
 {
-    protected function generate()
+    public function generate()
     {
-        $json = $this->getFields()->map(function($field){
+        $fields = $this->getFields()->map(function($field){
             if ($field['type'] == 'string' && !Str::contains($field['validations'], 'max')) {
-                $field['validations'] = explode(',', $field['validations']);
-                $field['validations'][] = 'max:' . $field['length'];
-                $field['validations'] = implode(',', $field['validations']);
+                if ($field['validations'] == '') {
+                    $field['validations'] = 'max:' . $field['length'];
+                } else {
+                    $field['validations'] = explode(',', $field['validations']);
+                    $field['validations'][] = 'max:' . $field['length'];
+                    $field['validations'] = implode(',', $field['validations']);
+                }
             }
             return $field;
         })->reject(function ($value, $key) {
@@ -21,7 +25,8 @@ class FormRequest extends Generator
 
         $contents = $this->view('scaffolding.formRequest', [
             'nameModel' => $this->getNameModel(),
-            'jsonContent' => $json
+            'fields'    => $fields,
+            'json'      => $this->json,
         ]);
 
         $nameFile = ucwords($this->getNameModel()) . "Request.php";

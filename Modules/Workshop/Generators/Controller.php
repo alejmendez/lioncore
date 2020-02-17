@@ -4,7 +4,7 @@ namespace Modules\Workshop\Generators;
 
 class Controller extends Generator
 {
-    protected function generate()
+    public function generate()
     {
         $fields = $this->getFields();
         $validations  = $fields->reject(function ($value, $key) {
@@ -17,9 +17,10 @@ class Controller extends Generator
 
         $contents = $this->view('scaffolding.controller', [
             'nameModel'    => $this->getNameModel(),
-            'jsonContent'  => $fields,
+            'fields'       => $fields,
             'fieldsSelect' => $fieldsSelect,
-            'validations'  => $validations
+            'validations'  => $validations,
+            'json'         => $this->json,
         ]);
 
         $nameFile = ucwords($this->getNameModel()) . "Controller.php";
