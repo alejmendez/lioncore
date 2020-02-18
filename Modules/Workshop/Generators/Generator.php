@@ -33,6 +33,13 @@ abstract class Generator
         return collect($this->json['fields']);
     }
 
+    protected function getFieldsWithoutId()
+    {
+        return $this->getFields()->reject(function ($field) {
+            return $field['name'] == 'id';
+        });
+    }
+
     protected function view($view, $data)
     {
         return view('workshop::' . $view, $data)->render();

@@ -50,14 +50,16 @@ class GeneratorCrud implements Generator
         foreach ($this->models as $model) {
             $json = $this->getJsonContent($model);
 
-            // $this->generateMigration($json);
-            // $this->generateModel($json);
-            // $this->generateFormRequest($json);
-            // $this->generateController($json);
-            // $this->generatePermissions($json);
+            $this->generateMigration($json);
+            $this->generateModel($json);
+            $this->generateFormRequest($json);
+            $this->generateController($json);
+            $this->generatePermissions($json);
             // $this->generateViewVue($json);
             $this->generateRoute($json);
-            // $this->generateTranslations($json);
+            $this->generateTranslations($json);
+            $this->generateFactory($json);
+            $this->generateTest($json);
         }
     }
 
@@ -164,6 +166,20 @@ class GeneratorCrud implements Generator
     {
         $this->info(__('Generating Translations'));
         $generator = new Translation($json);
+        $generator->generate();
+    }
+
+    protected function generateFactory($json)
+    {
+        $this->info(__('Generating Factory'));
+        $generator = new Factory($json);
+        $generator->generate();
+    }
+
+    protected function generateTest($json)
+    {
+        $this->info(__('Generating Test'));
+        $generator = new Test($json);
         $generator->generate();
     }
 

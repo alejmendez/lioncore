@@ -6,17 +6,14 @@ class Model extends Generator
 {
     public function generate()
     {
-        $fields = $this->getFields();
-        $fillable = $fields->reject(function ($field) {
-            return $field['name'] == 'id';
-        })->map(function ($field) {
+        $fields = $this->getFieldsWithoutId();
+        $fillable = $fields->map(function ($field) {
             return "'" . $field['name'] . "'";
         });
 
         $contents = $this->view('scaffolding.model', [
             'nameModel' => $this->getNameModel(),
             'fillable'  => $fillable,
-            'fields'    => $fields,
             'json'      => $this->json,
         ]);
 

@@ -8,7 +8,7 @@ class FormRequest extends Generator
 {
     public function generate()
     {
-        $fields = $this->getFields()->map(function($field){
+        $fields = $this->getFieldsWithoutId()->map(function($field){
             if ($field['type'] == 'string' && !Str::contains($field['validations'], 'max')) {
                 if ($field['validations'] == '') {
                     $field['validations'] = 'max:' . $field['length'];
@@ -19,8 +19,8 @@ class FormRequest extends Generator
                 }
             }
             return $field;
-        })->reject(function ($value, $key) {
-            return $value['name'] == 'id' || $value['validations'] == '';
+        })->reject(function ($field) {
+            return $field['validations'] == '';
         });
 
         $contents = $this->view('scaffolding.formRequest', [

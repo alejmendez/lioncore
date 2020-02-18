@@ -9,8 +9,8 @@ class Route extends Generator
     protected $routePath;
     public function generate()
     {
-        $this->routePath    = base_path('Modules\\' . $this->getModuleName() . '\Routes\api.php');
-        // $this->routeLaravel();
+        $this->routePath    = $this->modulePath(['Routes', 'api.php']);
+        $this->routeLaravel();
         //$this->routeVue();
     }
 
@@ -23,19 +23,20 @@ class Route extends Generator
 
         if (!Str::contains($routeContent, $nameController . '@index')) {
             $version = env('API_VERSION', 'v1');
-            $routeContent .= "
-            Route::group(['middleware' => 'auth:api', 'prefix' => '$version/$nameRoute'], function () {
-                Route::get('/', '" . $nameController . "@index')->name('" . $nameRoute . ".index ')
-                    ->middleware('auth');
-                Route::get('\{$nameRoute\}', '" . $nameController . "@show')->name('" . $nameRoute . ".show ')
-                    ->middleware('auth');
-                Route::post('/', '" . $nameController . "@store')->name('" . $nameRoute . ".store ')
-                    ->middleware('auth');
-                Route::put('\{$nameRoute\}', '" . $nameController . "@update')->name('" . $nameRoute . ".update ')
-                    ->middleware('auth');
-                Route::delete('\{$nameRoute\}', '" . $nameController . "@destroy')->name('" . $nameRoute . ".destroy ')
-                    ->middleware('auth');
-            });";
+            $routeContent .=
+            "\n" .
+            "Route::group(['middleware' => 'auth:api', 'prefix' => '$version/$nameRoute'], function () {\n" .
+            "    Route::get('/', '" . $nameController . "@index')->name('" . $nameRoute . ".index')\n" .
+            "        ->middleware('permission:$nameRoute');\n" .
+            "    Route::get('/{" . $nameRoute . "}', '" . $nameController . "@show')->name('" . $nameRoute . ".show')\n" .
+            "        ->middleware('permission:$nameRoute show');\n" .
+            "    Route::post('/', '" . $nameController . "@store')->name('" . $nameRoute . ".store')\n" .
+            "        ->middleware('permission:$nameRoute store');\n" .
+            "    Route::put('/{" . $nameRoute . "}', '" . $nameController . "@update')->name('" . $nameRoute . ".update')\n" .
+            "        ->middleware('permission:$nameRoute update');\n" .
+            "    Route::delete('/{" . $nameRoute . "}', '" . $nameController . "@destroy')->name('" . $nameRoute . ".destroy')\n" .
+            "        ->middleware('permission:$nameRoute destroy');\n" .
+            "});";
 
             $this->writeFile($this->routePath, $routeContent);
         }

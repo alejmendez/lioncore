@@ -21,11 +21,11 @@ class Migration extends Generator
     public function migrationFile()
     {
         $fields = $this->getFields();
-        $idField = $this->json['id'] ?? 'id';
+        $idField = $this->json['id'];
         $id = $fields->firstWhere('name', $idField);
 
-        $fields = $fields->reject(function ($ele) use($idField) {
-            return $ele['name'] == $idField;
+        $fields = $fields->reject(function ($field) use($idField) {
+            return $field['name'] == $idField;
         })->map(function($field) {
             $fieldStr = '$table->' . $field['type'] . '(' . $field['name'];
             if (isset($field['length'])) {
@@ -49,7 +49,7 @@ class Migration extends Generator
         $contents = $this->view('scaffolding.migration', [
             'id' => $id,
             'nameModel' => $this->getNameModel(),
-            'jsonContent' => $fields
+            'fields' => $fields
         ]);
 
         $date = $this->json['dateMigration'] ?? date('Y_m_d_His');
