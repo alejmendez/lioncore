@@ -21,7 +21,9 @@ class Permission extends Generator
 
         try {
             PermissionModel::findByName($permission);
-
+        } catch (\Spatie\Permission\Exceptions\PermissionAlreadyExists $e) {
+            return true;
+        } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
             foreach ($permissions as $permission) {
                 PermissionModel::create([
                     'name'       => $permission,
@@ -30,10 +32,6 @@ class Permission extends Generator
             }
 
             Role::findByName('admin')->givePermissionTo($permissions);
-        } catch (\Maklad\Permission\Exceptions\PermissionAlreadyExists $e) {
-            return true;
-        } catch (\Maklad\Permission\Exceptions\PermissionDoesNotExist $e) {
-            return true;
         }
     }
 }

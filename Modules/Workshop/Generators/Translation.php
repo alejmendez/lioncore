@@ -2,6 +2,8 @@
 
 namespace Modules\Workshop\Generators;
 
+use Str;
+
 class Translation extends Generator
 {
     protected $module;
@@ -16,7 +18,7 @@ class Translation extends Generator
 
         $this->module = strtolower($this->getModuleName());
         $this->nameModel = strtolower($this->getNameModel());
-        $fields = $this->getFields();
+        
         foreach ($lenguajes as $locale) {
             $translationsPath = resource_path("lang/{$locale}.json");
 
@@ -55,6 +57,7 @@ class Translation extends Generator
 
     protected function defineFieldLabels($json)
     {
+        $fields = $this->getFields();
         foreach ($fields as $content) {
             if (!isset($content['label'])) {
                 continue;

@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 
-use App\Traits\ApiResponse;
+use Modules\core\Traits\ApiResponse;
 
 class Handler extends ExceptionHandler
 {
