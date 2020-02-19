@@ -54,6 +54,7 @@ class CreatePeopleTable extends Migration
             $table->string('blood_type', 5)->nullable();
             $table->string('file_number', 80)->nullable();
             $table->string('management', 80)->nullable();
+            $table->string('organization_id', 80)->nullable();
 
             $table->timestamps();
             $table->softDeletes();

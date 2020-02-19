@@ -46,7 +46,10 @@ class PersonTest extends TestCase
                     ];
     }
 
-    /** @test  */
+    /**
+     * @group  person
+     * @test
+     */
     public function test_can_create_person()
     {
         $data = $this->generateData();
@@ -56,7 +59,10 @@ class PersonTest extends TestCase
             ->assertJson($data);
     }
 
-    /** @test  */
+    /**
+     * @group  person
+     * @test
+     */
     public function test_can_update_person()
     {
         $person = factory(Person::class)->create();
@@ -68,7 +74,10 @@ class PersonTest extends TestCase
             ->assertJson($data);
     }
 
-    /** @test  */
+    /**
+     * @group  person
+     * @test
+     */
     public function test_can_show_person()
     {
         $person = factory(Person::class)->create();
@@ -77,7 +86,10 @@ class PersonTest extends TestCase
             ->assertStatus(200);
     }
 
-    /** @test  */
+    /**
+     * @group  person
+     * @test
+     */
     public function test_can_delete_person()
     {
         $person = factory(Person::class)->create();
@@ -86,18 +98,21 @@ class PersonTest extends TestCase
             ->assertStatus(204);
     }
 
-    /** @test  */
+    /**
+     * @group  person
+     * @test
+     */
     public function test_can_list_persons()
     {
         $persons = factory(Person::class, 2)->create()->map(function ($person) {
-            return $person->only(['dni', 'first_name', 'last_name', 'address', 'birthdate', 'civil_status', 'room_telephone', 'mobile_phone', 'email', 'nationality', 'gender', 'height', 'weight', 'shirt_size', 'size_pants', 'shoe_size', 'profession', 'academic_level', 'country', 'state', 'municipality', 'parish', 'military_component', 'military_rank', 'number_children', 'spouse_works', 'observation', 'photos', 'turn', 'schedule', 'blood_type', 'file_number', 'management', 'organization_id']);
+            return $person->only(['dni', 'first_name', 'last_name']);
         });
 
         $this->get(route('person'))
             ->assertStatus(200)
             ->assertJson($persons->toArray())
             ->assertJsonStructure([
-                '*' => ['dni', 'first_name', 'last_name', 'address', 'birthdate', 'civil_status', 'room_telephone', 'mobile_phone', 'email', 'nationality', 'gender', 'height', 'weight', 'shirt_size', 'size_pants', 'shoe_size', 'profession', 'academic_level', 'country', 'state', 'municipality', 'parish', 'military_component', 'military_rank', 'number_children', 'spouse_works', 'observation', 'photos', 'turn', 'schedule', 'blood_type', 'file_number', 'management', 'organization_id'],
+                '*' => ['dni', 'first_name', 'last_name'],
             ]);
     }
 }

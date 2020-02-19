@@ -10,9 +10,20 @@ use Modules\Workshop\Generators\GeneratorCrud;
 
 class GenerateGrud extends Command
 {
-    protected $signature  = 'workshop:generate-crud
-                        {nameModel? : Name of the model}
-                        {module? : Name of the module}';
+    protected $signature = 'workshop:generate-crud
+        {nameModel? : Name of the model}
+        {module? : Name of the module}
+        {--i|migration}
+        {--m|model}
+        {--o|formrequest}
+        {--c|controller}
+        {--p|permissions}
+        {--w|viewvue}
+        {--r|route}
+        {--t|translations}
+        {--f|factory}
+        {--e|test}
+    ';
 
     /**
      * The console command description.

@@ -26,6 +26,7 @@
             "searchable": true,
             "inForm": true,
             "inList": true,
+            "faker": "dni",
             "flex": "sm6"
         },
         {
@@ -37,7 +38,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": true,
+            "faker": "firstName"
         },
         {
             "name": "last_name",
@@ -48,7 +50,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": true,
+            "faker": "lastName"
         },
         {
             "name": "address",
@@ -59,7 +62,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "address"
         },
         {
             "name": "birthdate",
@@ -69,7 +73,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "date('Y-m-d', '-18 years') "
         },
         {
             "name": "civil_status",
@@ -80,7 +85,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "randomElement(['C', 'S', 'D', 'V'])"
         },
         {
             "name": "room_telephone",
@@ -91,7 +97,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "phoneNumber"
         },
         {
             "name": "mobile_phone",
@@ -102,7 +109,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "phoneNumber"
         },
         {
             "name": "email",
@@ -113,7 +121,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "unique()->safeEmail"
         },
         {
             "name": "nationality",
@@ -124,7 +133,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "randomElement(['C', 'E'])"
         },
         {
             "name": "gender",
@@ -135,7 +145,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "randomElement(['M', 'F'])"
         },
         {
             "name": "height",
@@ -146,7 +157,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "numberBetween(150, 210)"
         },
         {
             "name": "weight",
@@ -157,7 +169,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "numberBetween(48, 130)"
         },
         {
             "name": "shirt_size",
@@ -168,7 +181,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "randomElement(['XS', 'S', 'M', 'L', 'XL', 'XL'])"
         },
         {
             "name": "size_pants",
@@ -179,7 +193,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "numberBetween(30, 54)"
         },
         {
             "name": "shoe_size",
@@ -190,7 +205,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "numberBetween(28, 54)"
         },
         {
             "name": "profession",
@@ -201,7 +217,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "word"
         },
         {
             "name": "academic_level",
@@ -212,7 +229,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "word"
         },
         {
             "name": "country",
@@ -223,7 +241,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "country"
         },
         {
             "name": "state",
@@ -234,7 +253,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "state"
         },
         {
             "name": "municipality",
@@ -245,7 +265,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "city"
         },
         {
             "name": "parish",
@@ -256,7 +277,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "word"
         },
         {
             "name": "military_component",
@@ -267,7 +289,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "word"
         },
         {
             "name": "military_rank",
@@ -278,7 +301,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "word"
         },
         {
             "name": "number_children",
@@ -289,7 +313,8 @@
             "searchable": true,
             "default": 0,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "numberBetween(0, 5)"
         },
         {
             "name": "spouse_works",
@@ -300,7 +325,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "word"
         },
         {
             "name": "observation",
@@ -311,7 +337,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "text(250)"
         },
         {
             "name": "photos",
@@ -322,7 +349,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "imageUrl(500, 500, 'people', true, 'Faker')"
         },
         {
             "name": "turn",
@@ -333,7 +361,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "word"
         },
         {
             "name": "schedule",
@@ -344,7 +373,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "word"
         },
         {
             "name": "blood_type",
@@ -355,7 +385,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "text(5)"
         },
         {
             "name": "file_number",
@@ -366,7 +397,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "word"
         },
         {
             "name": "management",
@@ -377,7 +409,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "word"
         },
         {
             "name": "organization_id",
@@ -388,7 +421,8 @@
             "validations": "",
             "searchable": true,
             "inForm": true,
-            "inList": true
+            "inList": false,
+            "faker": "word"
         }
     ]
 }
