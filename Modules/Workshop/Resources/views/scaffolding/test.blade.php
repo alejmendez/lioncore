@@ -10,7 +10,7 @@ class {{ ucwords($nameModel) }}Test extends TestCase
         $faker = \Faker\Factory::create();
         return [
             @foreach ($fields as $field)
-'{!! $field['name'] !!}' => $this->faker->{!! $field['faker'] !!},
+'{!! $field['name'] !!}' => $faker->{!! $field['faker'] !!},
             @endforeach
         ];
     }
@@ -63,7 +63,7 @@ class {{ ucwords($nameModel) }}Test extends TestCase
     {
         ${{ $nameModel }} = factory({{ ucwords($nameModel) }}::class)->create();
 
-        $this->delete(route('{{ $nameModel }}.delete', ${{ $nameModel }}->id))
+        $this->delete(route('{{ $nameModel }}.destroy', ${{ $nameModel }}->id))
             ->assertStatus(204);
     }
 
@@ -77,7 +77,7 @@ class {{ ucwords($nameModel) }}Test extends TestCase
             return ${{ $nameModel }}->only([{!! $fieldsInList !!}]);
         });
 
-        $this->get(route('{{ $nameModel }}'))
+        $this->get(route('{{ $nameModel }}.index'))
             ->assertStatus(200)
             ->assertJson(${{ $nameModel }}s->toArray())
             ->assertJsonStructure([
