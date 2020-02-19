@@ -14,7 +14,10 @@ class {{ ucwords($nameModel) }}Test extends TestCase
         ];
     }
 
-    /** @test */
+    /**
+     * @group {{ $nameModel }}
+     * @test
+     */
     public function test_can_create_{{ $nameModel }}()
     {
         $data = $this->generateData();
@@ -24,7 +27,10 @@ class {{ ucwords($nameModel) }}Test extends TestCase
             ->assertJson($data);
     }
 
-    /** @test */
+    /**
+     * @group {{ $nameModel }}
+     * @test
+     */
     public function test_can_update_{{ $nameModel }}()
     {
         ${{ $nameModel }} = factory({{ ucwords($nameModel) }}::class)->create();
@@ -36,7 +42,10 @@ class {{ ucwords($nameModel) }}Test extends TestCase
             ->assertJson($data);
     }
 
-    /** @test */
+    /**
+     * @group {{ $nameModel }}
+     * @test
+     */
     public function test_can_show_{{ $nameModel }}()
     {
         ${{ $nameModel }} = factory({{ ucwords($nameModel) }}::class)->create();
@@ -45,7 +54,10 @@ class {{ ucwords($nameModel) }}Test extends TestCase
             ->assertStatus(200);
     }
 
-    /** @test */
+    /**
+     * @group {{ $nameModel }}
+     * @test
+     */
     public function test_can_delete_{{ $nameModel }}()
     {
         ${{ $nameModel }} = factory({{ ucwords($nameModel) }}::class)->create();
@@ -54,7 +66,10 @@ class {{ ucwords($nameModel) }}Test extends TestCase
             ->assertStatus(204);
     }
 
-    /** @test */
+    /**
+     * @group {{ $nameModel }}
+     * @test
+     */
     public function test_can_list_{{ $nameModel }}s()
     {
         ${{ $nameModel }}s = factory({{ ucwords($nameModel) }}::class, 2)->create()->map(function (${{ $nameModel }}) {
