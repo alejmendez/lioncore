@@ -27,7 +27,7 @@ class Migration extends Generator
         $fields = $fields->reject(function ($field) use($idField) {
             return $field['name'] == $idField;
         })->map(function($field) {
-            $fieldStr = '$table->' . $field['type'] . '(' . $field['name'];
+            $fieldStr = '$table->' . $field['type'] . '(\'' . $field['name'] . '\'';
             if (isset($field['length'])) {
                 $fieldStr .= ', ' . $field['length'];
             }
