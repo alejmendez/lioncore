@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 $factory->define({{ ucwords($nameModel) }}::class, function (Faker $faker) {
     return [
         @foreach ($fields as $field)
-    "{{ $field['name'] }}" => $faker->sentence,
+    "{{ $field['name'] }}" => $faker->{!! $field['faker'] !!},
         @endforeach
     ];
 });

@@ -7,9 +7,10 @@ class {{ ucwords($nameModel) }}Test extends TestCase
 {
     protected function generateData()
     {
+        $faker = \Faker\Factory::create();
         return [
             @foreach ($fields as $field)
-'{!! $field['name'] !!}' => $this->faker->sentence,
+'{!! $field['name'] !!}' => $this->faker->{!! $field['faker'] !!},
             @endforeach
         ];
     }
@@ -22,7 +23,7 @@ class {{ ucwords($nameModel) }}Test extends TestCase
     {
         $data = $this->generateData();
 
-        $this->{{ $nameModel }}(route('{{ $nameModel }}.store'), $data)
+        $this->post(route('{{ $nameModel }}.store'), $data)
             ->assertStatus(201)
             ->assertJson($data);
     }

@@ -8,41 +8,42 @@ class PersonTest extends TestCase
 {
     protected function generateData()
     {
+        $faker = \Faker\Factory::create();
         return [
-            'dni' => $this->faker->sentence,
-            'first_name' => $this->faker->sentence,
-            'last_name' => $this->faker->sentence,
-            'address' => $this->faker->sentence,
-            'birthdate' => $this->faker->sentence,
-            'civil_status' => $this->faker->sentence,
-            'room_telephone' => $this->faker->sentence,
-            'mobile_phone' => $this->faker->sentence,
-            'email' => $this->faker->sentence,
-            'nationality' => $this->faker->sentence,
-            'gender' => $this->faker->sentence,
-            'height' => $this->faker->sentence,
-            'weight' => $this->faker->sentence,
-            'shirt_size' => $this->faker->sentence,
-            'size_pants' => $this->faker->sentence,
-            'shoe_size' => $this->faker->sentence,
-            'profession' => $this->faker->sentence,
-            'academic_level' => $this->faker->sentence,
-            'country' => $this->faker->sentence,
-            'state' => $this->faker->sentence,
-            'municipality' => $this->faker->sentence,
-            'parish' => $this->faker->sentence,
-            'military_component' => $this->faker->sentence,
-            'military_rank' => $this->faker->sentence,
-            'number_children' => $this->faker->sentence,
-            'spouse_works' => $this->faker->sentence,
-            'observation' => $this->faker->sentence,
-            'photos' => $this->faker->sentence,
-            'turn' => $this->faker->sentence,
-            'schedule' => $this->faker->sentence,
-            'blood_type' => $this->faker->sentence,
-            'file_number' => $this->faker->sentence,
-            'management' => $this->faker->sentence,
-            'organization_id' => $this->faker->sentence,
+            'dni' => $this->faker->numberBetween(5000000, 30000000),
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'address' => $this->faker->address,
+            'birthdate' => $this->faker->date('Y-m-d', '-18 years') ,
+            'civil_status' => $this->faker->randomElement(['C', 'S', 'D', 'V']),
+            'room_telephone' => $this->faker->phoneNumber,
+            'mobile_phone' => $this->faker->phoneNumber,
+            'email' => $this->faker->unique()->safeEmail,
+            'nationality' => $this->faker->randomElement(['C', 'E']),
+            'gender' => $this->faker->randomElement(['M', 'F']),
+            'height' => $this->faker->numberBetween(150, 210),
+            'weight' => $this->faker->numberBetween(48, 130),
+            'shirt_size' => $this->faker->randomElement(['XS', 'S', 'M', 'L', 'XL', 'XL']),
+            'size_pants' => $this->faker->numberBetween(30, 54),
+            'shoe_size' => $this->faker->numberBetween(28, 54),
+            'profession' => $this->faker->word,
+            'academic_level' => $this->faker->word,
+            'country' => $this->faker->country,
+            'state' => $this->faker->state,
+            'municipality' => $this->faker->city,
+            'parish' => $this->faker->word,
+            'military_component' => $this->faker->word,
+            'military_rank' => $this->faker->word,
+            'number_children' => $this->faker->numberBetween(0, 5),
+            'spouse_works' => $this->faker->word,
+            'observation' => $this->faker->text(250),
+            'photos' => $this->faker->imageUrl(500, 500, 'people', true, 'Faker'),
+            'turn' => $this->faker->word,
+            'schedule' => $this->faker->word,
+            'blood_type' => $this->faker->text(5),
+            'file_number' => $this->faker->word,
+            'management' => $this->faker->word,
+            'organization_id' => $this->faker->word,
                     ];
     }
 
@@ -54,7 +55,7 @@ class PersonTest extends TestCase
     {
         $data = $this->generateData();
 
-        $this->person(route('person.store'), $data)
+        $this->post(route('person.store'), $data)
             ->assertStatus(201)
             ->assertJson($data);
     }
