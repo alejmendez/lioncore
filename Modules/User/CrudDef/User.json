@@ -1,0 +1,80 @@
+{
+    "model": "User",
+    "module": "User",
+    "title": "User",
+    "dateMigration": "2019_12_10_000000",
+    "inDB": false,
+    "fields": [
+        {
+            "name": "id",
+            "type": "increments",
+            "htmlType": "",
+            "validations": "",
+            "searchable": false,
+            "fillable": false,
+            "primary": true,
+            "inForm": false,
+            "inList": false
+        },
+        {
+            "name": "person_id",
+            "type": "uuid",
+            "htmlType": "select",
+            "validations": "required",
+            "searchable": false,
+            "fillable": true,
+            "inForm": true,
+            "inList": false,
+            "faker": "number"
+        },
+        {
+            "name": "email",
+            "type": "string",
+            "length": 80,
+            "label" : "Email",
+            "htmlType": "text",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": false,
+            "faker": "unique()->safeEmail"
+        },
+        {
+            "name": "email_verified_at",
+            "type": "timestamp",
+            "length": 80,
+            "label" : "nationality",
+            "htmlType": "date",
+            "validations": "",
+            "searchable": true,
+            "nullable": true,
+            "inForm": true,
+            "inList": false,
+            "faker": "datetimestamp"
+        },
+        {
+            "name": "password",
+            "type": "string",
+            "length": 64,
+            "label" : "password",
+            "htmlType": "password",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": false,
+            "faker": "randomElement(['M', 'F'])"
+        },
+        {
+            "name": "verification_token",
+            "type": "string",
+            "length": "64",
+            "label" : "verification token",
+            "htmlType": "text",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": false,
+            "faker": "numberBetween(150, 210)"
+        }
+    ]
+}

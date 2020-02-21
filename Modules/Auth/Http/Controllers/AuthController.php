@@ -131,7 +131,7 @@ class AuthController extends BaseController
     public function currentUser()
     {
         return response()->json([
-            'user' => auth()->user(),
+            'user' => User::with('Person')->find(auth()->user()->id),
         ], 200);
     }
     /**

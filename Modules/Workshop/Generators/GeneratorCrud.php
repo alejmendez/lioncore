@@ -50,8 +50,8 @@ class GeneratorCrud implements Generator
         foreach ($this->models as $model) {
             $json = $this->getJsonContent($model);
 
-            $this->generateMigration($json);
-            $this->generateModel($json);
+            // $this->generateMigration($json);
+            // $this->generateModel($json);
             $this->generateFormRequest($json);
             $this->generateController($json);
             $this->generatePermissions($json);

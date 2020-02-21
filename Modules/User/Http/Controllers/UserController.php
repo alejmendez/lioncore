@@ -1,79 +1,54 @@
 <?php
-
 namespace Modules\User\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
+// Control Base
+use App\Http\Controllers\Controller as BaseController;
 
-class UserController extends Controller
+// Traits
+use Modules\core\Traits\ApiResponse;
+
+// Request
+use Illuminate\Http\Request;
+use Modules\User\Http\Request\UserRequest;
+
+// Modelos
+use Modules\User\Models\User;
+
+use DataTables;
+
+class UserController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
+    use ApiResponse;
+
     public function index()
     {
-        return view('user::index');
+        return DataTables::of(User::query())->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('user::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
     public function show($id)
     {
-        return view('user::show');
+        $instance = User::findOrFail($id);
+        return $this->showResponse($instance);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
+    public function store(UserRequest $request)
     {
-        return view('user::edit');
+        $instance = User::create($request->all());
+        return $this->createdResponse($instance);
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $instance = User::findOrFail($id);
+        $instance->fill($request->all());
+        $instance->save();
+        return $this->showResponse($instance);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
     public function destroy($id)
     {
-        //
+        $instance = User::findOrFail($id);
+        $instance->delete();
+        return $this->deletedResponse();
     }
 }

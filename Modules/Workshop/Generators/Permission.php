@@ -9,7 +9,9 @@ class Permission extends Generator
 {
     public function generate()
     {
+        app()['cache']->forget('spatie.permission.cache');
         $permission = strtolower($this->getNameModel());
+        $guardName = 'api';
 
         $permissions = [
             $permission,
@@ -19,19 +21,11 @@ class Permission extends Generator
             $permission . ' destroy'
         ];
 
-        try {
-            PermissionModel::findByName($permission);
-        } catch (\Spatie\Permission\Exceptions\PermissionAlreadyExists $e) {
-            return true;
-        } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
-            foreach ($permissions as $permission) {
-                PermissionModel::create([
-                    'name'       => $permission,
-                    'guard_name' => 'api'
-                ]);
-            }
-
-            Role::findByName('admin')->givePermissionTo($permissions);
+        $roleAdmin = Role::findByName('admin', $guardName);
+        foreach ($permissions as $permission) {
+            PermissionModel::findOrCreate($permission, $guardName);
         }
+
+        $roleAdmin->givePermissionTo($permissions);
     }
 }
