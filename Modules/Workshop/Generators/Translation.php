@@ -3,14 +3,20 @@
 namespace Modules\Workshop\Generators;
 
 use Str;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class Translation extends Generator
 {
     protected $module;
     protected $nameModel;
+    protected $jsonTrans = [];
+    protected $tr;
 
     public function generate()
     {
+        $this->tr = new GoogleTranslate();
+        $this->tr->setSource();
+
         $lenguajes = [
             app()->getLocale(),
             'en'
@@ -20,52 +26,59 @@ class Translation extends Generator
         $this->nameModel = strtolower($this->getNameModel());
 
         foreach ($lenguajes as $locale) {
+            $this->tr->setTarget($locale);
+            $this->jsonTrans = [];
             //$nameFile = $locale . ".json";
             //$pathFile = $this->modulePath(['Resources', 'lang', $nameFile]);
             $translationsPath = resource_path("lang/{$locale}.json");
 
-            $json = $this->initJson($translationsPath);
-            $json = $this->defineSingularAndPlural($json);
-            $json = $this->defineFieldLabels($json);
+            $this->defineSingularAndPlural();
+            $this->defineFieldLabels();
 
-            $translationsContent = json_encode($json, JSON_PRETTY_PRINT);
-            $translationsContent = str_replace('    ', '  ', $translationsContent);
+            $trans = $this->getJsonTrans($translationsPath);
 
-            $this->writeFile($translationsPath, $translationsContent);
+            $this->writeFile($translationsPath, $trans);
         }
     }
 
-    protected function initJson($translationsPath)
+    protected function getJsonTrans($translationsPath)
     {
-        $json = json_decode(file_get_contents($translationsPath), true);
+        $trans = json_decode(file_get_contents($translationsPath), true);
 
-        if (!isset($json[$this->module])) {
-            $json[$this->module] = [];
-        }
+        $trans[$this->module] = [
+            $this->nameModel => $this->jsonTrans
+        ];
 
-        if (!isset($json[$this->module][$this->nameModel])) {
-            $json[$this->module][$this->nameModel] = [];
-        }
+        $trans = json_encode($trans, JSON_PRETTY_PRINT);
 
-        return $json;
+        return $trans;
     }
 
-    protected function defineSingularAndPlural($json)
+    protected function defineSingularAndPlural()
     {
-        $json[$this->module][$this->nameModel]['_singular'] = Str::singular($this->nameModel);
-        $json[$this->module][$this->nameModel]['_plural'] = Str::plural($this->nameModel);
-        return $json;
+        $this->addTrans('_singular', Str::singular($this->nameModel));
+        $this->addTrans('_plural', Str::plural($this->nameModel));
     }
 
-    protected function defineFieldLabels($json)
+    protected function defineFieldLabels()
     {
-        $fields = $this->getFields();
+        $fields = $this->getFields()->reject(function ($field) {
+            return !isset($field['label']);
+        });
         foreach ($fields as $content) {
-            if (!isset($content['label'])) {
-                continue;
-            }
-            $json[$this->module][$this->nameModel][$content['label']] = $content['label'];
+            $this->addTrans($content['label'], $content['label']);
         }
-        return $json;
+        return $this->json;
+    }
+
+    protected function addTrans($key, $value)
+    {
+        $value = $this->traslate($value);
+        $this->jsonTrans[$key] = $value;
+    }
+
+    protected function traslate($text)
+    {
+        return $this->tr->translate($text);
     }
 }

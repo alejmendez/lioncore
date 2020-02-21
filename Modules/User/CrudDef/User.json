@@ -43,7 +43,7 @@
             "name": "email_verified_at",
             "type": "timestamp",
             "length": 80,
-            "label" : "nationality",
+            "label" : "email verified at",
             "htmlType": "date",
             "validations": "",
             "searchable": true,
