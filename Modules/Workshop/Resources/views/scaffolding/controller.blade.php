@@ -9,7 +9,7 @@ use Modules\core\Traits\ApiResponse;
 
 // Request
 use Illuminate\Http\Request;
-use Modules\{{ $json['module'] }}\Http\Request\{{ ucwords($nameModel) }}Request;
+use Modules\{{ $json['module'] }}\Http\Requests\{{ ucwords($nameModel) }}Request;
 
 // Modelos
 use Modules\{{ $json['module'] }}\Models\{{ ucwords($nameModel) }};

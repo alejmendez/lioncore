@@ -103,16 +103,12 @@ class Handler extends ExceptionHandler
             return $this->errorResponse('Falla inesperada, Intente luego', 500);
         }
 
-        return $request->expectsJson()
-                        ? $this->prepareJsonResponse($request, $exception)
-                        : $this->prepareResponse($request, $exception);
+        return $this->prepareJsonResponse($request, $exception);
     }
 
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        return $request->expectsJson()
-                    ? response()->json(['message' => $exception->getMessage()], 401)
-                    : redirect()->guest(route('login'));
+        return response()->json(['message' => $exception->getMessage()], 401);
     }
 
     protected function convertValidationExceptionToResponse(ValidationException $e, $request)
@@ -121,9 +117,7 @@ class Handler extends ExceptionHandler
             return $e->response;
         }
 
-        return $request->expectsJson()
-                    ? $this->invalidJson($request, $e)
-                    : $this->invalid($request, $e);
+        return $this->invalidJson($request, $e);
     }
 
     protected function invalidJson($request, ValidationException $exception)

@@ -9,7 +9,7 @@ use Modules\core\Traits\ApiResponse;
 
 // Request
 use Illuminate\Http\Request;
-use Modules\User\Http\Request\UserRequest;
+use Modules\User\Http\Requests\UserRequest;
 
 // Modelos
 use Modules\User\Models\User;

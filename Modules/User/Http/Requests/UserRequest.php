@@ -1,15 +1,14 @@
 <?php
 namespace Modules\User\Http\Requests;
 
-use Modules\Core\Http\Request\FormRequest;
+use Modules\Core\Http\Requests\FormRequest;
 
 class UserRequest extends FormRequest
 {
     protected $fieldId = 'id';
     protected $rules = [
-            "person_id" => "required",
-            "email" => "max:80",
-            "password" => "max:64",
-            "verification_token" => "max:64",
-        ];
+        "person_id" => "exists:people,id",
+        "email" => "email|min:10|max:80",
+        "password" => "min:6|max:30"
+    ];
 }

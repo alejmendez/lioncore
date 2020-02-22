@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
 
 class FormRequest extends BaseFormRequest
 {
-    protected $fieldId = '';
+    protected $fieldId = 'id';
 
     public function response(array $errors)
     {
@@ -53,6 +53,6 @@ class FormRequest extends BaseFormRequest
      */
     public function authorize()
     {
-        return Auth::check();
+        return auth()->check();
     }
 }
