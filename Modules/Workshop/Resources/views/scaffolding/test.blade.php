@@ -23,9 +23,13 @@ class {{ ucwords($nameModel) }}Test extends TestCase
     {
         $data = $this->generateData();
 
-        $this->post(route('{{ $nameModel }}.store'), $data)
+        $this->json('POST', route('{{ $nameModel }}s.store'), $data)
             ->assertStatus(201)
-            ->assertJson($data);
+            ->assertJson([
+                'code' => 201,
+                'status' => 'success',
+                'data' => $data
+            ]);
     }
 
     /**
@@ -38,9 +42,13 @@ class {{ ucwords($nameModel) }}Test extends TestCase
 
         $data = $this->generateData();
 
-        $this->put(route('{{ $nameModel }}.update', ${{ $nameModel }}->id), $data)
+        $this->json('PUT', route('{{ $nameModel }}s.update', ${{ $nameModel }}->id), $data)
             ->assertStatus(200)
-            ->assertJson($data);
+            ->assertJson([
+                'code' => 200,
+                'status' => 'success',
+                'data' => $data
+            ]);
     }
 
     /**
@@ -51,7 +59,7 @@ class {{ ucwords($nameModel) }}Test extends TestCase
     {
         ${{ $nameModel }} = factory({{ ucwords($nameModel) }}::class)->create();
 
-        $this->get(route('{{ $nameModel }}.show', ${{ $nameModel }}->id))
+        $this->json('GET', route('{{ $nameModel }}s.show', ${{ $nameModel }}->id))
             ->assertStatus(200);
     }
 
@@ -63,8 +71,8 @@ class {{ ucwords($nameModel) }}Test extends TestCase
     {
         ${{ $nameModel }} = factory({{ ucwords($nameModel) }}::class)->create();
 
-        $this->delete(route('{{ $nameModel }}.destroy', ${{ $nameModel }}->id))
-            ->assertStatus(204);
+        $this->json('DELETE', route('{{ $nameModel }}s.destroy', ${{ $nameModel }}->id))
+            ->assertStatus(200);
     }
 
     /**
@@ -77,11 +85,17 @@ class {{ ucwords($nameModel) }}Test extends TestCase
             return ${{ $nameModel }}->only([{!! $fieldsInList !!}]);
         });
 
-        $this->get(route('{{ $nameModel }}.index'))
+        $this->json('GET', route('{{ $nameModel }}s.index') . '?page=1&rowsPerPage=5')
             ->assertStatus(200)
-            ->assertJson(${{ $nameModel }}s->toArray())
             ->assertJsonStructure([
-                '*' => [{!! $fieldsInList !!}],
+                'draw',
+                'recordsTotal',
+                'recordsFiltered',
+                'data' => [
+                    [
+                        {!! $fieldsInList !!}
+                    ]
+                ],
             ]);
     }
 }

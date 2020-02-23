@@ -2,20 +2,32 @@
 namespace Modules\User\Tests\Feature;
 
 use Modules\User\Models\User;
+use Modules\Role\Models\Role;
+use Modules\Core\Models\Person;
+
 use Tests\TestCase;
+use Illuminate\Support\Str;
 
 class UserTest extends TestCase
 {
+    protected function setUp():void
+    {
+        parent::setUp();
+        $userAdmin = factory(User::class)->create();
+        $roleAdmin = Role::findByName('admin');
+        $userAdmin->assignRole($roleAdmin);
+        $this->be($userAdmin);
+    }
+
     protected function generateData()
     {
         $faker = \Faker\Factory::create();
         return [
-            'person_id' => $faker->number,
-            'email' => $faker->unique()->safeEmail,
-            'email_verified_at' => $faker->datetimestamp,
-            'password' => $faker->randomElement(['M', 'F']),
-            'verification_token' => $faker->numberBetween(150, 210),
-                    ];
+            "person_id" => Person::inRandomOrder()->first()->id,
+            "email" => $faker->unique()->safeEmail,
+            "password" => "12345678",
+            "verification_token" => Str::random(64),
+        ];
     }
 
     /**
@@ -26,9 +38,16 @@ class UserTest extends TestCase
     {
         $data = $this->generateData();
 
-        $this->post(route('user.store'), $data)
+        $this->json('POST', route('users.store'), $data)
             ->assertStatus(201)
-            ->assertJson($data);
+            ->assertJson([
+                'code' => 201,
+                'status' => 'success',
+                'data' => [
+                    'person_id' => $data['person_id'],
+                    'email' => $data['email']
+                ]
+            ]);
     }
 
     /**
@@ -41,9 +60,16 @@ class UserTest extends TestCase
 
         $data = $this->generateData();
 
-        $this->put(route('user.update', $user->id), $data)
+        $this->json('PUT', route('users.update', $user->id), $data)
             ->assertStatus(200)
-            ->assertJson($data);
+            ->assertJson([
+                'code' => 200,
+                'status' => 'success',
+                'data' => [
+                    'person_id' => $data['person_id'],
+                    'email' => $data['email']
+                ]
+            ]);
     }
 
     /**
@@ -54,7 +80,7 @@ class UserTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $this->get(route('user.show', $user->id))
+        $this->json('GET', route('users.show', $user->id))
             ->assertStatus(200);
     }
 
@@ -66,8 +92,8 @@ class UserTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $this->delete(route('user.destroy', $user->id))
-            ->assertStatus(204);
+        $this->json('DELETE', route('users.destroy', $user->id))
+            ->assertStatus(200);
     }
 
     /**
@@ -77,14 +103,20 @@ class UserTest extends TestCase
     public function test_can_list_users()
     {
         $users = factory(User::class, 2)->create()->map(function ($user) {
-            return $user->only([]);
+            return $user->only(['email']);
         });
 
-        $this->get(route('user.index'))
+        $this->json('GET', route('users.index') . '?page=1&rowsPerPage=5')
             ->assertStatus(200)
-            ->assertJson($users->toArray())
             ->assertJsonStructure([
-                '*' => [],
+                'draw',
+                'recordsTotal',
+                'recordsFiltered',
+                'data' => [
+                    [
+                        'email'
+                    ]
+                ],
             ]);
     }
 }

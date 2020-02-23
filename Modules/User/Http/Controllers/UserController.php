@@ -22,7 +22,8 @@ class UserController extends BaseController
 
     public function index()
     {
-        return DataTables::of(User::query())->make(true);
+        $query = User::select('email');
+        return DataTables::of($query)->make(true);
     }
 
     public function show($id)

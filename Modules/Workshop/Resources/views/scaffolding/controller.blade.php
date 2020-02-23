@@ -22,7 +22,8 @@ class {{ ucwords($nameModel) }}Controller extends BaseController
 
     public function index()
     {
-        return DataTables::of({{ ucwords($nameModel) }}::query())->make(true);
+        $query = {{ ucwords($nameModel) }}::select({!! $fieldsInList !!});
+        return DataTables::of($query)->make(true);
     }
 
     public function show($id)

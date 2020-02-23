@@ -3,6 +3,7 @@ use Modules\User\Models\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
+use Modules\Core\Models\Person;
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -16,10 +17,10 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-            "person_id" => $faker->number,
-            "email" => $faker->unique()->safeEmail,
-            "email_verified_at" => $faker->datetimestamp,
-            "password" => $faker->randomElement(['M', 'F']),
-            "verification_token" => $faker->numberBetween(150, 210),
-            ];
+        "person_id" => Person::inRandomOrder()->first()->id,
+        "email" => $faker->unique()->safeEmail,
+        "email_verified_at" => $faker->dateTime(),
+        "password" => Str::random(16),
+        "verification_token" => Str::random(64),
+    ];
 });
