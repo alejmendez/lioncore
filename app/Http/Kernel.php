@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+            'cors',
         ],
     ];
 
@@ -62,8 +63,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
-        'permission' => \Modules\Auth\Http\Middleware\PermissionMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 
     /**
