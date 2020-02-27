@@ -82,7 +82,12 @@ class AuthController extends BaseController
      */
     public function user()
     {
-        return response()->json(auth()->user());
+        $user = User::find(auth()->user()->id);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $user
+        ]);
     }
 
     public function payload()
@@ -130,9 +135,12 @@ class AuthController extends BaseController
 
     public function currentUser()
     {
+        $user = User::with('Person')->find(auth()->user()->id);
+
         return response()->json([
-            'user' => User::with('Person')->find(auth()->user()->id),
-        ], 200);
+            'status' => 'success',
+            'data' => $user
+        ]);
     }
     /**
      * Get the token array structure.
