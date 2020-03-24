@@ -12,5 +12,5 @@
 */
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('/{any?}', 'LaravueController@index')->where('any', '^(?!api\/)[\/\w\.-]*');
+    Route::get('/{any?}', 'ApplicationController')->where('any', '^(?!api\/)[\/\w\.-]*');
 });

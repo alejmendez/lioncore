@@ -151,11 +151,15 @@ class AuthController extends BaseController
      */
     protected function respondWithToken($token, $code = 200)
     {
-        return response()->json([
+        $user = User::with('Person')->find(auth()->user()->id);
+
+        return response([
+            'status' => 'success',
             'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user(),
-        ], $code);
+            'user' => $user,
+        ], $code)
+        ->header('Authorization', $token);
     }
 }
