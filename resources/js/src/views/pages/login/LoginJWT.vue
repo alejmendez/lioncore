@@ -20,18 +20,18 @@
         icon-no-border
         icon="icon icon-lock"
         icon-pack="feather"
-        label-placeholder="Password"
+        label-placeholder="Contraseña"
         v-model="password"
         class="w-full mt-6" />
     <span class="text-danger text-sm">{{ errors.first('password') }}</span>
 
     <div class="flex flex-wrap justify-between my-5">
-        <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
-        <router-link to="/pages/forgot-password">Forgot Password?</router-link>
+        <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Recuerdame</vs-checkbox>
+        <router-link to="/pages/forgot-password">¿Se te olvidó tu contraseña?</router-link>
     </div>
     <div class="flex flex-wrap justify-between mb-3">
-      <vs-button  type="border" @click="registerUser">Register</vs-button>
-      <vs-button :disabled="!validateForm" @click="loginJWT">Login</vs-button>
+      <vs-button  type="border" @click="registerUser">Registrar</vs-button>
+      <vs-button :disabled="!validateForm" @click="loginJWT">Iniciar sesión</vs-button>
     </div>
   </div>
 </template>
@@ -40,8 +40,8 @@
 export default {
   data () {
     return {
-      email: 'admin@admin.com',
-      password: 'adminadmin',
+      email: '',
+      password: '',
       checkbox_remember_me: false
     }
   },

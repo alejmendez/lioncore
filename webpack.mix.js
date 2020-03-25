@@ -25,7 +25,7 @@ mix.js('resources/js/app.js', 'public/js')
         }
     })
     .sass('resources/sass/app.scss', 'public/css').options({
-        postCss:[require('autoprefixer'), require('postcss-rtl')]
+        postCss: [require('autoprefixer'), require('postcss-rtl')]
     })
     .postCss('resources/assets/css/main.css', 'public/css', [
         tailwindcss('tailwind.js'), require('postcss-rtl')()
@@ -49,8 +49,7 @@ if (mix.inProduction()) {
         }
     });
     mix.setResourceRoot("/demo/vuexy-vuejs-laravel-admin-template/demo-1/");
-}
-else{
+} else {
     mix.webpackConfig({
         output: {
             chunkFilename: 'js/chunks/[name].js',
