@@ -19,23 +19,12 @@
                         </div>
                         <div class="vx-col sm:w-full md:w-full lg:w-1/2 mx-auto self-center  d-theme-dark-bg">
                             <div class="px-8 pt-8 register-tabs-container">
-                                <div class="vx-card__title mb-4">
-                                    <h4 class="mb-4">Create Account</h4>
-                                    <p>Fill the below form to create a new account.</p>
+                                <div class="vx-card__title mb-8">
+                                    <h4 class="mb-4">Crear una cuenta</h4>
+                                    <p>Rellene el siguiente formulario para crear una nueva cuenta.</p>
                                 </div>
-                                <vs-tabs>
-                                  <vs-tab label="JWT">
-                                    <register-jwt></register-jwt>
-                                  </vs-tab>
 
-                                  <vs-tab label="Firebase">
-                                    <register-firebase></register-firebase>
-                                  </vs-tab>
-
-                                  <vs-tab label="Auth0">
-                                    <register-auth0></register-auth0>
-                                  </vs-tab>
-                                </vs-tabs>
+                                <register-jwt></register-jwt>
                             </div>
                         </div>
                     </div>
@@ -47,14 +36,10 @@
 
 <script>
 import RegisterJwt from './RegisterJWT.vue'
-import RegisterFirebase from './RegisterFirebase.vue'
-import RegisterAuth0 from './RegisterAuth0.vue'
 
 export default {
   components: {
     RegisterJwt,
-    RegisterFirebase,
-    RegisterAuth0
   }
 }
 </script>

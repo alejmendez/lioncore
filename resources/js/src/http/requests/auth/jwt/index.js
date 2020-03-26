@@ -5,16 +5,16 @@ import store from '../../../../store/store.js'
 let isAlreadyFetchingAccessToken = false
 let subscribers = []
 
-function onAccessTokenFetched (access_token) {
+function onAccessTokenFetched(access_token) {
   subscribers = subscribers.filter(callback => callback(access_token))
 }
 
-function addSubscriber (callback) {
+function addSubscriber(callback) {
   subscribers.push(callback)
 }
 
 export default {
-  init () {
+  init() {
     axios.interceptors.response.use(function (response) {
       return response
     }, function (error) {
@@ -44,20 +44,20 @@ export default {
       return Promise.reject(error)
     })
   },
-  login (email, pwd) {
-    return axios.post('/api/auth/login', {
+  login(email, pwd) {
+    return axios.post('/api/v1/auth/login', {
       email,
       password: pwd
     })
   },
-  registerUser (name, email, pwd) {
-    return axios.post('/api/auth/register', {
+  registerUser(name, email, pwd) {
+    return axios.post('/api/v1/auth/register', {
       displayName: name,
       email,
       password: pwd
     })
   },
-  refreshToken () {
-    return axios.post('/api/auth/refresh-token', {accessToken: localStorage.getItem('accessToKen')})
+  refreshToken() {
+    return axios.post('/api/v1/auth/refresh', { accessToken: localStorage.getItem('accessToKen') })
   }
 }
