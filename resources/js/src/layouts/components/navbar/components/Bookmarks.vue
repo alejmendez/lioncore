@@ -1,16 +1,5 @@
 <template>
   <div class="navbar-bookmarks flex items-center">
-    <!-- STARRED PAGES - FIRST 10 -->
-    <ul class="vx-navbar__starred-pages">
-      <draggable v-model="starredPagesLimited" :group="{name: 'pinList'}" class="flex cursor-move">
-        <li class="starred-page" v-for="page in starredPagesLimited" :key="page.url">
-          <vx-tooltip :text="page.title" position="bottom" delay=".3s">
-            <feather-icon :svgClasses="['h-6 w-6 stroke-current', textColor]" class="p-2 cursor-pointer" :icon="page.icon" @click="$router.push(page.url).catch(() => {})" />
-          </vx-tooltip>
-        </li>
-      </draggable>
-    </ul>
-
     <!-- STARRED PAGES MORE -->
     <div class="vx-navbar__starred-pages--more-dropdown" v-if="starredPagesMore.length">
       <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">

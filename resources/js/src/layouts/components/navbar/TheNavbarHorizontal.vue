@@ -48,7 +48,7 @@ import Logo                 from '../Logo.vue'
 export default {
   name: 'the-navbar-horizontal',
   props: {
-    logo: { type: String                                                                                                          },
+    logo: { type: String },
     navbarType: {
       type: String,
       required: true
