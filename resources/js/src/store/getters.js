@@ -24,7 +24,6 @@ const getters = {
     else if (state.windowWidth >= 576) return 'sm'
     else return 'xs'
   },
-
   scrollbarTag: state => {
     return state.is_touch_device ? 'div' : 'VuePerfectScrollbar'
   }

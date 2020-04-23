@@ -36,7 +36,7 @@
                 :target     = "item.target"
                 :isDisabled = "item.isDisabled"
                 :slug       = "item.slug">
-                  <span class="truncate">{{ $t(item.i18n) || item.name }}</span>
+                  <span class="truncate">{{  item.name }}</span>
                   <vs-chip :color="item.tagColor" v-if="item.tag">{{ item.tag }}</vs-chip>
               </h-nav-menu-item>
             </div>
@@ -77,7 +77,8 @@ export default {
       if (group.submenu) {
         group.submenu.forEach((item) => {
           if (active) return true
-          if ((path === item.url || routeParent === item.slug) && item.url) { active = true } else if (item.submenu) { this.checkGrpChildrenActive(item) }
+          if ((path === item.url || routeParent === item.slug) && item.url) active = true
+          else if (item.submenu) this.checkGrpChildrenActive(item)
         })
       }
 

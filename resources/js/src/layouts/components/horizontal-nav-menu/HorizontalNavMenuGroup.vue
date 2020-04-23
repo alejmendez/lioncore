@@ -20,7 +20,7 @@
             :svgClasses = "iconClasses" />
 
           <!-- Group Name -->
-          <span class="truncate mr-3 select-none">{{ $t(group.i18n) || group.name }}</span>
+          <span class="truncate mr-3 select-none">{{  group.name }}</span>
         </span>
 
         <!-- Group Collapse Icon -->
@@ -53,7 +53,7 @@
             :icon   = "itemIcon"
             :slug   = "groupItem.slug"
             :target = "groupItem.target">
-              <span class="truncate">{{ $t(groupItem.i18n) || groupItem.name }}</span>
+              <span class="truncate">{{  groupItem.name }}</span>
               <vs-chip class="ml-auto" :color="groupItem.tagColor" v-if="groupItem.tag">{{ groupItem.tag }}</vs-chip>
           </h-nav-menu-item>
 
@@ -146,8 +146,8 @@ export default {
         if (val) {
           const dd = this.$refs.childDropdown
 
-          if (window.innerHeight - dd.getBoundingClientRect().top - dd.getBoundingClientRect().height - 28 < 1) {
-            const maxHeight = window.innerHeight - dd.getBoundingClientRect().top - 70
+          if (((window.innerHeight - dd.getBoundingClientRect().top) - dd.getBoundingClientRect().height - 28) < 1) {
+            const maxHeight = (window.innerHeight - dd.getBoundingClientRect().top - 70)
             dd.style.maxHeight = `${maxHeight}px`
             dd.style.overflowY = 'auto'
             dd.style.overflowX = 'hidden'

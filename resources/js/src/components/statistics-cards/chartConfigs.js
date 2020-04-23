@@ -46,10 +46,7 @@ export default {
         y: 0,
         offsetX: 0,
         offsetY: 0,
-        padding: {
-          left: 0,
-          right: 0
-        }
+        padding: { left: 0, right: 0 }
       }
     ],
     tooltip: {

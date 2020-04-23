@@ -31,7 +31,7 @@
             :svgClasses = "{ 'w-3 h-3' : this.groupIndex % 1 != 0 }" />
 
           <!-- Group Name -->
-          <span v-show="!verticalNavMenuItemsMin" class="truncate mr-3 select-none">{{ $t(group.i18n) || group.name }}</span>
+          <span v-show="!verticalNavMenuItemsMin" class="truncate mr-3 select-none">{{  group.name }}</span>
 
           <!-- Group Tag -->
           <vs-chip class="ml-auto mr-4" :color="group.tagColor" v-if="group.tag && !verticalNavMenuItemsMin">{{ group.tag }}</vs-chip>
@@ -45,7 +45,7 @@
           svg-classes= "w-4 h-4" />
 
         <!-- Group Tooltip -->
-        <span class="vs-sidebar--tooltip">{{ $t(group.i18n) || group.name }}</span>
+        <span class="vs-sidebar--tooltip">{{  group.name }}</span>
       </div>
       <!-- /Group Label -->
 
@@ -71,7 +71,7 @@
             :icon   = "itemIcon(groupIndex + '.' + index)"
             :slug   = "groupItem.slug"
             :target = "groupItem.target">
-              <span class="truncate">{{ $t(groupItem.i18n) || groupItem.name }}</span>
+              <span class="truncate">{{  groupItem.name }}</span>
               <vs-chip class="ml-auto" :color="groupItem.tagColor" v-if="groupItem.tag">{{ groupItem.tag }}</vs-chip>
           </v-nav-menu-item>
 
@@ -203,7 +203,7 @@ export default {
 
         this.$parent.$children.map((child) => {
           if (child.isGroupActive) {
-            if (child !== this && !child.open && child.maxHeight !== '0px') {
+            if (child !== this && (!child.open) && child.maxHeight !== '0px') {
               setTimeout(() => {
                 child.maxHeight = `${0}px`
               }, 50)

@@ -148,7 +148,7 @@ export default{
         }
       }
 
-      if (grp_index !== null) this.currentSelected = `${grp_index  }.0`
+      if (grp_index !== null) this.currentSelected = `${grp_index}.0`
     }
   },
   methods: {

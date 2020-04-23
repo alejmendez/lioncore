@@ -316,7 +316,9 @@ export default {
       get ()    { return this.$store.state.theme },
       set (val) { this.$store.dispatch('updateTheme', val) }
     },
-    scrollbarTag () { return this.$store.state.is_touch_device ? 'div' : 'VuePerfectScrollbar' },
+    scrollbarTag () {
+      return this.$store.state.is_touch_device ? 'div' : 'VuePerfectScrollbar'
+    },
     windowWidth () {
       return this.$store.state.windowWidth
     }
