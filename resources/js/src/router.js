@@ -65,6 +65,26 @@ const router = new Router({
           }
         },
 
+        // =============================================================================
+        // Lion System
+        // =============================================================================
+        {
+          path: '/pages/profile',
+          name: 'page-profile',
+          component: () => import('@/views/pages/profile/list.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Pages' },
+              { title: 'Profile', active: true }
+            ],
+            pageTitle: 'Profile',
+            rule: 'editor'
+          }
+        },
+
+
+
 
         // =============================================================================
         // Application Routes
@@ -876,16 +896,16 @@ const router = new Router({
         // Pages Routes
         // =============================================================================
         {
-          path: '/pages/profile',
-          name: 'page-profile',
-          component: () => import('@/views/pages/Profile.vue'),
+          path: '/pages/profilea',
+          name: 'page-profilea',
+          component: () => import('@/views/pages/Profilea.vue'),
           meta: {
             breadcrumb: [
               { title: 'Home', url: '/' },
               { title: 'Pages' },
-              { title: 'Profile', active: true }
+              { title: 'Profilea', active: true }
             ],
-            pageTitle: 'Profile',
+            pageTitle: 'Profilea',
             rule: 'editor'
           }
         },

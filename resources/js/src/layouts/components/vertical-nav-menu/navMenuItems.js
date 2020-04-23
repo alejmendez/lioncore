@@ -27,6 +27,36 @@ export default [
   //   icon: "MailIcon",
   //   i18n: "Email",
   // },
+
+  {
+    url: '/pages/profile',
+    name: 'Profile',
+    slug: '/pages-profile',
+    icon: 'UserIcon',
+    i18n: 'Profile'
+  },
+  /*--
+  {
+    url: '/diary',
+    name: 'diary',
+    slug: 'diary',
+    icon: 'CalendarIcon',
+    i18n: 'diary'
+  },
+  {
+    url: '/schedule',
+    name: 'Schedule',
+    slug: 'schedule',
+    icon: 'UserIcon',
+    i18n: 'Schedule'
+  },
+  {
+    url: '/ratings',
+    name: 'Ratings',
+    slug: 'ratings',
+    icon: 'UserIcon',
+    i18n: 'Ratings'
+  },--*/
   {
     url: null,
     name: 'Dashboard',
@@ -607,8 +637,8 @@ export default [
     i18n: 'Pages',
     items: [
       {
-        url: '/pages/profile',
-        slug: 'page-profile',
+        url: '/pages/profilea',
+        slug: 'page-profilea',
         name: 'Profile',
         icon: 'UserIcon',
         i18n: 'Profile'
