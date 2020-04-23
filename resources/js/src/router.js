@@ -54,21 +54,99 @@ const router = new Router({
         // PAGES
         // =============================================================================
         {
-          path: '/pages/login',
-          name: 'page-login',
-          component: () => import('@/views/pages/Login.vue')
-        },
-        {
-          path: '/pages/error-404',
-          name: 'page-error-404',
-          component: () => import('@/views/pages/Error404.vue')
-        }
+            path: '/callback',
+            name: 'auth-callback',
+            component: () => import('@/views/Callback.vue'),
+            meta: {
+              rule: 'editor'
+            }
+          },
+          {
+            path: '/login',
+            name: 'page-login',
+            component: () => import('@/views/pages/Login.vue'),
+            meta: {
+              rule: 'editor'
+            }
+          },
+          {
+            path: '/register',
+            name: 'page-register',
+            component: () => import('@/views/pages/Register.vue'),
+            meta: {
+              rule: 'editor'
+            }
+          },
+          {
+            path: '/forgot-password',
+            name: 'page-forgot-password',
+            component: () => import('@/views/pages/ForgotPassword.vue'),
+            meta: {
+              rule: 'editor'
+            }
+          },
+          {
+            path: '/reset-password',
+            name: 'page-reset-password',
+            component: () => import('@/views/pages/ResetPassword.vue'),
+            meta: {
+              rule: 'editor'
+            }
+          },
+          {
+            path: '/lock-screen',
+            name: 'page-lock-screen',
+            component: () => import('@/views/pages/LockScreen.vue'),
+            meta: {
+              rule: 'editor'
+            }
+          },
+          {
+            path: '/comingsoon',
+            name: 'page-coming-soon',
+            component: () => import('@/views/pages/ComingSoon.vue'),
+            meta: {
+              rule: 'editor'
+            }
+          },
+          {
+            path: '/error-404',
+            name: 'page-error-404',
+            component: () => import('@/views/pages/Error404.vue'),
+            meta: {
+              rule: 'editor'
+            }
+          },
+          {
+            path: '/error-500',
+            name: 'page-error-500',
+            component: () => import('@/views/pages/Error500.vue'),
+            meta: {
+              rule: 'editor'
+            }
+          },
+          {
+            path: '/not-authorized',
+            name: 'page-not-authorized',
+            component: () => import('@/views/pages/NotAuthorized.vue'),
+            meta: {
+              rule: 'editor'
+            }
+          },
+          {
+            path: '/maintenance',
+            name: 'page-maintenance',
+            component: () => import('@/views/pages/Maintenance.vue'),
+            meta: {
+              rule: 'editor'
+            }
+          }
       ]
     },
     // Redirect to 404 page, if no match found
     {
       path: '*',
-      redirect: '/pages/error-404'
+      redirect: '/error-404'
     }
   ]
 })
