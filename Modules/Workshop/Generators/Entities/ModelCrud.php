@@ -4,6 +4,7 @@ namespace Modules\Workshop\Generators\Entities;
 
 use File;
 use Module;
+use Illuminate\Support\Str;
 
 class ModelCrud
 {
@@ -22,7 +23,7 @@ class ModelCrud
 
         $ext = '.' . config('workshop.extCrudDef');
         $nameModel = str_replace($ext, '', $this->fileName);
-        $nameModel = ucfirst(str_singular(strtolower($nameModel)));
+        $nameModel = ucfirst(Str::singular(strtolower($nameModel)));
         $this->setName($nameModel);
     }
 

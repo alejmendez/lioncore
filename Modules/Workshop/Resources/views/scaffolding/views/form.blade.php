@@ -42,7 +42,7 @@ import Form from 'vform'
 import router from '~/router'
 
 export default {
-  name: '{{ strtolower(str_plural($nameModel)) }}-form-view',
+  name: '{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}-form-view',
   data: () => ({
     form: new Form({
       @foreach ($this->json as $ele)
@@ -65,14 +65,14 @@ export default {
   },
   methods: {
     cancel () {
-      router.push({ name: '{{ strtolower(str_plural($nameModel)) }}' })
+      router.push({ name: '{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}' })
     },
     getDataFromApi (id) {
       if (!id) {
         return
       }
 
-      return axios.get(`/api/v1/{{ strtolower(str_plural($nameModel)) }}/${id}`)
+      return axios.get(`/api/v1/{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}/${id}`)
         .then(response => {
           let data = response.data.data
 
@@ -81,7 +81,7 @@ export default {
     },
     save () {
       let form = this.form
-      let url = `/api/v1/{{ strtolower(str_plural($nameModel)) }}/${form.id}`
+      let url = `/api/v1/{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}/${form.id}`
       let promise = form.id ? form.put(url) : form.post(url)
 
       this.$emit('busy', true)
@@ -89,7 +89,7 @@ export default {
       return promise.then(response => {
           this.$emit('busy', false)
           router.push({
-            name: '{{ strtolower(str_plural($nameModel)) }}'
+            name: '{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}'
           })
         })
         .catch(() => {

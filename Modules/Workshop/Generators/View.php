@@ -2,6 +2,8 @@
 
 namespace Modules\Workshop\Generators;
 
+use Illuminate\Support\Str;
+
 class View extends Generator
 {
     const PATHVIEW = 'scaffolding.views';
@@ -41,7 +43,7 @@ class View extends Generator
 
     protected function getPath()
     {
-        $path = resource_path('assets/js/pages/' . ucwords($this->getModuleName()) . '/' . strtolower(str_plural($this->getNameModel())));
+        $path = resource_path('assets/js/pages/' . ucwords($this->getModuleName()) . '/' . strtolower(Str::of($this->getNameModel())->plural()));
 
         if (!is_dir($path)) {
             @mkdir($path, 0777, true);

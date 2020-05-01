@@ -1,15 +1,15 @@
 <template>
   <v-card>
     <v-card-title primary-title class="grey lighten-4">
-      <h3 class="headline mb-0">@{{ $t('<?php echo strtolower(str_plural($nameModel)); ?>') }}</h3>
+      <h3 class="headline mb-0">@{{ $t('<?php echo strtolower(Illuminate\Support\Str::plural($nameModel)); ?>') }}</h3>
 
-      <v-btn slot="activator" color="primary" right dark class="mb-2" :to="{ name: '<?php echo strtolower(str_plural($nameModel)); ?>' }">@{{ $t('new_<?php echo strtolower(str_plural($nameModel)); ?>') }}</v-btn>
+      <v-btn slot="activator" color="primary" right dark class="mb-2" :to="{ name: '<?php echo strtolower(Illuminate\Support\Str::plural($nameModel)); ?>' }">@{{ $t('new_<?php echo strtolower(Illuminate\Support\Str::plural($nameModel)); ?>') }}</v-btn>
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text>
       <v-data-table
         :headers="headers"
-        :items="{{ strtolower(str_plural($nameModel)) }}"
+        :items="{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}"
         :pagination.sync="pagination"
         :total-items="total"
         :loading="loading"
@@ -45,14 +45,14 @@ import axios from 'axios'
 import router from '~/router'
 
 export default {
-  name: '{{ strtolower(str_plural($nameModel)) }}-list-view',
+  name: '{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}-list-view',
   metaInfo () {
-    return { title: this.$t('{{ strtolower(str_plural($nameModel)) }}') }
+    return { title: this.$t('{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}') }
   },
   data () {
     return {
       total: 0,
-      {{ strtolower(str_plural($nameModel)) }}: [],
+      {{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}: [],
       loading: true,
       pagination: {},
       headers: [
@@ -77,7 +77,7 @@ export default {
   methods: {
     editItem (user) {
       router.push({
-        name: '{{ strtolower(str_plural($nameModel)) }}',
+        name: '{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}',
         params: {
           id: user.id
         }
@@ -93,7 +93,7 @@ export default {
       this.loading = true
       const { sortBy, descending, page, rowsPerPage } = $this.pagination
 
-      return axios.get('/api/v1/{{ strtolower(str_plural($nameModel)) }}', {
+      return axios.get('/api/v1/{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}', {
           params: {
             sortBy,
             descending,
@@ -104,7 +104,7 @@ export default {
         .then(response => {
           let data = response.data
 
-          this.{{ strtolower(str_plural($nameModel)) }} = data.data
+          this.{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }} = data.data
           this.total = data.paginator.total
           this.loading = false
         })

@@ -52,7 +52,7 @@ class Route extends Generator
         $posApiResourcesEnd = 0;
 
         $nameRoute = strtolower($this->getNameModel());
-        $nameRoutePlural = str_plural($nameRoute);
+        $nameRoutePlural = Str::of($nameRoute)->plural();
         $newContent =  "    { path: '/$nameRoutePlural', name: '$nameRoutePlural', component: require('~/pages/core/$nameRoutePlural/list.vue') },\r\n";
         $newContent .= "    { path: '/$nameRoute/:id?', name: '$nameRoute', component: require('~/pages/core/$nameRoutePlural/form.vue') },";
 

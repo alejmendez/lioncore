@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Create{{ ucwords(str_plural($nameModel)) }}Table extends Migration
+class Create{{ ucwords(Illuminate\Support\Str::plural($nameModel)) }}Table extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class Create{{ ucwords(str_plural($nameModel)) }}Table extends Migration
      */
     public function up()
     {
-        Schema::create('{{ str_plural(strtolower($nameModel)) }}', function (Blueprint $table) {
+        Schema::create('{{ Illuminate\Support\Str::plural(strtolower($nameModel)) }}', function (Blueprint $table) {
             $table->uuid('{{ $id['name'] }}')->unique()->primary('{{ $id['name'] }}');
 
             @foreach ($fields as $field)
@@ -31,6 +31,6 @@ class Create{{ ucwords(str_plural($nameModel)) }}Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('{{ str_plural(strtolower($nameModel)) }}');
+        Schema::dropIfExists('{{ Illuminate\Support\Str::plural(strtolower($nameModel)) }}');
     }
 }
