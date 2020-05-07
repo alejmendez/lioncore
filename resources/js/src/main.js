@@ -24,6 +24,8 @@ Vue.prototype.$http = axios
 // Theme Configurations
 import '../themeConfig.js'
 
+// ACL
+import acl from './acl/acl'
 
 // Globally Registered Components
 import './globalComponents.js'
@@ -34,6 +36,10 @@ import router from './router'
 
 // Vuex Store
 import store from './store/store'
+
+
+// i18n
+import i18n from './i18n/i18n'
 
 
 // Vuejs - Vue wrapper for hammerjs
@@ -51,5 +57,7 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
+  i18n,
+//  acl,
   render: h => h(App)
 }).$mount('#app')
