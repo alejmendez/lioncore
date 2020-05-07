@@ -16,9 +16,24 @@ export default [
     icon: 'HomeIcon'
   },
   {
-    url: '/page2',
-    name: 'Page 2',
-    slug: 'page2',
-    icon: 'FileIcon'
-  }
+    header: 'Admin',
+    icon: 'PackageIcon',
+    i18n: 'Admin',
+    items: [
+      {
+        url: '/user/',
+        name: 'User',
+        icon: 'UserIcon',
+        slug: 'user',
+        i18n: 'User'
+      },
+      {
+        url: '/role/',
+        name: 'Role',
+        icon: 'UsersIcon',
+        slug: 'role',
+        i18n: 'Role'
+      }
+    ]
+  },
 ]
