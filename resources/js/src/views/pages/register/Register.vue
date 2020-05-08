@@ -23,7 +23,19 @@
                                     <h4 class="mb-4">Create Account</h4>
                                     <p>Fill the below form to create a new account.</p>
                                 </div>
-                                <register-jwt></register-jwt>
+                                <vs-tabs>
+                                  <vs-tab label="JWT">
+                                    <register-jwt></register-jwt>
+                                  </vs-tab>
+
+                                  <vs-tab label="Firebase">
+                                    <register-firebase></register-firebase>
+                                  </vs-tab>
+
+                                  <vs-tab label="Auth0">
+                                    <register-auth0></register-auth0>
+                                  </vs-tab>
+                                </vs-tabs>
                             </div>
                         </div>
                     </div>
@@ -35,10 +47,14 @@
 
 <script>
 import RegisterJwt from './RegisterJWT.vue'
+import RegisterFirebase from './RegisterFirebase.vue'
+import RegisterAuth0 from './RegisterAuth0.vue'
 
 export default {
   components: {
-    RegisterJwt
+    RegisterJwt,
+    RegisterFirebase,
+    RegisterAuth0
   }
 }
 </script>

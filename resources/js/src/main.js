@@ -42,6 +42,14 @@ import store from './store/store'
 import i18n from './i18n/i18n'
 
 
+// Vuexy Admin Filters
+import './filters/filters'
+
+
+// VeeValidate
+import VeeValidate from 'vee-validate'
+Vue.use(VeeValidate)
+
 // Vuejs - Vue wrapper for hammerjs
 import { VueHammer } from 'vue2-hammer'
 Vue.use(VueHammer)
@@ -58,6 +66,6 @@ new Vue({
   router,
   store,
   i18n,
-//  acl,
+  acl,
   render: h => h(App)
 }).$mount('#app')

@@ -1,9 +1,9 @@
 // axios
 import axios from 'axios'
 
-const domain = 'http://lioncore.oo/v1/api/'
+const baseURL = 'http://lioncore.oo/v1/api/'
 
 export default axios.create({
-  domain
+  baseURL
   // You can add your headers here
 })

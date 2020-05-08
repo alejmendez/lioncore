@@ -13,7 +13,8 @@ export default [
     url: '/',
     name: 'Home',
     slug: 'home',
-    icon: 'HomeIcon'
+    icon: 'HomeIcon',
+    i18n: 'Home'
   },
   {
     header: 'Admin',
