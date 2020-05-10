@@ -307,18 +307,18 @@ export default {
         .then(response => {
 
           // If there's user data in response
-          if (response.data.userData) {
+          if (response.data.user) {
             // Navigate User to homepage
             router.push(router.currentRoute.query.to || '/')
 
             // Set accessToken
-            localStorage.setItem('accessToken', response.data.accessToken)
+            localStorage.setItem('accessToken', response.data.token)
 
             // Update user details
-            commit('UPDATE_USER_INFO', response.data.userData, {root: true})
+            commit('UPDATE_USER_INFO', response.data.user, {root: true})
 
             // Set bearer token in axios
-            commit('SET_BEARER', response.data.accessToken)
+            commit('SET_BEARER', response.data.token)
 
             resolve(response)
           } else {

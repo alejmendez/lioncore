@@ -1,7 +1,7 @@
 // axios
 import axios from 'axios'
 
-const baseURL = 'http://lioncore.oo/v1/api/'
+const baseURL = 'http://lioncore.oo/api/v1/'
 
 export default axios.create({
   baseURL

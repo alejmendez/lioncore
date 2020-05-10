@@ -1,4 +1,7 @@
+import login from './es/login'
+
 export default {
+  login,
   Home: 'Inicio',
   Admin: 'Administrador',
   Dashboard: 'Tablero',

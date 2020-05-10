@@ -21,8 +21,18 @@ Vue.use(Vuesax)
 import axios from './axios.js'
 Vue.prototype.$http = axios
 
+// API Calls
+import './http/requests'
 // Theme Configurations
 import '../themeConfig.js'
+
+
+// Firebase
+import '@/firebase/firebaseConfig'
+
+// Auth0 Plugin
+import AuthPlugin from './plugins/auth'
+Vue.use(AuthPlugin)
 
 // ACL
 import acl from './acl/acl'
@@ -58,6 +68,16 @@ Vue.use(VueHammer)
 // PrismJS
 import 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
+
+
+// Feather font icon
+require('@assets/css/iconfont.css')
+
+
+// Vue select css
+// Note: In latest version you have to add it separately
+// import 'vue-select/dist/vue-select.css';
+
 
 
 Vue.config.productionTip = false
