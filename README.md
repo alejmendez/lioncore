@@ -26,7 +26,7 @@ php artisan key:generate
 php artisan jwt:secret
 ```
 ```
-php artisan modules:migrate --seed
+php artisan module:migrate --seed
 ```
 
 Para cambiar la dirección del puerto, ejecute el siguiente comando:

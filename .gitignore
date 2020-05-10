@@ -2,6 +2,8 @@
 .vscode
 .scannerwork
 sonar-project.properties
+composer.lock
+package.json
 
 /node_modules
 
