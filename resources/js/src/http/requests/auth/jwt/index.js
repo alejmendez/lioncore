@@ -35,7 +35,7 @@ export default {
 
         const retryOriginalRequest = new Promise((resolve) => {
           addSubscriber(access_token => {
-            originalRequest.headers.Authorization = `Bearer ${access_token}`
+            originalRequest.headers.Authorization = `bearer ${access_token}`
             resolve(axios(originalRequest))
           })
         })
