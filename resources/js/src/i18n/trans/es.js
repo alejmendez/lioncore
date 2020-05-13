@@ -1,7 +1,25 @@
 import login from './es/login'
+import register from './es/register'
+import forgot_password from './es/forgot_password'
+import reset_password from './es/reset_password'
+import lock_screen from './es/lock_screen'
+import comingsoon from './es/comingsoon'
+import error404 from './es/error404'
+import error500 from './es/error500'
+import not_authorized from './es/not_authorized'
+import maintenance from './es/maintenance'
 
 export default {
   login,
+  register,
+  forgot_password,
+  reset_password,
+  lock_screen,
+  comingsoon,
+  error404,
+  error500,
+  not_authorized,
+  maintenance,
   Home: 'Inicio',
   Admin: 'Administrador',
   Dashboard: 'Tablero',

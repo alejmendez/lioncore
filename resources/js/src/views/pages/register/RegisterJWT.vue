@@ -13,9 +13,9 @@ Author URL: http://www.themeforest.net/user/pixinvent
     <vs-input
       v-validate="'required|alpha_dash|min:3'"
       data-vv-validate-on="blur"
-      label-placeholder="Name"
+      :label-placeholder="$t('register.name')"
       name="displayName"
-      placeholder="Name"
+      :placeholder="$t('register.name')"
       v-model="displayName"
       class="w-full" />
     <span class="text-danger text-sm">{{ errors.first('displayName') }}</span>
@@ -25,8 +25,8 @@ Author URL: http://www.themeforest.net/user/pixinvent
       data-vv-validate-on="blur"
       name="email"
       type="email"
-      label-placeholder="Email"
-      placeholder="Email"
+      :label-placeholder="$t('register.email')"
+      :placeholder="$t('register.email')"
       v-model="email"
       class="w-full mt-6" />
     <span class="text-danger text-sm">{{ errors.first('email') }}</span>
@@ -37,8 +37,8 @@ Author URL: http://www.themeforest.net/user/pixinvent
       data-vv-validate-on="blur"
       v-validate="'required|min:6|max:10'"
       name="password"
-      label-placeholder="Password"
-      placeholder="Password"
+      :label-placeholder="$t('register.password')"
+      :placeholder="$t('register.password')"
       v-model="password"
       class="w-full mt-6" />
     <span class="text-danger text-sm">{{ errors.first('password') }}</span>
@@ -49,15 +49,15 @@ Author URL: http://www.themeforest.net/user/pixinvent
       data-vv-validate-on="blur"
       data-vv-as="password"
       name="confirm_password"
-      label-placeholder="Confirm Password"
-      placeholder="Confirm Password"
+      :label-placeholder="$t('register.confirm_password')"
+      :placeholder="$t('register.confirm_password')"
       v-model="confirm_password"
       class="w-full mt-6" />
     <span class="text-danger text-sm">{{ errors.first('confirm_password') }}</span>
 
-    <vs-checkbox v-model="isTermsConditionAccepted" class="mt-6">I accept the terms & conditions.</vs-checkbox>
-    <vs-button  type="border" to="/pages/login" class="mt-6">Login</vs-button>
-    <vs-button class="float-right mt-6" @click="registerUserJWt" :disabled="!validateForm">Register</vs-button>
+    <vs-checkbox v-model="isTermsConditionAccepted" class="mt-6">{{ $t('register.terms') }}</vs-checkbox>
+    <vs-button  type="border" to="/pages/login" class="mt-6">{{ $t('register.login') }}</vs-button>
+    <vs-button class="float-right mt-6" @click="registerUserJWt" :disabled="!validateForm">{{ $t('register.register') }}</vs-button>
   </div>
 </template>
 

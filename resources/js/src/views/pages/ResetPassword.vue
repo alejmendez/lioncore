@@ -20,16 +20,16 @@
                         <div class="vx-col sm:w-full md:w-full lg:w-1/2 mx-auto self-center  d-theme-dark-bg">
                             <div class="p-8">
                                 <div class="vx-card__title mb-8">
-                                    <h4 class="mb-4">Reset Password</h4>
-                                    <p>Please enter your new password.</p>
+                                    <h4 class="mb-4">{{ $t('reset_password.title') }}</h4>
+                                    <p>{{ $t('reset_password.description') }}</p>
                                 </div>
-                                <vs-input type="email" label-placeholder="Email" v-model="value1" class="w-full mb-6" />
-                                <vs-input type="password" label-placeholder="Password" v-model="value2" class="w-full mb-6" />
-                                <vs-input type="password" label-placeholder="Confirm Password" v-model="value3" class="w-full mb-8" />
+                                <vs-input type="email" :label-placeholder="$t('reset_password.email')" v-model="value1" class="w-full mb-6" />
+                                <vs-input type="password" :label-placeholder="$t('reset_password.password')" v-model="value2" class="w-full mb-6" />
+                                <vs-input type="password" :label-placeholder="$t('reset_password.confirm_password')" v-model="value3" class="w-full mb-8" />
 
                                 <div class="flex flex-wrap justify-between flex-col-reverse sm:flex-row">
-                                    <vs-button type="border" to="/pages/login" class="w-full sm:w-auto mb-8 sm:mb-auto mt-3 sm:mt-auto">Go Back To Login</vs-button>
-                                    <vs-button class="w-full sm:w-auto">Reset</vs-button>
+                                    <vs-button type="border" to="/pages/login" class="w-full sm:w-auto mb-8 sm:mb-auto mt-3 sm:mt-auto">{{ $t('reset_password.go_to_back') }}</vs-button>
+                                    <vs-button class="w-full sm:w-auto">{{ $t('reset_password.reset') }}</vs-button>
                                 </div>
 
                             </div>

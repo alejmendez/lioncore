@@ -24,7 +24,7 @@
               <div class="px-8 pt-8 login-tabs-container">
 
                 <div class="vx-card__title mb-8">
-                  <h4 class="mb-4">{{ $t('login.login') }}</h4>
+                  <h4 class="mb-4">{{ $t('login.title') }}</h4>
                   <p>{{ $t('login.welcome_back') }}</p>
                 </div>
 

@@ -53,6 +53,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        dd($exception);
         parent::report($exception);
     }
 
@@ -67,6 +68,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        dd($exception);
         if (method_exists($exception, 'render') && $response = $exception->render($request)) {
             return Router::toResponse($request, $response);
         } elseif ($exception instanceof Responsable) {

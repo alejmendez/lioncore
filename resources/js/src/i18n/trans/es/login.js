@@ -1,5 +1,5 @@
 export default {
-  'login': 'Iniciar sesión',
+  'title': 'Iniciar sesión',
   'email': 'Correo electrónico',
   'password': 'Contraseña',
   'remember_me': 'Recuerdame',

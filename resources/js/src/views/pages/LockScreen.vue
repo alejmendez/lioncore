@@ -20,14 +20,14 @@
                         <div class="vx-col sm:w-full md:w-full lg:w-1/2 mx-auto self-center d-theme-dark-bg">
                             <div class="p-8">
                                 <div class="vx-card__title mb-8">
-                                    <h4 class="mb-4">Your Session is locked</h4>
+                                    <h4 class="mb-4">{{ $t('lock_screen.title') }}</h4>
                                 </div>
-                                <vs-input icon-no-border icon="icon icon-user" icon-pack="feather" label-placeholder="Username" v-model="value1" class="w-full mb-6"/>
-                                <vs-input icon-no-border icon="icon icon-lock" icon-pack="feather" type="password" label-placeholder="Password" v-model="value2" class="w-full mb-6" />
+                                <vs-input icon-no-border icon="icon icon-user" icon-pack="feather" :label-placeholder="$t('lock_screen.username')" v-model="value1" class="w-full mb-6"/>
+                                <vs-input icon-no-border icon="icon icon-lock" icon-pack="feather" type="password" :label-placeholder="$t('lock_screen.password')" v-model="value2" class="w-full mb-6" />
 
                                 <div class="flex justify-between flex-wrap">
-                                    <router-link to="/pages/login" class="mb-4">Are you not John Doe?</router-link>
-                                    <vs-button class="ml-2">Unlock</vs-button>
+                                    <router-link to="/pages/login" class="mb-4">{{ $t('lock_screen.are_you_not') }}</router-link>
+                                    <vs-button class="ml-2">{{ $t('lock_screen.unlock') }}</vs-button>
                                 </div>
 
                             </div>

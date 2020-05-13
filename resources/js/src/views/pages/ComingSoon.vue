@@ -14,7 +14,7 @@
       <vx-card>
 
         <div class="vx-card__title mb-6">
-          <h2 class="text-center">We are launching soon</h2>
+          <h2 class="text-center">{{ $t('comingsoon.title') }}</h2>
         </div>
 
         <img src="@assets/images/pages/rocket.png" alt="coming-soon" class="mx-auto mb-2" width="150">
@@ -26,35 +26,35 @@
 
               <div class="single-counter">
                 <span class="timer">{{ props.days }}</span>
-                <span>Days</span>
+                <span>{{ $t('comingsoon.days') }}</span>
               </div>
 
               <div class="single-counter">
                 <span class="timer">{{ props.hours }}</span>
-                <span>Hours</span>
+                <span>{{ $t('comingsoon.hours') }}</span>
               </div>
 
               <div class="single-counter">
                 <span class="timer">{{ props.minutes }}</span>
-                <span>Minutes</span>
+                <span>{{ $t('comingsoon.minutes') }}</span>
               </div>
 
               <div class="single-counter">
                 <span class="timer">{{ props.seconds }}</span>
-                <span>Seconds</span>
+                <span>{{ $t('comingsoon.seconds') }}</span>
               </div>
 
             </template>
           </countdown>
         </div>
 
-        <vs-divider position="center">Subscribe</vs-divider>
+        <vs-divider position="center">{{ $t('comingsoon.subscribe') }}</vs-divider>
 
         <div class="subscription">
 
-          <span>If you would like to be notified when our app is live, Please subscribe to our mailing list.</span>
-          <vs-input type="email" label-placeholder="Email" v-model="value1" class="w-full mb-4" />
-          <vs-button class="w-full">Subscribe</vs-button>
+          <span>{{ $t('comingsoon.description') }}</span>
+          <vs-input type="email" :label-placeholder="$t('comingsoon.email')" v-model="value1" class="w-full mb-4" />
+          <vs-button class="w-full">{{ $t('comingsoon.subscribe') }}</vs-button>
 
         </div>
       </vx-card>
