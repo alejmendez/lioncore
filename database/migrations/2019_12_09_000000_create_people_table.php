@@ -23,7 +23,7 @@ class CreatePeopleTable extends Migration
             $table->date('birthdate')->nullable();
             $table->string('room_telephone', 15)->nullable();
             $table->string('mobile_phone', 15)->nullable();
-            $table->string('website', 15)->nullable();
+            $table->string('website', 100)->nullable();
             $table->string('languages', 15)->nullable();
             $table->string('email', 80)->nullable();
             $table->string('nationality', 80)->nullable();
@@ -39,7 +39,7 @@ class CreatePeopleTable extends Migration
             $table->smallInteger('number_children')->nullable()->default(0);
             $table->string('observation', 255)->nullable();
             $table->string('blood_type', 5)->nullable();
-            
+
             $table->timestamps();
             $table->softDeletes();
         });

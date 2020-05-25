@@ -1,9 +1,9 @@
 <?php
-use Modules\User\Models\User;
+use App\Models\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
-use Modules\Core\Models\Person;
+use App\Models\Person;
 /*
 |--------------------------------------------------------------------------
 | Model Factories

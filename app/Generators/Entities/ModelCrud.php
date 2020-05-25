@@ -31,9 +31,9 @@ class ModelCrud
     {
         $modules = Module::all();
         $filesList = [];
-        $pathCrudDefInModules = config('workshop.pathCrudDefInModules');
+        $pathCrudDef = config('workshop.pathCrudDef');
         foreach ($modules as $module) {
-            $pathCrud = $module->getPath() . '/' . $pathCrudDefInModules;
+            $pathCrud = $module->getPath() . '/' . $pathCrudDef;
             if (!File::exists($pathCrud)) {
                 continue;
             }

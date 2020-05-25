@@ -1,9 +1,9 @@
 <?php
-namespace Modules\User\Tests\Feature;
+namespace App\Tests\Feature;
 
-use Modules\User\Models\User;
-use Modules\Role\Models\Role;
-use Modules\Core\Models\Person;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\Person;
 
 use Tests\TestCase;
 use Illuminate\Support\Str;

@@ -30,5 +30,5 @@ class Person extends ModelBase
         'number_children',
         'observation',
         'blood_type',
-            ];
+    ];
 }

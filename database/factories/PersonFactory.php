@@ -1,5 +1,5 @@
 <?php
-use Modules\core\Models\Person;
+use App\Models\Person;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -24,7 +24,7 @@ $factory->define(Person::class, function (Faker $faker) {
         "birthdate" => $faker->date('Y-m-d', '-18 years') ,
         "room_telephone" => $faker->phoneNumber,
         "mobile_phone" => $faker->phoneNumber,
-        "website" => $faker->internet->url,
+        "website" => $faker->url,
         "languages" => $faker->randomElement(['english', 'spanish', 'french', 'russian', 'german', 'arabic', 'sanskrit']),
         "email" => $faker->unique()->safeEmail,
         "nationality" => $faker->randomElement(['C', 'E']),

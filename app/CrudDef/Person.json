@@ -115,14 +115,14 @@
         {
             "name": "website",
             "type": "string",
-            "length": 15,
+            "length": 100,
             "label" : "Web site",
             "htmlType": "text",
             "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": false,
-            "faker": "internet->url"
+            "faker": "url"
         },
         {
             "name": "languages",

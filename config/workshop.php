@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'pathCrudDefInModules' => 'CrudDef',
+    'pathCrudDef' => 'CrudDef',
     'extCrudDef' => 'json',
 ];

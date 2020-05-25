@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Workshop\Tests\Feature;
+namespace App\Tests\Feature;
 
-use Modules\Workshop\Tests\BaseWorkshopTest as TestCase;
+use App\Tests\BaseWorkshopTest as TestCase;
 
-use Modules\Workshop\Generators\GeneratorCrud;
+use App\Generators\GeneratorCrud;
 
 class WorkshopTest extends TestCase
 {

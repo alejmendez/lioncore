@@ -1,7 +1,7 @@
 <?php
-namespace Modules\core\Tests\Feature;
+namespace App\Tests\Feature;
 
-use Modules\core\Models\Person;
+use App\Models\Person;
 use Tests\TestCase;
 
 class PersonTest extends TestCase
