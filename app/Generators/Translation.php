@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Workshop\Generators;
+namespace App\Generators;
 
-use Str;
+use Illuminate\Support\Str;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class Translation extends Generator

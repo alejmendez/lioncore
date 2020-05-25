@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Workshop\Console;
+namespace App\Console;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-use Modules\Workshop\Generators\GeneratorCrud;
+use App\Generators\GeneratorCrud;
 
 class GenerateGrud extends Command
 {

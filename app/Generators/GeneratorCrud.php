@@ -1,21 +1,21 @@
 <?php
 
-namespace Modules\Workshop\Generators;
+namespace App\Generators;
 
 use File;
 
-use Modules\Workshop\Generators\Interfaces\Generator;
-use Modules\Workshop\Console\GenerateGrud;
-use Modules\Workshop\Generators\Entities\ModelCrud;
+use App\Generators\Interfaces\Generator;
+use App\Console\GenerateGrud;
+use App\Generators\Entities\ModelCrud;
 
-use Modules\Workshop\Generators\Migration;
-use Modules\Workshop\Generators\Model;
-use Modules\Workshop\Generators\FormRequest;
-use Modules\Workshop\Generators\Controller;
-use Modules\Workshop\Generators\Permission;
-use Modules\Workshop\Generators\View;
-use Modules\Workshop\Generators\Route;
-use Modules\Workshop\Generators\Translation;
+use App\Generators\Migration;
+use App\Generators\Model;
+use App\Generators\FormRequest;
+use App\Generators\Controller;
+use App\Generators\Permission;
+use App\Generators\View;
+use App\Generators\Route;
+use App\Generators\Translation;
 
 class GeneratorCrud implements Generator
 {

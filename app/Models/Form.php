@@ -1,7 +1,7 @@
 <?php
-namespace Modules\Core\Models;
+namespace App\Models;
 
-use Modules\Core\Models\ModelBase;
+use App\Models\ModelBase;
 
 class Form extends ModelBase
 {
@@ -11,7 +11,7 @@ class Form extends ModelBase
 
     public function fields()
     {
-        return $this->hasMany('Modules\Core\Models\Field');
+        return $this->hasMany('App\Models\Field');
     }
 
     // "name": "dni",

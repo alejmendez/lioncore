@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Workshop\Generators\Entities;
+namespace App\Generators\Entities;
 
 use File;
 use Module;

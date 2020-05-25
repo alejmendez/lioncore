@@ -1,7 +1,7 @@
 <?php
-namespace Modules\Core\Models;
+namespace App\Models;
 
-use Modules\Core\Models\ModelBase;
+use App\Models\ModelBase;
 
 class Field extends ModelBase
 {
@@ -11,6 +11,6 @@ class Field extends ModelBase
 
     public function form()
     {
-        return $this->belongsTo('Modules\Core\Models\Form');
+        return $this->belongsTo('App\Models\Form');
     }
 }

@@ -1,7 +1,7 @@
 <?php
-namespace Modules\core\Models;
+namespace App\Models;
 
-use Modules\Core\Models\ModelBase;
+use App\Models\ModelBase;
 
 class Person extends ModelBase
 {

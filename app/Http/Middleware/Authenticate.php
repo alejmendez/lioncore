@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
-use Modules\core\Traits\ApiResponse;
+use App\Traits\ApiResponse;
 
 class Authenticate extends Middleware
 {

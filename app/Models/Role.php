@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\Role\Models;
+namespace App\Models;
 
 use Spatie\Permission\Models\Role as RoleBase;
-use Modules\Core\Models\AutoGenerateUuid;
+use App\Models\AutoGenerateUuid;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

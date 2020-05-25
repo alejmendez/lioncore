@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\User\Models;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -73,6 +73,6 @@ class User extends Authenticatable implements JWTSubject, Auditable
 
     public function person()
     {
-        return $this->belongsTo('Modules\Core\Models\Person');
+        return $this->belongsTo('App\Models\Person');
     }
 }

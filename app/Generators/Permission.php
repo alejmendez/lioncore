@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\Workshop\Generators;
+namespace App\Generators;
 
-use Modules\Role\Models\Permission as PermissionModel;
-use Modules\Role\Models\Role;
+use App\Models\Permission as PermissionModel;
+use App\Models\Role;
 
 class Permission extends Generator
 {

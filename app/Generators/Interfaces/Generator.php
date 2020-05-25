@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Workshop\Generators\Interfaces;
+namespace App\Generators\Interfaces;
 
 interface Generator
 {

@@ -1,18 +1,18 @@
 <?php
-namespace Modules\core\Http\Controllers;
+namespace App\Http\Controllers;
 
 // Control Base
 use App\Http\Controllers\Controller as BaseController;
 
 // Traits
-use Modules\core\Traits\ApiResponse;
+use App\Traits\ApiResponse;
 
 // Request
 use Illuminate\Http\Request;
-use Modules\core\Http\Requests\PersonRequest;
+use App\Http\Requests\PersonRequest;
 
 // Modelos
-use Modules\core\Models\Person;
+use App\Models\Person;
 
 use DataTables;
 

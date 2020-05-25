@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \Modules\Workshop\Console\GenerateGrud::class,
+        \App\Console\GenerateGrud::class,
     ];
 
     /**

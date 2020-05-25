@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Workshop\Generators;
+namespace App\Generators;
 
-use Str;
+use Illuminate\Support\Str;
 
 class FormRequest extends Generator
 {

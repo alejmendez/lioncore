@@ -1,7 +1,7 @@
 <?php
-namespace Modules\User\Http\Requests;
+namespace App\Http\Requests;
 
-use Modules\Core\Http\Requests\FormRequest;
+use App\Http\Requests\FormRequest;
 
 class UserRequest extends FormRequest
 {

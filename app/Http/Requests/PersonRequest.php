@@ -1,7 +1,7 @@
 <?php
-namespace Modules\core\Http\Requests;
+namespace App\Http\Requests;
 
-use Modules\Core\Http\Requests\FormRequest;
+use App\Http\Requests\FormRequest;
 
 class PersonRequest extends FormRequest
 {

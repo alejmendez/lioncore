@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\Auth\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-use Modules\User\Models\User;
-use Modules\Core\Http\Controllers\BaseController;
-use Modules\User\Repositories\UserRepository;
+use App\Models\User;
+use App\Http\Controllers\BaseController;
+use App\Repositories\UserRepository;
 
 /**
  * Controlador el flujo de autenticacion del sistema en base a JWT

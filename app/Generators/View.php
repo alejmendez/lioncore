@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Workshop\Generators;
+namespace App\Generators;
 
 use Illuminate\Support\Str;
 

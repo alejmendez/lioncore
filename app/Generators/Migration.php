@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Workshop\Generators;
+namespace App\Generators;
 
-use Str;
-use Modules\Core\Models\Form;
-use Modules\Core\Models\Field;
+use Illuminate\Support\Str;
+use App\Models\Form;
+use App\Models\Field;
 
 class Migration extends Generator
 {
