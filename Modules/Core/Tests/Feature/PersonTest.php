@@ -13,38 +13,28 @@ class PersonTest extends TestCase
             'dni' => $faker->numberBetween(5000000, 30000000),
             'first_name' => $faker->firstName,
             'last_name' => $faker->lastName,
-            'address' => $faker->address,
+            'company' => $faker->company,
+            'avatar' => $faker->imageUrl(500, 500, 'people', true, 'Faker'),
             'birthdate' => $faker->date('Y-m-d', '-18 years') ,
-            'civil_status' => $faker->randomElement(['C', 'S', 'D', 'V']),
             'room_telephone' => $faker->phoneNumber,
             'mobile_phone' => $faker->phoneNumber,
+            'website' => $faker->internet->url,
+            'languages' => $faker->randomElement(['english', 'spanish', 'french', 'russian', 'german', 'arabic', 'sanskrit']),
             'email' => $faker->unique()->safeEmail,
             'nationality' => $faker->randomElement(['C', 'E']),
             'gender' => $faker->randomElement(['M', 'F']),
-            'height' => $faker->numberBetween(150, 210),
-            'weight' => $faker->numberBetween(48, 130),
-            'shirt_size' => $faker->randomElement(['XS', 'S', 'M', 'L', 'XL', 'XL']),
-            'size_pants' => $faker->numberBetween(30, 54),
-            'shoe_size' => $faker->numberBetween(28, 54),
-            'profession' => $faker->word,
-            'academic_level' => $faker->word,
-            'country' => $faker->country,
+            'civil_status' => $faker->randomElement(['C', 'S', 'D', 'V']),
+            'contact_options' => $faker->randomElement(['C', 'S', 'D', 'V']),
+            'address' => $faker->address,
+            'address2' => $faker->secondaryAddress,
+            'postcode' => $faker->postcode,
+            'city' => $faker->city,
             'state' => $faker->state,
-            'municipality' => $faker->city,
-            'parish' => $faker->word,
-            'military_component' => $faker->word,
-            'military_rank' => $faker->word,
+            'country' => $faker->country,
             'number_children' => $faker->numberBetween(0, 5),
-            'spouse_works' => $faker->word,
             'observation' => $faker->text(250),
-            'photos' => $faker->imageUrl(500, 500, 'people', true, 'Faker'),
-            'turn' => $faker->word,
-            'schedule' => $faker->word,
             'blood_type' => $faker->text(5),
-            'file_number' => $faker->word,
-            'management' => $faker->word,
-            'organization_id' => $faker->word,
-        ];
+                    ];
     }
 
     /**
@@ -55,9 +45,13 @@ class PersonTest extends TestCase
     {
         $data = $this->generateData();
 
-        $this->post(route('person.store'), $data)
+        $this->json('POST', route('persons.store'), $data)
             ->assertStatus(201)
-            ->assertJson($data);
+            ->assertJson([
+                'code' => 201,
+                'status' => 'success',
+                'data' => $data
+            ]);
     }
 
     /**
@@ -70,9 +64,13 @@ class PersonTest extends TestCase
 
         $data = $this->generateData();
 
-        $this->put(route('person.update', $person->id), $data)
+        $this->json('PUT', route('persons.update', $person->id), $data)
             ->assertStatus(200)
-            ->assertJson($data);
+            ->assertJson([
+                'code' => 200,
+                'status' => 'success',
+                'data' => $data
+            ]);
     }
 
     /**
@@ -83,7 +81,7 @@ class PersonTest extends TestCase
     {
         $person = factory(Person::class)->create();
 
-        $this->get(route('person.show', $person->id))
+        $this->json('GET', route('persons.show', $person->id))
             ->assertStatus(200);
     }
 
@@ -95,8 +93,8 @@ class PersonTest extends TestCase
     {
         $person = factory(Person::class)->create();
 
-        $this->delete(route('person.destroy', $person->id))
-            ->assertStatus(204);
+        $this->json('DELETE', route('persons.destroy', $person->id))
+            ->assertStatus(200);
     }
 
     /**
@@ -109,11 +107,17 @@ class PersonTest extends TestCase
             return $person->only(['dni', 'first_name', 'last_name']);
         });
 
-        $this->get(route('person.index'))
+        $this->json('GET', route('persons.index') . '?page=1&rowsPerPage=5')
             ->assertStatus(200)
-            ->assertJson($persons->toArray())
             ->assertJsonStructure([
-                '*' => ['dni', 'first_name', 'last_name'],
+                'draw',
+                'recordsTotal',
+                'recordsFiltered',
+                'data' => [
+                    [
+                        'dni', 'first_name', 'last_name'
+                    ]
+                ],
             ]);
     }
 }

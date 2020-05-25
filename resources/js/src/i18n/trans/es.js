@@ -8,6 +8,8 @@ import error404 from './es/error404'
 import error500 from './es/error500'
 import not_authorized from './es/not_authorized'
 import maintenance from './es/maintenance'
+import menu from './es/menu'
+import users from './es/users'
 
 export default {
   login,
@@ -20,6 +22,8 @@ export default {
   error500,
   not_authorized,
   maintenance,
+  menu,
+  users,
   Home: 'Inicio',
   Admin: 'Administrador',
   Dashboard: 'Tablero',
@@ -146,7 +150,5 @@ export default {
   DisabledMenu: 'Menú deshabilitado',
   Support: 'Apoyo',
   Documentation: 'Documentación',
-  RaiseSupport: 'Elevar apoyo',
-  demoTitle: 'Título de la tarjeta',
-  demoText: 'Pastel de ajonjolí cupcake pan de jengibre danés Me encanta el pan de jengibre. Tarta de manzana tarta azufaifas chupa chups muffin halvah lollipop. Pastel de chocolate pastel de avena tiramisú mazapán azúcar ciruela. Donut dulce pastel de avena pastel dragée fruitcake algodón de azúcar gotas de limón.'
+  RaiseSupport: 'Elevar apoyo'
 }

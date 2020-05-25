@@ -49,7 +49,7 @@ const router = new Router({
               { title: 'User' },
               { title: 'List', active: true }
             ],
-            pageTitle: 'User List',
+            pageTitle: 'users.title.list',
             rule: 'editor'
           }
         },
@@ -63,12 +63,12 @@ const router = new Router({
               { title: 'User' },
               { title: 'View', active: true }
             ],
-            pageTitle: 'User View',
+            pageTitle: 'users.title.view',
             rule: 'editor'
           }
         },
         {
-          path: '/apps/user/user-edit/:userId',
+          path: '/user/:userId',
           name: 'app-user-edit',
           component: () => import('@/views/user/user-edit/UserEdit.vue'),
           meta: {
@@ -77,10 +77,10 @@ const router = new Router({
               { title: 'User' },
               { title: 'Edit', active: true }
             ],
-            pageTitle: 'User Edit',
+            pageTitle: 'users.title.edit',
             rule: 'editor'
           }
-        },
+        }
       ]
     },
     // =============================================================================

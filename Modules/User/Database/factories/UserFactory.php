@@ -16,11 +16,16 @@ use Modules\Core\Models\Person;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+    $email = $faker->unique()->safeEmail;
+    $username = explode('@', $email);
+    $username = $username[0];
+
     return [
-        "person_id" => Person::inRandomOrder()->first()->id,
-        "email" => $faker->unique()->safeEmail,
-        "email_verified_at" => $faker->dateTime(),
-        "password" => Str::random(16),
-        "verification_token" => Str::random(64),
+        'person_id' => Person::inRandomOrder()->first()->id,
+        'email' => $email,
+        'email_verified_at' => $faker->dateTime(),
+        'password' => Str::random(16),
+        'verification_token' => Str::random(64),
+        'username' => $username,
     ];
 });

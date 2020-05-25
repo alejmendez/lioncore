@@ -54,16 +54,28 @@
             "faker": "lastName"
         },
         {
-            "name": "address",
+            "name": "company",
             "type": "string",
             "length": 80,
-            "label" : "Address",
+            "label" : "Company",
             "htmlType": "text",
             "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": false,
-            "faker": "address"
+            "faker": "company"
+        },
+        {
+            "name": "avatar",
+            "type": "string",
+            "length": 80,
+            "label" : "Avatar",
+            "htmlType": "text",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": false,
+            "faker": "imageUrl(500, 500, 'people', true, 'Faker')"
         },
         {
             "name": "birthdate",
@@ -75,18 +87,6 @@
             "inForm": true,
             "inList": false,
             "faker": "date('Y-m-d', '-18 years') "
-        },
-        {
-            "name": "civil_status",
-            "type": "string",
-            "length": 20,
-            "label" : "Civil status",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "randomElement(['C', 'S', 'D', 'V'])"
         },
         {
             "name": "room_telephone",
@@ -111,6 +111,30 @@
             "inForm": true,
             "inList": false,
             "faker": "phoneNumber"
+        },
+        {
+            "name": "website",
+            "type": "string",
+            "length": 15,
+            "label" : "Web site",
+            "htmlType": "text",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": false,
+            "faker": "internet->url"
+        },
+        {
+            "name": "languages",
+            "type": "string",
+            "length": 15,
+            "label" : "Languages",
+            "htmlType": "text",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": false,
+            "faker": "randomElement(['english', 'spanish', 'french', 'russian', 'german', 'arabic', 'sanskrit'])"
         },
         {
             "name": "email",
@@ -149,100 +173,76 @@
             "faker": "randomElement(['M', 'F'])"
         },
         {
-            "name": "height",
-            "type": "decimal",
-            "length": "5, 2",
-            "label" : "Height",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "numberBetween(150, 210)"
-        },
-        {
-            "name": "weight",
-            "type": "decimal",
-            "length": "5, 2",
-            "label" : "Weight",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "numberBetween(48, 130)"
-        },
-        {
-            "name": "shirt_size",
+            "name": "civil_status",
             "type": "string",
-            "length": 2,
-            "label" : "Shirt size",
+            "length": 1,
+            "label" : "Civil status",
             "htmlType": "text",
             "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": false,
-            "faker": "randomElement(['XS', 'S', 'M', 'L', 'XL', 'XL'])"
+            "faker": "randomElement(['C', 'S', 'D', 'V'])"
         },
         {
-            "name": "size_pants",
+            "name": "contact_options",
             "type": "string",
-            "length": 2,
-            "label" : "Size Pants",
+            "length": 20,
+            "label" : "Contact Options",
             "htmlType": "text",
             "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": false,
-            "faker": "numberBetween(30, 54)"
+            "faker": "randomElement(['E', 'M', 'P'])"
         },
         {
-            "name": "shoe_size",
-            "type": "string",
-            "length": 2,
-            "label" : "Shoe Size",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "numberBetween(28, 54)"
-        },
-        {
-            "name": "profession",
+            "name": "address",
             "type": "string",
             "length": 80,
-            "label" : "Profession",
+            "label" : "AddressAddress Line 1",
             "htmlType": "text",
             "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": false,
-            "faker": "word"
+            "faker": "address"
         },
         {
-            "name": "academic_level",
+            "name": "address2",
             "type": "string",
             "length": 80,
-            "label" : "Academic level",
+            "label" : "AddressAddress Line 2",
             "htmlType": "text",
             "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": false,
-            "faker": "word"
+            "faker": "secondaryAddress"
         },
         {
-            "name": "country",
+            "name": "postcode",
             "type": "string",
             "length": 80,
-            "label" : "country",
+            "label" : "Post Code",
             "htmlType": "text",
             "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": false,
-            "faker": "country"
+            "faker": "postcode"
+        },
+        {
+            "name": "city",
+            "type": "string",
+            "length": 80,
+            "label" : "City",
+            "htmlType": "text",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": false,
+            "faker": "city"
         },
         {
             "name": "state",
@@ -257,52 +257,16 @@
             "faker": "state"
         },
         {
-            "name": "municipality",
+            "name": "country",
             "type": "string",
             "length": 80,
-            "label" : "Municipality",
+            "label" : "Country",
             "htmlType": "text",
             "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": false,
-            "faker": "city"
-        },
-        {
-            "name": "parish",
-            "type": "string",
-            "length": 80,
-            "label" : "Parish",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "word"
-        },
-        {
-            "name": "military_component",
-            "type": "string",
-            "length": 80,
-            "label" : "Military component",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "word"
-        },
-        {
-            "name": "military_rank",
-            "type": "string",
-            "length": 80,
-            "label" : "Military rank",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "word"
+            "faker": "country"
         },
         {
             "name": "number_children",
@@ -317,18 +281,6 @@
             "faker": "numberBetween(0, 5)"
         },
         {
-            "name": "spouse_works",
-            "type": "string",
-            "length": 80,
-            "label" : "Spouse works",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "word"
-        },
-        {
             "name": "observation",
             "type": "string",
             "length": 255,
@@ -341,42 +293,6 @@
             "faker": "text(250)"
         },
         {
-            "name": "photos",
-            "type": "string",
-            "length": 255,
-            "label" : "Photos",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "imageUrl(500, 500, 'people', true, 'Faker')"
-        },
-        {
-            "name": "turn",
-            "type": "string",
-            "length": 80,
-            "label" : "Turn",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "word"
-        },
-        {
-            "name": "schedule",
-            "type": "string",
-            "length": 80,
-            "label" : "Schedule",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "word"
-        },
-        {
             "name": "blood_type",
             "type": "string",
             "length": 5,
@@ -387,42 +303,6 @@
             "inForm": true,
             "inList": false,
             "faker": "text(5)"
-        },
-        {
-            "name": "file_number",
-            "type": "string",
-            "length": 80,
-            "label" : "File number",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "word"
-        },
-        {
-            "name": "management",
-            "type": "string",
-            "length": 80,
-            "label" : "Management",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "word"
-        },
-        {
-            "name": "organization_id",
-            "type": "string",
-            "length": 80,
-            "label" : "Organization",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "word"
         }
     ]
 }

@@ -22,13 +22,13 @@ class UserController extends BaseController
 
     public function index()
     {
-        $query = User::select('email');
+        $query = User::with('person');
         return DataTables::of($query)->make(true);
     }
 
     public function show($id)
     {
-        $instance = User::findOrFail($id);
+        $instance = User::with('person')->findOrFail($id);
         return $this->showResponse($instance);
     }
 

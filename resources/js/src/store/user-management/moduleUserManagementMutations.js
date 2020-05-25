@@ -9,11 +9,22 @@
 
 
 export default {
-  SET_USERS (state, users) {
+  SET_DATA (state, users) {
     state.users = users
   },
-  REMOVE_RECORD (state, itemId) {
-    const userIndex = state.users.findIndex((u) => u.id === itemId)
-    state.users.splice(userIndex, 1)
+  RECORDS_FILTERED (state, recordsFiltered) {
+    state.recordsFiltered = recordsFiltered
+  },
+  RECORDS_TOTAL (state, recordsTotal) {
+    state.recordsTotal = recordsTotal
+  },
+  GET (state, id) {
+    console.log('GET', id)
+  },
+  SAVE (state, id) {
+    console.log('SAVE', id)
+  },
+  DELETE (state, id) {
+    console.log('delete', id)
   }
 }

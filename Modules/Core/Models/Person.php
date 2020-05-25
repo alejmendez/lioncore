@@ -1,6 +1,5 @@
 <?php
-
-namespace Modules\Core\Models;
+namespace Modules\core\Models;
 
 use Modules\Core\Models\ModelBase;
 
@@ -10,45 +9,26 @@ class Person extends ModelBase
         'dni',
         'first_name',
         'last_name',
-        'address',
+        'company',
+        'avatar',
         'birthdate',
-        'civil_status',
         'room_telephone',
         'mobile_phone',
+        'website',
+        'languages',
         'email',
         'nationality',
         'gender',
-        'height',
-        'weight',
-        'shirt_size',
-        'size_pants',
-        'shoe_size',
-        'profession',
-        'academic_level',
-        'country',
+        'civil_status',
+        'contact_options',
+        'address',
+        'address2',
+        'postcode',
+        'city',
         'state',
-        'municipality',
-        'parish',
-        'military_component',
-        'military_rank',
+        'country',
         'number_children',
-        'spouse_works',
         'observation',
-        'photos',
-        'turn',
-        'schedule',
         'blood_type',
-        'file_number',
-        'management',
-    ];
-
-    public function setEmailAttribute($value)
-    {
-        $this->attributes['email'] = strtolower($value);
-    }
-
-    public function user()
-    {
-        return $this->hasOne('Modules\User\Models\User');
-    }
+            ];
 }

@@ -32,26 +32,26 @@ export default [
     name: 'Home',
     slug: 'home',
     icon: 'HomeIcon',
-    i18n: 'Home'
+    i18n: 'menu.home'
   },
   {
     header: 'Admin',
     icon: 'PackageIcon',
-    i18n: 'Admin',
+    i18n: 'menu.admin',
     items: [
       {
         url: '/user/',
         name: 'User',
         icon: 'UserIcon',
         slug: 'user',
-        i18n: 'User'
+        i18n: 'menu.user'
       },
       {
         url: '/role/',
         name: 'Role',
         icon: 'UsersIcon',
         slug: 'role',
-        i18n: 'Role'
+        i18n: 'menu.role'
       }
     ]
   },

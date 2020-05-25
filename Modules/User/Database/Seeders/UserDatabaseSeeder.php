@@ -20,7 +20,7 @@ class UserDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // User::truncate();
+        User::truncate();
 
         $person = Person::create([
             'dni' => '19',
@@ -34,6 +34,7 @@ class UserDatabaseSeeder extends Seeder
             'password' => '1234',
             'verification_token' => '',
             'email_verified_at' => now(),
+            'username' => 'admin',
         ]);
 
         $roleAdmin = Role::findByName('admin');
@@ -50,7 +51,13 @@ class UserDatabaseSeeder extends Seeder
             'password' => 'cq43351la',
             'verification_token' => '',
             'email_verified_at' => now(),
+            'username' => 'alejmendez',
         ]);
         $user->assignRole($roleAdmin);
+
+        factory(User::class, 100)->create()->each(function($user) {
+            $person = factory('Modules\Core\Models\Person')->make();
+            $user->person()->save($person);
+        });
     }
 }

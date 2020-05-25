@@ -18,44 +18,28 @@ class CreatePeopleTable extends Migration
             $table->string('dni', 15)->nullable();
             $table->string('first_name', 80)->nullable();
             $table->string('last_name', 80)->nullable();
-            $table->string('address', 80)->nullable();
-
+            $table->string('company', 80)->nullable();
+            $table->string('avatar', 80)->nullable();
             $table->date('birthdate')->nullable();
-            $table->string('civil_status', 20)->nullable();
             $table->string('room_telephone', 15)->nullable();
             $table->string('mobile_phone', 15)->nullable();
+            $table->string('website', 15)->nullable();
+            $table->string('languages', 15)->nullable();
             $table->string('email', 80)->nullable();
             $table->string('nationality', 80)->nullable();
-
             $table->string('gender', 2)->nullable();
-            $table->decimal('height', 5, 2)->nullable();
-            $table->decimal('weight', 5, 2)->nullable();
-            $table->string('shirt_size', 2)->nullable();
-            $table->string('size_pants', 2)->nullable();
-            $table->string('shoe_size', 2)->nullable();
-            $table->string('profession', 80)->nullable();
-            $table->string('academic_level', 80)->nullable();
-
-            $table->string('country', 80)->nullable();
+            $table->string('civil_status', 1)->nullable();
+            $table->string('contact_options', 50)->nullable();
+            $table->string('address', 80)->nullable();
+            $table->string('address2', 80)->nullable();
+            $table->string('postcode', 80)->nullable();
+            $table->string('city', 80)->nullable();
             $table->string('state', 80)->nullable();
-            $table->string('municipality', 80)->nullable();
-            $table->string('parish', 80)->nullable();
-
-            $table->string('military_component', 80)->nullable();
-            $table->string('military_rank', 80)->nullable();
-
-            $table->smallInteger('number_children')->default(0);
-            $table->string('spouse_works', 80)->nullable();
+            $table->string('country', 80)->nullable();
+            $table->smallInteger('number_children')->nullable()->default(0);
             $table->string('observation', 255)->nullable();
-
-            $table->string('photos', 255)->nullable();
-            $table->string('turn', 80)->nullable();
-            $table->string('schedule', 80)->nullable();
             $table->string('blood_type', 5)->nullable();
-            $table->string('file_number', 80)->nullable();
-            $table->string('management', 80)->nullable();
-            $table->string('organization_id', 80)->nullable();
-
+            
             $table->timestamps();
             $table->softDeletes();
         });

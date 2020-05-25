@@ -356,7 +356,8 @@ export default {
   },
   fetchAccessToken () {
     return new Promise((resolve) => {
-      jwt.refreshToken().then(response => { resolve(response) })
+      router.push('/login').catch(() => {})
+      // jwt.refreshToken().then(response => { resolve(response) })
     })
   }
 }

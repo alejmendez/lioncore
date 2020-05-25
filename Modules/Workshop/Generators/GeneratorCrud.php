@@ -50,8 +50,8 @@ class GeneratorCrud implements Generator
         foreach ($this->models as $model) {
             $json = $this->getJsonContent($model);
 
-            // $this->generateMigration($json);
-            // $this->generateModel($json);
+            $this->generateMigration($json);
+            $this->generateModel($json);
             $this->generateFormRequest($json);
             $this->generateController($json);
             $this->generatePermissions($json);
@@ -193,9 +193,9 @@ class GeneratorCrud implements Generator
      * @param  bool|null  $multiple
      * @return string
      */
-    public function choice($question, array $choices, $default = null, $attempts = null, $multiple = null)
+    public function choice($question, array $choices, $default = null, $maxAttempts = null, $allowMultipleSelections = false)
     {
-        return $this->console->choice($question, $choices, $default, $attempts, $multiple);
+        return $this->console->choice($question, $choices, $default, $maxAttempts, $allowMultipleSelections);
     }
 
     /**

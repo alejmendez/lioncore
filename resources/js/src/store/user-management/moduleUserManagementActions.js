@@ -20,30 +20,32 @@ export default {
   //       .catch((error) => { reject(error) })
   //   })
   // },
-  fetchUsers ({ commit }) {
+  list ({ commit }, data) {
     return new Promise((resolve, reject) => {
-      axios.get('users')
+      axios.get('users', data)
         .then((response) => {
-          commit('SET_USERS', response.data)
+          commit('SET_DATA', response.data.data)
+          commit('RECORDS_FILTERED', response.data.recordsFiltered)
+          commit('RECORDS_TOTAL', response.data.recordsTotal)
           resolve(response)
         })
         .catch((error) => { reject(error) })
     })
   },
-  fetchUser (context, userId) {
+  fetchUser (context, id) {
     return new Promise((resolve, reject) => {
-      axios.get(`users/${userId}`)
+      axios.get(`users/${id}`)
         .then((response) => {
           resolve(response)
         })
         .catch((error) => { reject(error) })
     })
   },
-  removeRecord ({ commit }, userId) {
+  removeRecord ({ commit }, id) {
     return new Promise((resolve, reject) => {
-      axios.delete(`users/${userId}`)
+      axios.delete(`users/${id}`)
         .then((response) => {
-          commit('REMOVE_RECORD', userId)
+          commit('REMOVE_RECORD', id)
           resolve(response)
         })
         .catch((error) => { reject(error) })

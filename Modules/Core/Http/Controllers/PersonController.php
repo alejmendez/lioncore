@@ -9,7 +9,7 @@ use Modules\core\Traits\ApiResponse;
 
 // Request
 use Illuminate\Http\Request;
-use Modules\core\Http\Request\PersonRequest;
+use Modules\core\Http\Requests\PersonRequest;
 
 // Modelos
 use Modules\core\Models\Person;
@@ -22,7 +22,8 @@ class PersonController extends BaseController
 
     public function index()
     {
-        return DataTables::of(Person::query())->make(true);
+        $query = Person::select('dni', 'first_name', 'last_name');
+        return DataTables::of($query)->make(true);
     }
 
     public function show($id)

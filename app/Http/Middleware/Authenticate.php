@@ -4,13 +4,16 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Modules\core\Traits\ApiResponse;
 
 class Authenticate extends Middleware
 {
+    use ApiResponse;
+
     public function handle($request, Closure $next, ...$guards)
     {
         if ($this->authenticate($request, $guards) === 'authentication_error') {
-            return response()->json(['error' => 'Unauthorized']);
+            return $this->errorResponse('Usuario no autenticado', 401);
         }
 
         return $next($request);

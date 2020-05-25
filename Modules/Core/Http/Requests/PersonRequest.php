@@ -1,7 +1,7 @@
 <?php
 namespace Modules\core\Http\Requests;
 
-use Modules\Core\Http\Request\FormRequest;
+use Modules\Core\Http\Requests\FormRequest;
 
 class PersonRequest extends FormRequest
 {
@@ -10,32 +10,24 @@ class PersonRequest extends FormRequest
             "dni" => "max:15",
             "first_name" => "max:80",
             "last_name" => "max:80",
-            "address" => "max:80",
-            "civil_status" => "max:20",
+            "company" => "max:80",
+            "avatar" => "max:80",
             "room_telephone" => "max:15",
             "mobile_phone" => "max:15",
+            "website" => "max:15",
+            "languages" => "max:15",
             "email" => "max:80",
             "nationality" => "max:80",
             "gender" => "max:2",
-            "shirt_size" => "max:2",
-            "size_pants" => "max:2",
-            "shoe_size" => "max:2",
-            "profession" => "max:80",
-            "academic_level" => "max:80",
-            "country" => "max:80",
+            "civil_status" => "max:1",
+            "contact_options" => "max:50",
+            "address" => "max:80",
+            "address2" => "max:80",
+            "postcode" => "max:80",
+            "city" => "max:80",
             "state" => "max:80",
-            "municipality" => "max:80",
-            "parish" => "max:80",
-            "military_component" => "max:80",
-            "military_rank" => "max:80",
-            "spouse_works" => "max:80",
+            "country" => "max:80",
             "observation" => "max:255",
-            "photos" => "max:255",
-            "turn" => "max:80",
-            "schedule" => "max:80",
             "blood_type" => "max:5",
-            "file_number" => "max:80",
-            "management" => "max:80",
-            "organization_id" => "max:80",
         ];
 }

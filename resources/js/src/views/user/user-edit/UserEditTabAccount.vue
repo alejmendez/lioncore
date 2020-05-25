@@ -163,7 +163,7 @@ export default {
   },
   methods: {
     capitalize (str) {
-      return str.slice(0, 1).toUpperCase() + str.slice(1, str.length)
+      return str ? str.slice(0, 1).toUpperCase() + str.slice(1, str.length) : ''
     },
     save_changes () {
       /* eslint-disable */

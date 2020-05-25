@@ -63,12 +63,6 @@ export default {
     return {
       user_data: null,
       user_not_found: false,
-
-      /*
-        This property is created for fetching latest data from API when tab is changed
-
-        Please check it's watcher
-      */
       activeTab: 0
     }
   },
@@ -80,13 +74,13 @@ export default {
   methods: {
     fetch_user_data (userId) {
       this.$store.dispatch('userManagement/fetchUser', userId)
-        .then(res => { this.user_data = res.data })
+        .then(res => { this.user_data = res.data.data })
         .catch(err => {
           if (err.response.status === 404) {
             this.user_not_found = true
             return
           }
-          console.error(err) 
+          console.error(err)
         })
     }
   },
