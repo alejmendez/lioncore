@@ -32,11 +32,6 @@
               <user-edit-tab-information class="mt-4" :data="user_data" />
             </div>
           </vs-tab>
-          <vs-tab label="Social" icon-pack="feather" icon="icon-share-2">
-            <div class="tab-text">
-              <user-edit-tab-social class="mt-4" :data="user_data" />
-            </div>
-          </vs-tab>
         </vs-tabs>
 
       </div>
@@ -48,7 +43,6 @@
 <script>
 import UserEditTabAccount     from './UserEditTabAccount.vue'
 import UserEditTabInformation from './UserEditTabInformation.vue'
-import UserEditTabSocial      from './UserEditTabSocial.vue'
 
 // Store Module
 import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
@@ -56,8 +50,7 @@ import moduleUserManagement from '@/store/user-management/moduleUserManagement.j
 export default {
   components: {
     UserEditTabAccount,
-    UserEditTabInformation,
-    UserEditTabSocial
+    UserEditTabInformation
   },
   data () {
     return {

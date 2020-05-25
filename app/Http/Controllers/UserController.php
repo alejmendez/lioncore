@@ -13,6 +13,7 @@ use App\Http\Requests\UserRequest;
 
 // Modelos
 use App\Models\User;
+use App\Http\Resources\User as UserResource;
 
 use DataTables;
 
@@ -29,7 +30,8 @@ class UserController extends BaseController
     public function show($id)
     {
         $instance = User::with('person')->findOrFail($id);
-        return $this->showResponse($instance);
+        $userResource = new UserResource($instance);
+        return $this->showResponse($userResource);
     }
 
     public function store(UserRequest $request)

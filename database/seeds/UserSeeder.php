@@ -33,6 +33,7 @@ class UserSeeder extends Seeder
             'verification_token' => '',
             'email_verified_at' => now(),
             'username' => 'admin',
+            'status' => 'active',
         ]);
 
         $roleAdmin = Role::findByName('admin');
@@ -50,6 +51,7 @@ class UserSeeder extends Seeder
             'verification_token' => '',
             'email_verified_at' => now(),
             'username' => 'alejmendez',
+            'status' => 'active',
         ]);
         $user->assignRole($roleAdmin);
 

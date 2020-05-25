@@ -27,7 +27,7 @@ class CreatePeopleTable extends Migration
             $table->string('languages', 15)->nullable();
             $table->string('email', 80)->nullable();
             $table->string('nationality', 80)->nullable();
-            $table->string('gender', 2)->nullable();
+            $table->string('gender', 10)->nullable();
             $table->string('civil_status', 1)->nullable();
             $table->string('contact_options', 50)->nullable();
             $table->string('address', 80)->nullable();

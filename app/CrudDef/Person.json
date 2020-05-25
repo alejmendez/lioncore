@@ -163,14 +163,14 @@
         {
             "name": "gender",
             "type": "string",
-            "length": 2,
+            "length": 10,
             "label" : "Gender",
             "htmlType": "text",
             "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": false,
-            "faker": "randomElement(['M', 'F'])"
+            "faker": "randomElement(['male', 'female', 'other'])"
         },
         {
             "name": "civil_status",
@@ -187,14 +187,14 @@
         {
             "name": "contact_options",
             "type": "string",
-            "length": 20,
+            "length": 50,
             "label" : "Contact Options",
             "htmlType": "text",
             "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": false,
-            "faker": "randomElement(['E', 'M', 'P'])"
+            "faker": "randomElement(['email', 'message', 'phone'])"
         },
         {
             "name": "address",

@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(Person::class, function (Faker $faker) {
+
     return [
         "dni" => $faker->numberBetween(5000000, 30000000),
         "first_name" => $faker->firstName,
@@ -28,9 +29,9 @@ $factory->define(Person::class, function (Faker $faker) {
         "languages" => $faker->randomElement(['english', 'spanish', 'french', 'russian', 'german', 'arabic', 'sanskrit']),
         "email" => $faker->unique()->safeEmail,
         "nationality" => $faker->randomElement(['C', 'E']),
-        "gender" => $faker->randomElement(['M', 'F']),
+        "gender" => $faker->randomElement(['male', 'female', 'other']),
         "civil_status" => $faker->randomElement(['C', 'S', 'D', 'V']),
-        "contact_options" => $faker->randomElement(['E', 'M', 'P']),
+        "contact_options" => $faker->randomElement(['email', 'message', 'phone']),
         "address" => $faker->address,
         "address2" => $faker->secondaryAddress,
         "postcode" => $faker->postcode,

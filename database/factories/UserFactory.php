@@ -27,5 +27,6 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => Str::random(16),
         'verification_token' => Str::random(64),
         'username' => $username,
+        'status' => $faker->randomElement(['active', 'blocked', 'deactivated']),
     ];
 });

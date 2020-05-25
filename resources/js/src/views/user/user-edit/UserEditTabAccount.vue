@@ -17,7 +17,9 @@
           <img :src="data.avatar" class="mr-8 rounded h-24 w-24" />
           <!-- <vs-avatar :src="data.avatar" size="80px" class="mr-4" /> -->
           <div>
-            <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">{{ data.name  }}</p>
+            <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">
+              {{ data.first_name }} {{ data.last_name }}
+            </p>
             <input type="file" class="hidden" ref="update_avatar_input" @change="update_avatar" accept="image/*">
 
             <!-- Toggle comment of below buttons as one for actual flow & currently shown is only for demo -->
@@ -36,8 +38,11 @@
         <vs-input class="w-full mt-4" label="Username" v-model="data_local.username" v-validate="'required|alpha_num'" name="username" />
         <span class="text-danger text-sm"  v-show="errors.has('username')">{{ errors.first('username') }}</span>
 
-        <vs-input class="w-full mt-4" label="Name" v-model="data_local.name" v-validate="'required|alpha_spaces'" name="name" />
-        <span class="text-danger text-sm"  v-show="errors.has('name')">{{ errors.first('name') }}</span>
+        <vs-input class="w-full mt-4" label="Name" v-model="data_local.first_name" v-validate="'required|alpha_spaces'" name="first_name" />
+        <span class="text-danger text-sm"  v-show="errors.has('first_name')">{{ errors.first('first_name') }}</span>
+
+        <vs-input class="w-full mt-4" label="Last Name" v-model="data_local.last_name" v-validate="'required|alpha_spaces'" name="last_name" />
+        <span class="text-danger text-sm"  v-show="errors.has('last_name')">{{ errors.first('last_name') }}</span>
 
         <vs-input class="w-full mt-4" label="Email" v-model="data_local.email" type="email" v-validate="'required|email'" name="email" />
         <span class="text-danger text-sm"  v-show="errors.has('email')">{{ errors.first('email') }}</span>

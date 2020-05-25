@@ -40,6 +40,30 @@
             "faker": "unique()->safeEmail"
         },
         {
+            "name": "username",
+            "type": "string",
+            "length": 50,
+            "label" : "username",
+            "htmlType": "text",
+            "validations": "min:3|max:80",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "unique()->username"
+        },
+        {
+            "name": "status",
+            "type": "string",
+            "length": 20,
+            "label" : "Status",
+            "htmlType": "text",
+            "validations": "max:20",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "randomElement(['active', 'blocked', 'desactived'])"
+        },
+        {
             "name": "email_verified_at",
             "type": "timestamp",
             "length": 80,
