@@ -6,40 +6,15 @@
 >
     <testsuites>
         <testsuite name="Unit">
-            <directory suffix="Test.php">./Modules/Auth/Tests/Unit</directory>
-            <directory suffix="Test.php">./Modules/Blog/Tests/Unit</directory>
-            <directory suffix="Test.php">./Modules/Core/Tests/Unit</directory>
-            <directory suffix="Test.php">./Modules/Dashboard/Tests/Unit</directory>
-            <directory suffix="Test.php">./Modules/Menu/Tests/Unit</directory>
-            <directory suffix="Test.php">./Modules/Page/Tests/Unit</directory>
-            <directory suffix="Test.php">./Modules/Setting/Tests/Unit</directory>
-            <directory suffix="Test.php">./Modules/User/Tests/Unit</directory>
-            <directory suffix="Test.php">./Modules/Workshop/Tests/Unit</directory>
+            <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
-
         <testsuite name="Feature">
-            <directory suffix="Test.php">./Modules/Auth/Tests/Feature</directory>
-            <directory suffix="Test.php">./Modules/Blog/Tests/Feature</directory>
-            <directory suffix="Test.php">./Modules/Core/Tests/Feature</directory>
-            <directory suffix="Test.php">./Modules/Dashboard/Tests/Feature</directory>
-            <directory suffix="Test.php">./Modules/Menu/Tests/Feature</directory>
-            <directory suffix="Test.php">./Modules/Page/Tests/Feature</directory>
-            <directory suffix="Test.php">./Modules/Setting/Tests/Feature</directory>
-            <directory suffix="Test.php">./Modules/User/Tests/Feature</directory>
-            <directory suffix="Test.php">./Modules/User/Workshop/Feature</directory>
+            <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./app</directory>
-            <directory suffix=".php">./Modules/Auth</directory>
-            <directory suffix=".php">./Modules/Blog</directory>
-            <directory suffix=".php">./Modules/Core</directory>
-            <directory suffix=".php">./Modules/Dashboard</directory>
-            <directory suffix=".php">./Modules/Menu</directory>
-            <directory suffix=".php">./Modules/Page</directory>
-            <directory suffix=".php">./Modules/Setting</directory>
-            <directory suffix=".php">./Modules/User</directory>
         </whitelist>
     </filter>
     <php>

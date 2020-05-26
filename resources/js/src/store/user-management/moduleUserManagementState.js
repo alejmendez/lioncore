@@ -8,6 +8,8 @@
 ==========================================================================================*/
 
 export default {
+  filtersValues: [],
+  filters: [],
   users: [],
   recordsFiltered: 0,
   recordsTotal: 0

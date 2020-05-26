@@ -8,6 +8,7 @@
 ==========================================================================================*/
 
 import axios from '@/axios.js'
+import qs from 'qs'
 
 export default {
   // addItem({ commit }, item) {
@@ -20,9 +21,27 @@ export default {
   //       .catch((error) => { reject(error) })
   //   })
   // },
-  list ({ commit }, data) {
+  getFiltersValues ({ commit }, data) {
     return new Promise((resolve, reject) => {
-      axios.get('users', data)
+      axios.get('users/filters', data)
+        .then((response) => {
+          commit('SET_FILTERS_VALUES', response.data.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  setFilters ({ commit }, data) {
+    commit('SET_FILTERS', data)
+  },
+  list ({ commit }, params) {
+    return new Promise((resolve, reject) => {
+      axios.get('users', {
+        params,
+        paramsSerializer: params => {
+          return qs.stringify(params)
+        }
+      })
         .then((response) => {
           commit('SET_DATA', response.data.data)
           commit('RECORDS_FILTERED', response.data.recordsFiltered)

@@ -9,6 +9,12 @@
 
 
 export default {
+  SET_FILTERS_VALUES (state, filtersValues) {
+    state.filtersValues = filtersValues
+  },
+  SET_FILTERS (state, filters) {
+    state.filters = filters
+  },
   SET_DATA (state, users) {
     state.users = users
   },

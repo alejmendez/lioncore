@@ -10,10 +10,10 @@
     <title>Lioncore</title>
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset(mix('css/main.css')) . '?_=' . time() }}" />
-    <link rel="stylesheet" href="{{ asset(mix('css/iconfont.css')) . '?_=' . time() }}" />
-    <link rel="stylesheet" href="{{ asset(mix('css/material-icons/material-icons.css')) . '?_=' . time() }}" />
-    <link rel="stylesheet" href="{{ asset(mix('css/vuesax.css')) . '?_=' . time() }}" />
-    <link rel="stylesheet" href="{{ asset(mix('css/prism-tomorrow.css')) . '?_=' . time() }}" />
+    <link rel="stylesheet" href="{{ asset(mix('css/iconfont.css')) }}" />
+    <link rel="stylesheet" href="{{ asset(mix('css/material-icons/material-icons.css')) }}" />
+    <link rel="stylesheet" href="{{ asset(mix('css/vuesax.css')) }}" />
+    <link rel="stylesheet" href="{{ asset(mix('css/prism-tomorrow.css')) }}" />
     <link rel="stylesheet" href="{{ asset(mix('css/app.css')) . '?_=' . time() }}" />
 
     <!-- Favicon -->
@@ -26,8 +26,7 @@
         Please enable it to continue.
       </strong>
     </noscript>
-    <div id="app">
-    </div>
+    <div id="app"></div>
 
     <!-- <script src="js/app.js"></script> -->
     <script src="{{ asset(mix('js/app.js')) . '?_=' . time() }}"></script>

@@ -34,6 +34,15 @@ class UserController extends BaseController
         return $this->showResponse($userResource);
     }
 
+    public function filters($id)
+    {
+        $filters = [
+
+        ];
+
+        return $this->showResponse($filters);
+    }
+
     public function store(UserRequest $request)
     {
         $instance = User::create($request->all());
