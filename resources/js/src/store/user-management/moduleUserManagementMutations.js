@@ -15,8 +15,8 @@ export default {
   SET_FILTERS (state, filters) {
     state.filters = filters
   },
-  SET_DATA (state, users) {
-    state.users = users
+  SET_DATA (state, data) {
+    state.data = data
   },
   RECORDS_FILTERED (state, recordsFiltered) {
     state.recordsFiltered = recordsFiltered

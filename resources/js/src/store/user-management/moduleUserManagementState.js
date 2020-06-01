@@ -10,7 +10,7 @@
 export default {
   filtersValues: [],
   filters: [],
-  users: [],
+  data: [],
   recordsFiltered: 0,
   recordsTotal: 0
 }
