@@ -39,7 +39,7 @@ mix.js('resources/js/app.js', 'public/js')
   .copyDirectory('node_modules/material-icons/iconfont/material-icons.css', 'public/css/material-icons/material-icons.css') // Material Icon fonts css
   .copy('node_modules/prismjs/themes/prism-tomorrow.css', 'public/css/prism-tomorrow.css') // Prism Tomorrow theme css
   .copyDirectory('resources/assets/images', 'public/images') // Copy all images from resources to public folder
-
+  .sourceMaps()
 
 // Change below options according to your requirement
 if (mix.inProduction()) {

@@ -1,13 +1,9 @@
 <template>
-  <div class="vx-card p-6">
-    <div class="flex flex-wrap items-center"></div>
-
+  <div class="vs-con-loading__container tableContainerCrud">
     <!-- Table -->
     <vs-table
       ref="table"
       search
-      striped
-      hoverFlat
       :sst="true"
       :data="usersData"
       :max-items="itemsPerPage"
@@ -25,30 +21,6 @@
             <span class="ml-2 text-base text-primary">Add New User</span>
           </div>
         </div>
-
-        <!-- ITEMS PER PAGE -->
-        <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4 items-per-page-handler">
-          <div
-            class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium"
-          >
-            <span
-              class="mr-2"
-            >{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ totalItems - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : totalItems }} of {{ queriedItems }}</span>
-            <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
-          </div>
-          <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
-          <vs-dropdown-menu>
-            <vs-dropdown-item @click="itemsPerPage = 10">
-              <span>10</span>
-            </vs-dropdown-item>
-            <vs-dropdown-item @click="itemsPerPage = 25">
-              <span>25</span>
-            </vs-dropdown-item>
-            <vs-dropdown-item @click="itemsPerPage = 50">
-              <span>50</span>
-            </vs-dropdown-item>
-          </vs-dropdown-menu>
-        </vs-dropdown>
       </div>
 
       <template slot="thead">
@@ -81,7 +53,35 @@
         </tbody>
       </template>
     </vs-table>
-    <vs-pagination :total="numberOfPages" v-model="page"></vs-pagination>
+    <div>
+      <vs-row class="mt-5">
+        <vs-col vs-type="flex" vs-w="6">
+          <!-- ITEMS PER PAGE -->
+          Showing
+          {{ currentPage * itemsPerPage - (itemsPerPage - 1) }}
+          to
+          <vs-dropdown>
+            <a class="a-icon" href="#">
+              {{ itemsPerPage }}
+              <vs-icon class="" icon="expand_more"></vs-icon>
+            </a>
+            <div style="margin-left: 5px; height: 18px;">
+              <vs-dropdown-menu>
+                <vs-dropdown-item :key="index" v-for="item, index in optionsList" @click="changeItemsPerPage(item)">
+                  {{ item }}
+                </vs-dropdown-item>
+              </vs-dropdown-menu>
+            </div>
+          </vs-dropdown>
+          of
+          {{ queriedItems }}
+          entries
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+          <vs-pagination :total="numberOfPages" v-model="page"></vs-pagination>
+        </vs-col>
+      </vs-row>
+    </div>
   </div>
 </template>
 
@@ -95,6 +95,7 @@ export default {
     return {
       timer: null,
       page: 1,
+      optionsList: [10, 25, 50],
       itemsPerPage: 10,
       isMounted: false,
       listColumns,
@@ -130,6 +131,15 @@ export default {
     addNew () {
       this.$router.push('/user/new').catch(() => {})
     },
+    loading () {
+      this.$vs.loading({
+        container: '.tableContainerCrud',
+        scale: 0.6
+      })
+    },
+    loaded () {
+      this.$vs.loading.close('.tableContainerCrud > .con-vs-loading')
+    },
     handleSearch (searching) {
       if (this.timer) {
         clearTimeout(this.timer)
@@ -149,11 +159,14 @@ export default {
     },
     handleSort (key, active) {
       this.datatable.draw++
-      console.log(key + ' - ' + active)
-      console.log(this.listColumns)
-      console.log(this.listColumns.indexOf(key))
+
       this.datatable.order[0].column = this.listColumns.indexOf(key)
       this.datatable.order[0].dir = active
+      this.getData()
+    },
+    changeItemsPerPage (cant) {
+      this.datatable.length = cant
+      this.itemsPerPage = cant
       this.getData()
     },
     editRecord (id) {
@@ -188,16 +201,23 @@ export default {
       })
     },
     getData () {
-      this.$store.dispatch('userManagement/list', this.datatable).catch(err => {
-        console.error(err)
-      })
+      try {
+        this.loading()
+        this.$store.dispatch('userManagement/list', this.datatable)
+          .then(() => this.loaded())
+          .catch(() => this.loaded())
+      } catch (err) {
+        this.loaded()
+      }
     }
   },
   mounted () {
     this.isMounted = true
   },
   created () {
-    this.getData()
+    setTimeout(() => {
+      this.getData()
+    }, 300)
   }
 }
 </script>

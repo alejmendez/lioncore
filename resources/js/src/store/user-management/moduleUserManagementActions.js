@@ -35,7 +35,7 @@ export default {
     commit('SET_FILTERS', data)
   },
   list ({ commit }, params) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       axios.get('users', {
         params,
         paramsSerializer: params => {
@@ -48,7 +48,6 @@ export default {
           commit('RECORDS_TOTAL', response.data.recordsTotal)
           resolve(response)
         })
-        .catch((error) => { reject(error) })
     })
   },
   fetchUser (context, id) {
