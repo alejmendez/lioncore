@@ -18,7 +18,7 @@
             @click="addNew"
           >
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <span class="ml-2 text-base text-primary">Add New User</span>
+            <span class="ml-2 text-base text-primary">Add new {{ entityName }}</span>
           </div>
         </div>
       </div>
@@ -90,6 +90,7 @@ import { datatables } from '@/utils'
 
 export default {
   props: {
+    entityName: String,
     listColumns: Array,
     page: {
       type: Number,
@@ -195,7 +196,7 @@ export default {
         type: 'confirm',
         color: 'danger',
         title: 'Confirm Delete',
-        text: `You are about to delete "${this.params.data.username}"`,
+        text: `Are you sure you want to delete the ${ this.entityName }?`,
         accept: this.deleteRecord,
         acceptText: 'Delete'
       })
@@ -214,8 +215,8 @@ export default {
       this.getData()
       this.$vs.notify({
         color: 'success',
-        title: 'User Deleted',
-        text: 'The selected user was successfully deleted'
+        title: 'Record Deleted',
+        text: `The selected ${ this.entityName } was successfully deleted.`
       })
     },
     getData () {

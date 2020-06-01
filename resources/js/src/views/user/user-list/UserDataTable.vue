@@ -1,5 +1,6 @@
 <template>
   <table-crud
+    entityName="user"
     newRoute="/user/new"
     editRoute="/user"
     getDataAction="userManagement/list"
