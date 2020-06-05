@@ -57,5 +57,24 @@ if (mix.inProduction()) {
       chunkFilename: 'js/chunks/[name].js'
     }
   })
+    .options({
+      hmrOptions: {
+        host: 'lioncore.oo',  // site's host name
+        port: 9001
+      }
+    })
+    .webpackConfig({
+      // add any webpack dev server config here
+      devServer: {
+        proxy: {
+          host: '0.0.0.0',  // host machine ip
+          port: 8080
+        },
+        watchOptions:{
+          aggregateTimeout:200,
+          poll:5000
+        }
+      }
+    });
 }
 

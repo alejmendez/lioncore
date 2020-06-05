@@ -7,8 +7,8 @@
       :sst="true"
       :data="tableData"
       :max-items="itemsPerPage"
-      @search="handleSearch"
-      @sort="handleSort"
+      @search="search"
+      @sort="sort"
     >
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
         <div class="flex flex-wrap-reverse items-center data-list-btn-container">
@@ -24,9 +24,13 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="email">Email</vs-th>
-        <vs-th sort-key="username">Username</vs-th>
-        <vs-th sort-key="person.first_name">Name</vs-th>
+        <vs-th
+          v-for="th in thead"
+          :key="th.name"
+          :sort-key="th.key"
+          >
+          {{ th.name }}
+        </vs-th>
         <vs-th>Action</vs-th>
       </template>
 
@@ -46,7 +50,7 @@
                 icon="TrashIcon"
                 svgClasses="w-5 h-5 hover:text-danger stroke-current"
                 class="ml-2"
-                @click.stop="confirmDeleteRecord(tr.id)"
+                @click.stop="deleteRecord(tr.id)"
               />
             </vs-td>
           </vs-tr>
@@ -67,8 +71,8 @@
             </a>
             <div style="margin-left: 5px; height: 18px;">
               <vs-dropdown-menu>
-                <vs-dropdown-item :key="index" v-for="item, index in optionsList" @click="changeItemsPerPage(item)">
-                  {{ item }}
+                <vs-dropdown-item :key="item.id" v-for="item in optionsListCalc" @click="changeItemsPerPage(item)">
+                  {{ item.option }}
                 </vs-dropdown-item>
               </vs-dropdown-menu>
             </div>
@@ -92,6 +96,7 @@ export default {
   props: {
     entityName: String,
     listColumns: Array,
+    thead: Array,
     page: {
       type: Number,
       default: 1
@@ -108,8 +113,6 @@ export default {
     management: String,
 
     getDataAction: String,
-    deleteAction: String,
-    editRoute: String,
     newRoute: String
   },
   data () {
@@ -132,55 +135,69 @@ export default {
       return Math.ceil(this.$store.state[this.management].recordsTotal / this.itemsPerPage)
     },
     currentPage () {
-      if (this.isMounted) {
-        return this.$refs.table.currentx
-      }
-      return 0
+      return this.isMounted ? this.$refs.table.currentx : 0
     },
     queriedItems () {
       return this.$refs.table ? this.$refs.table.queriedResults.length : this.totalItems
+    },
+    optionsListCalc () {
+      return this.optionsList.map(ele => {
+        return {id: ele, option: ele}
+      })
     }
   },
   watch: {
     page (val) {
-      this.handleChangePage(val)
+      this.changePage(val)
     }
   },
   methods: {
     addNew () {
+      this.$emit('add-new')
       this.$router.push(this.newRoute).catch(() => {})
     },
     loading () {
+      this.$emit('loading')
       this.$vs.loading({
         container: '.tableContainerCrud',
         scale: 0.6
       })
     },
     loaded () {
+      this.$emit('loaded')
       this.$vs.loading.close('.tableContainerCrud > .con-vs-loading')
     },
-    handleSearch (searching) {
+    search (searching) {
       if (this.timer) {
         clearTimeout(this.timer)
         this.timer = null
       }
 
       this.timer = setTimeout(() => {
+        this.$emit('search')
         this.datatable.draw++
         this.datatable.search.value = searching
         this.getData()
       }, 400)
     },
-    handleChangePage (page) {
+    changePage (page) {
+      this.$emit('change-page')
       this.datatable.draw++
       this.datatable.start = (page - 1) * this.itemsPerPage
       this.getData()
     },
-    handleSort (key, active) {
+    sort (key, active) {
       this.datatable.draw++
+      this.$emit('sort')
 
-      this.datatable.order[0].column = this.listColumns.indexOf(key)
-      this.datatable.order[0].dir = active
+      if (active !== null) {
+        this.datatable.order[0].column = this.listColumns.indexOf(key)
+        this.datatable.order[0].dir = active
+      } else {
+        this.datatable.order[0].column = 0
+        this.datatable.order[0].dir = 'asc'
+      }
+
       this.getData()
     },
     changeItemsPerPage (cant) {
@@ -189,27 +206,10 @@ export default {
       this.getData()
     },
     editRecord (id) {
-      this.$router.push(`${this.editRoute}/${id}`).catch(() => {})
-    },
-    confirmDeleteRecord () {
-      this.$vs.dialog({
-        type: 'confirm',
-        color: 'danger',
-        title: 'Confirm Delete',
-        text: `Are you sure you want to delete the ${ this.entityName }?`,
-        accept: this.deleteRecord,
-        acceptText: 'Delete'
-      })
+      this.$emit('edit-record', id)
     },
     deleteRecord (id) {
-      this.$store
-        .dispatch(this.deleteAction, id)
-        .then(() => {
-          this.showDeleteSuccess()
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      this.$emit('delete-record', id)
     },
     showDeleteSuccess () {
       this.getData()
@@ -220,6 +220,7 @@ export default {
       })
     },
     getData () {
+      this.$emit('get-data')
       try {
         this.loading()
         this.$store.dispatch(this.getDataAction, this.datatable)

@@ -32,32 +32,32 @@ export default {
     return {
 
       // Filter Options
-      roleFilter: { label: 'All', value: 'all' },
+      roleFilter: { label: 'All', value: '' },
       roleOptions: [
-        { label: 'All', value: 'all' },
+        { label: 'All', value: '' },
         { label: 'Admin', value: 'admin' },
         { label: 'User', value: 'user' },
         { label: 'Staff', value: 'staff' }
       ],
 
-      statusFilter: { label: 'All', value: 'all' },
+      statusFilter: { label: 'All', value: '' },
       statusOptions: [
-        { label: 'All', value: 'all' },
+        { label: 'All', value: '' },
         { label: 'Active', value: 'active' },
         { label: 'Deactivated', value: 'deactivated' },
         { label: 'Blocked', value: 'blocked' }
       ],
 
-      isVerifiedFilter: { label: 'All', value: 'all' },
+      isVerifiedFilter: { label: 'All', value: '' },
       isVerifiedOptions: [
-        { label: 'All', value: 'all' },
+        { label: 'All', value: '' },
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
       ],
 
-      departmentFilter: { label: 'All', value: 'all' },
+      departmentFilter: { label: 'All', value: '' },
       departmentOptions: [
-        { label: 'All', value: 'all' },
+        { label: 'All', value: '' },
         { label: 'Sales', value: 'sales' },
         { label: 'Development', value: 'development' },
         { label: 'Management', value: 'management' }
@@ -72,7 +72,7 @@ export default {
       this.setColumnFilter('status', obj.value)
     },
     isVerifiedFilter (obj) {
-      const val = obj.value === 'all' ? 'all' : obj.value === 'yes' ? 'true' : 'false'
+      const val = obj.value === '' ? '' : obj.value === 'yes' ? 'true' : 'false'
       this.setColumnFilter('is_verified', val)
     },
     departmentFilter (obj) {
@@ -93,7 +93,7 @@ export default {
     },
     resetColFilters () {
       // Reset Filter Options
-      this.roleFilter = this.statusFilter = this.isVerifiedFilter = this.departmentFilter = { label: 'All', value: 'all' }
+      this.roleFilter = this.statusFilter = this.isVerifiedFilter = this.departmentFilter = { label: 'All', value: '' }
 
       this.$refs.filterCard.removeRefreshAnimation()
     }

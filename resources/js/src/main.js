@@ -41,7 +41,7 @@ import acl from './acl/acl'
 import './globalComponents.js'
 
 // Vue Router
-import router from './router'
+import router from './router/index'
 
 
 // Vuex Store
