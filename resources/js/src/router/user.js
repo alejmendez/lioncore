@@ -14,28 +14,28 @@ exports.router = [
     }
   },
   {
-    path: '/apps/user/user-view/:userId',
-    name: 'app-user-view',
-    component: () => import('@/views/user/UserView.vue'),
+    path: '/user/new',
+    name: 'app-user-new',
+    component: () => import('@/views/user/user-form/UserForm.vue'),
     meta: {
       breadcrumb: [
         { title: 'Home', url: '/' },
-        { title: 'User' },
-        { title: 'View', active: true }
+        { title: 'User', url: '/user' },
+        { title: 'New', active: true }
       ],
-      pageTitle: 'users.title.view',
+      pageTitle: 'users.title.new',
       rule: 'editor'
     }
   },
   {
-    path: '/user/:userId',
+    path: '/user/:id',
     name: 'app-user-edit',
     component: () => import('@/views/user/user-form/UserForm.vue'),
     meta: {
       breadcrumb: [
         { title: 'Home', url: '/' },
-        { title: 'User' },
-        { title: 'Form', active: true }
+        { title: 'User', url: '/user' },
+        { title: 'Edit', active: true }
       ],
       pageTitle: 'users.title.edit',
       rule: 'editor'
