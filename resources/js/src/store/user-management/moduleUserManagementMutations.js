@@ -9,6 +9,9 @@
 
 
 export default {
+  SET_MODULE_DATA (state, moduleData) {
+    state.moduleData = moduleData
+  },
   SET_FILTERS_VALUES (state, filtersValues) {
     state.filtersValues = filtersValues
   },

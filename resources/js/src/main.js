@@ -57,8 +57,7 @@ import './filters/filters'
 
 
 // VeeValidate
-import VeeValidate from 'vee-validate'
-Vue.use(VeeValidate)
+import './plugins/validator'
 
 // Vuejs - Vue wrapper for hammerjs
 import { VueHammer } from 'vue2-hammer'

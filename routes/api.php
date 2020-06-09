@@ -30,7 +30,9 @@ Route::prefix('v1')->group(function () {
         Route::prefix('users')->name('users.')->group(function () {
             Route::get('/', 'UserController@index')->name('index')
                 ->middleware('permission:user');
-            Route::get('/filters', 'UserController@filters')->name('filters')
+                Route::get('/filters', 'UserController@filters')->name('filters')
+                ->middleware('permission:user');
+            Route::get('/module-data', 'UserController@moduleData')->name('module-data')
                 ->middleware('permission:user');
             Route::get('/{user}', 'UserController@show')->name('show')
                 ->middleware('permission:user show');

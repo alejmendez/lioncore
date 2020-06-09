@@ -34,6 +34,16 @@ export default {
   setFilters ({ commit }, data) {
     commit('SET_FILTERS', data)
   },
+  getModuleData ({ commit }) {
+    return new Promise((resolve, reject) => {
+      axios.get('users/module-data')
+        .then((response) => {
+          commit('SET_MODULE_DATA', response.data.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
   list ({ commit }, params) {
     return new Promise((resolve) => {
       axios.get('users', {

@@ -34,13 +34,73 @@ class UserController extends BaseController
         return $this->showResponse($userResource);
     }
 
-    public function filters($id)
+    public function moduleData()
     {
-        $filters = [
+        $moduleData = [
+            'status' => [
+                [
+                    'label' => 'Active',
+                    'value' => 'active'
+                ],
+                [
+                    'label' => 'Blocked',
+                    'value' => 'blocked'
+                ],
+                [
+                    'label' => 'Deactivated',
+                    'value' => 'deactivated'
+                ]
+            ],
+            'roles' => [
+                [
+                    'label' => 'Admin',
+                    'value' => 'admin'
+                ],
+                [
+                    'label' => 'User',
+                    'value' => 'user'
+                ],
+                [
+                    'label' => 'Staff',
+                    'value' => 'staff'
+                ]
+            ],
+            'langs' => [
+                [
+                    'label' => 'English',
+                    'value' => 'english'
+                ],
+                [
+                    'label' => 'Spanish',
+                    'value' => 'spanish'
+                ],
+                [
+                    'label' => 'French',
+                    'value' => 'french'
+                ],
+                [
+                    'label' => 'Russian',
+                    'value' => 'russian'
+                ],
+                [
+                    'label' => 'German',
+                    'value' => 'german'
+                ],
+                [
+                    'label' => 'Arabic',
+                    'value' => 'arabic'
+                ],
+                [
+                    'label' => 'Sanskrit',
+                    'value' => 'sanskrit'
+                ]
+            ],
+            'permissions' => [
 
+            ]
         ];
 
-        return $this->showResponse($filters);
+        return $this->showResponse($moduleData);
     }
 
     public function store(UserRequest $request)

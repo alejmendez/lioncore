@@ -1,38 +1,44 @@
 <template>
   <div>
-    <vs-input
-        v-validate="'required|email|min:3'"
-        data-vv-validate-on="blur"
-        name="email"
-        icon-no-border
-        icon="icon icon-user"
-        icon-pack="feather"
-        :label-placeholder="$t('login.email')"
-        v-model="email"
-        class="w-full"/>
-    <span class="text-danger text-sm">{{ errors.first('email') }}</span>
+    <ValidationObserver v-slot="{ handleSubmit, invalid }">
+      <form @submit.prevent="handleSubmit(loginJWT)">
+        <ValidationProvider rules="required|email|min:3" v-slot="{ errors }">
+          <vs-input
+            name="email"
+            class="w-full"
+            icon-no-border
+            icon="icon icon-user"
+            icon-pack="feather"
+            v-model="email"
+            :label-placeholder="$t('login.email')"
+            />
+          <span class="text-danger text-sm">{{ errors[0] }}</span>
+        </ValidationProvider>
 
-    <vs-input
-        data-vv-validate-on="blur"
-        v-validate="'required|min:6|max:10'"
-        type="password"
-        name="password"
-        icon-no-border
-        icon="icon icon-lock"
-        icon-pack="feather"
-        :label-placeholder="$t('login.password')"
-        v-model="password"
-        class="w-full mt-6" />
-    <span class="text-danger text-sm">{{ errors.first('password') }}</span>
+        <ValidationProvider rules="required|min:6|max:10" v-slot="{ errors }">
+          <vs-input
+            name="password"
+            type="password"
+            class="w-full mt-6"
+            icon-no-border
+            icon="icon icon-lock"
+            icon-pack="feather"
+            v-model="password"
+            :label-placeholder="$t('login.password')"
+            />
+          <span class="text-danger text-sm">{{ errors[0] }}</span>
+        </ValidationProvider>
 
-    <div class="flex flex-wrap justify-between my-5">
-        <vs-checkbox v-model="checkbox_remember_me" class="mb-3">{{ $t('login.remember_me') }}</vs-checkbox>
-        <router-link to="/pages/forgot-password">{{ $t('login.forgot_password') }}</router-link>
-    </div>
-    <div class="flex flex-wrap justify-between mb-3">
-      <vs-button  type="border" @click="registerUser">{{ $t('login.register') }}</vs-button>
-      <vs-button :disabled="!validateForm" @click="loginJWT">{{ $t('login.login') }}</vs-button>
-    </div>
+        <div class="flex flex-wrap justify-between my-5">
+          <vs-checkbox v-model="checkbox_remember_me" class="mb-3">{{ $t('login.remember_me') }}</vs-checkbox>
+          <router-link to="/pages/forgot-password">{{ $t('login.forgot_password') }}</router-link>
+        </div>
+        <div class="flex flex-wrap justify-between mb-3">
+          <vs-button type="border" @click="registerUser">{{ $t('login.register') }}</vs-button>
+          <vs-button button="submit" :disabled="invalid">{{ $t('login.login') }}</vs-button>
+        </div>
+      </form>
+    </ValidationObserver>
   </div>
 </template>
 
@@ -71,9 +77,7 @@ export default {
       return true
     },
     loginJWT () {
-
-      if (!this.checkLogin()) return
-
+      console.log('login...')
       // Loading
       this.$vs.loading()
 

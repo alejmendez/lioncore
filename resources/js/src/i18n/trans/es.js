@@ -11,6 +11,8 @@ import maintenance from './es/maintenance'
 import menu from './es/menu'
 import users from './es/users'
 
+import es from 'vee-validate/dist/locale/es.json'
+
 export default {
   login,
   register,
@@ -24,6 +26,7 @@ export default {
   maintenance,
   menu,
   users,
+  validation: es.messages,
   Home: 'Inicio',
   Admin: 'Administrador',
   Dashboard: 'Tablero',

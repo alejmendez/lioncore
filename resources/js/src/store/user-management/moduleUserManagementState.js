@@ -8,7 +8,8 @@
 ==========================================================================================*/
 
 export default {
-  filtersValues: [],
+  moduleData: {},
+  filtersValues: {},
   filters: [],
   data: [],
   recordsFiltered: 0,

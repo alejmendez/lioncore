@@ -1,4 +1,7 @@
+import en from 'vee-validate/dist/locale/en.json'
+
 export default {
+  validation: en.messages,
   Dashboard: 'Dashboard',
   eCommerce: 'eCommerce',
   Apps: 'Apps',
