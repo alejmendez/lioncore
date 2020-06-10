@@ -50,9 +50,8 @@ class GenerateGrud extends Command
     public function handle()
     {
         $models = (String) $this->argument('nameModel');
-        $module = (String) $this->argument('module');
 
-        $generatorCrud = new GeneratorCrud($models, $module, $this);
+        $generatorCrud = new GeneratorCrud($models, $this);
         $generatorCrud->run();
     }
 }

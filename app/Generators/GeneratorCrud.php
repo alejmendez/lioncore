@@ -20,21 +20,18 @@ use App\Generators\Translation;
 class GeneratorCrud implements Generator
 {
     protected $models;
-    protected $module;
     protected $console;
 
-    public function __construct(String $models, String $module, GenerateGrud $console = null)
+    public function __construct(String $models, GenerateGrud $console = null)
     {
         $this->console = $console;
-        $this->initVars($models, $module);
+        $this->initVars($models);
     }
 
-    public function initVars(String $models, String $module)
+    public function initVars(String $models)
     {
         $this->models = explode(',', $models);
         $this->models = array_map('trim', $this->models);
-
-        $this->module = $module;
 
         if (count($this->models) == 1) {
             if ($this->models[0] == '') {
@@ -89,7 +86,8 @@ class GeneratorCrud implements Generator
         }
 
         if (!isset($files[$nameModel])) {
-            return false;
+            $this->error(__('The model not exist'));
+            exit();
         }
 
         $model = $files[$nameModel];

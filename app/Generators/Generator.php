@@ -10,22 +10,17 @@ abstract class Generator
         $this->json = $json;
     }
 
-    protected function modulePath($path)
+    protected function appPath($path)
     {
         if (is_array($path)) {
             $path = implode(DIRECTORY_SEPARATOR, $path);
         }
-        return module_path($this->getModuleName(), $path);
+        return app_path($path);
     }
 
     protected function getNameModel()
     {
         return $this->json['model'];
-    }
-
-    protected function getModuleName()
-    {
-        return $this->json['module'];
     }
 
     protected function getFields()
@@ -42,7 +37,7 @@ abstract class Generator
 
     protected function view($view, $data)
     {
-        return view('workshop::' . $view, $data)->render();
+        return view($view, $data)->render();
     }
 
     protected function writeFilePhp($pathFile, $contents)

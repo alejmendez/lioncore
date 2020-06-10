@@ -21,7 +21,7 @@ class Controller extends Generator
         ]);
 
         $nameFile = ucwords($this->getNameModel()) . "Controller.php";
-        $pathFile = $this->modulePath(['Http', 'Controllers', $nameFile]);
+        $pathFile = $this->appPath(['Http', 'Controllers', $nameFile]);
 
         $this->writeFilePhp($pathFile, $contents);
     }

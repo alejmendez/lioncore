@@ -9,7 +9,7 @@ class Route extends Generator
     protected $routePath;
     public function generate()
     {
-        $this->routePath    = $this->modulePath(['Routes', 'api.php']);
+        $this->routePath    = $this->appPath(['Routes', 'api.php']);
         $this->routeLaravel();
         //$this->routeVue();
     }

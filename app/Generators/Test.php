@@ -24,7 +24,7 @@ class Test extends Generator
         ]);
 
         $nameFile = ucwords($this->getNameModel()) . "Test.php";
-        $pathFile = $this->modulePath(['Tests', 'Feature', $nameFile]);
+        $pathFile = $this->appPath(['Tests', 'Feature', $nameFile]);
         $this->writeFilePhp($pathFile, $contents);
     }
 }

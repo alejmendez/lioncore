@@ -18,7 +18,7 @@ class Model extends Generator
         ]);
 
         $nameFile = ucwords($this->getNameModel()) . ".php";
-        $pathFile = $this->modulePath(['Models', $nameFile]);
+        $pathFile = $this->appPath(['Models', $nameFile]);
 
         $this->writeFilePhp($pathFile, $contents);
     }

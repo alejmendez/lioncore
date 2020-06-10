@@ -55,16 +55,6 @@ class ModelCrud
         $this->file = $file;
     }
 
-    public function getModule()
-    {
-        return $this->module;
-    }
-
-    public function setModule($module)
-    {
-        $this->module = $module;
-    }
-
     public function getPath()
     {
         return $this->path;
@@ -97,6 +87,6 @@ class ModelCrud
 
     public function __toString()
     {
-        return '[' . $this->module . '] ' . $this->name;
+        return $this->name;
     }
 }

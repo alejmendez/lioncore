@@ -7,7 +7,6 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class Translation extends Generator
 {
-    protected $module;
     protected $nameModel;
     protected $jsonTrans = [];
     protected $tr;
@@ -22,14 +21,12 @@ class Translation extends Generator
             'en'
         ];
 
-        $this->module = strtolower($this->getModuleName());
         $this->nameModel = strtolower($this->getNameModel());
 
         foreach ($lenguajes as $locale) {
             $this->tr->setTarget($locale);
             $this->jsonTrans = [];
             //$nameFile = $locale . ".json";
-            //$pathFile = $this->modulePath(['Resources', 'lang', $nameFile]);
             $translationsPath = resource_path("lang/{$locale}.json");
 
             $this->defineSingularAndPlural();
@@ -45,7 +42,7 @@ class Translation extends Generator
     {
         $trans = json_decode(file_get_contents($translationsPath), true);
 
-        $trans[$this->module] = [
+        $trans[] = [
             $this->nameModel => $this->jsonTrans
         ];
 

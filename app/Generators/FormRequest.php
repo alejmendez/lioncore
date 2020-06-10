@@ -33,7 +33,7 @@ class FormRequest extends Generator
         ]);
 
         $nameFile = ucwords($this->getNameModel()) . "Request.php";
-        $pathFile = $this->modulePath(['Http', 'Requests', $nameFile]);
+        $pathFile = $this->appPath(['Http', 'Requests', $nameFile]);
 
         $this->writeFilePhp($pathFile, $contents);
     }

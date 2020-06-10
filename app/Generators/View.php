@@ -34,7 +34,6 @@ class View extends Generator
 
         return [
             'title' => $this->title,
-            'module' => $this->getModuleName(),
             'nameModel' => $this->getNameModel(),
             'jsonContent' => $fields,
             'fieldsSelect' => $fieldsSelect
@@ -43,7 +42,7 @@ class View extends Generator
 
     protected function getPath()
     {
-        $path = resource_path('assets/js/pages/' . ucwords($this->getModuleName()) . '/' . strtolower(Str::of($this->getNameModel())->plural()));
+        $path = resource_path('assets/js/pages/' . strtolower(Str::of($this->getNameModel())->plural()));
 
         if (!is_dir($path)) {
             @mkdir($path, 0777, true);

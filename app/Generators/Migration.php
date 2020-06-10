@@ -54,7 +54,7 @@ class Migration extends Generator
 
         $date = $this->json['dateMigration'] ?? date('Y_m_d_His');
         $nameFile = $date . "_create_" . Str::plural(strtolower($this->getNameModel())) . "_table.php";
-        $pathFile = $this->modulePath(['Database', 'Migrations', $nameFile]);
+        $pathFile = $this->appPath(['Database', 'Migrations', $nameFile]);
 
         $this->writeFilePhp($pathFile, $contents);
     }
