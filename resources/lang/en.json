@@ -96,7 +96,7 @@
     "property": {
         "_singular": "property",
         "_plural": "properties",
-        "property": "property",
+        "name": "name",
         "value": "value"
     }
 }

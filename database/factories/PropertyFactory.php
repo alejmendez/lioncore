@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 
 $factory->define(Property::class, function (Faker $faker) {
     return [
-        "property" => $faker->unique()->word,
+        "name" => $faker->unique()->word,
         "value" => $faker->unique()->word,
     ];
 });

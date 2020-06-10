@@ -17,10 +17,10 @@
             "inList": false
         },
         {
-            "name": "property",
+            "name": "name",
             "type": "string",
             "length": 50,
-            "label" : "property",
+            "label" : "name",
             "htmlType": "text",
             "validations": "min:3|max:50",
             "searchable": true,

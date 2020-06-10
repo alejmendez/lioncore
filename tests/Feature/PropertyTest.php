@@ -10,9 +10,9 @@ class PropertyTest extends TestCase
     {
         $faker = \Faker\Factory::create();
         return [
-            'property' => $faker->unique()->word,
+            'name' => $faker->unique()->word,
             'value' => $faker->unique()->word,
-                    ];
+        ];
     }
 
     /**
@@ -82,7 +82,7 @@ class PropertyTest extends TestCase
     public function test_can_list_propertys()
     {
         $propertys = factory(Property::class, 2)->create()->map(function ($property) {
-            return $property->only(['property', 'value']);
+            return $property->only(['name', 'value']);
         });
 
         $this->json('GET', route('propertys.index') . '?page=1&rowsPerPage=5')
@@ -93,7 +93,7 @@ class PropertyTest extends TestCase
                 'recordsFiltered',
                 'data' => [
                     [
-                        'property', 'value'
+                        'name', 'value'
                     ]
                 ],
             ]);

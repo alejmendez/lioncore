@@ -99,7 +99,7 @@
     "property": {
         "_singular": "propiedad",
         "_plural": "propiedades",
-        "property": "propiedad",
+        "name": "nombre",
         "value": "valor"
     }
 }

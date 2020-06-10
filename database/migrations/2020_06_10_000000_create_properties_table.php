@@ -15,9 +15,9 @@ class CreatePropertiesTable extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary('id');
 
-            $table->string('property', 50)->nullable();
-            $table->longText('value')->nullable();
-            
+            $table->string('name', 50)->unique();
+            $table->longText('value');
+
             $table->timestamps();
             $table->softDeletes();
         });

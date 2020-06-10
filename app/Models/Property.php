@@ -6,7 +6,7 @@ use App\Models\ModelBase;
 class Property extends ModelBase
 {
     protected $fillable = [
-        'property',
+        'name',
         'value',
-            ];
+    ];
 }

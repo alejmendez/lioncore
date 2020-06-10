@@ -22,7 +22,7 @@ class PropertyController extends BaseController
 
     public function index()
     {
-        $query = Property::select('property', 'value');
+        $query = Property::select('name', 'value');
         return DataTables::of($query)->make(true);
     }
 
