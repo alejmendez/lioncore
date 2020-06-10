@@ -43,5 +43,18 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{user}', 'UserController@destroy')->name('destroy')
                 ->middleware('permission:user destroy');
         });
+
+        Route::prefix('v1/properties')->name('properties.')->middleware('auth:api')->group(function () {
+            Route::get('/', 'PropertyController@index')->name('index')
+                ->middleware('permission:property');
+            Route::get('/{property}', 'PropertyController@show')->name('show')
+                ->middleware('permission:property show');
+            Route::post('/', 'PropertyController@store')->name('store')
+                ->middleware('permission:property store');
+            Route::put('/{property}', 'PropertyController@update')->name('update')
+                ->middleware('permission:property update');
+            Route::delete('/{property}', 'PropertyController@destroy')->name('destroy')
+                ->middleware('permission:property destroy');
+        });
     });
 });

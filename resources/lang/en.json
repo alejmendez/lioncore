@@ -57,44 +57,46 @@
     "actions": "Actions",
     "new_user": "New user",
     "super": "Super",
-    "core": {
-        "person": {
-            "_singular": "person",
-            "_plural": "people",
-            "dni": "days",
-            "First name": "First name",
-            "Last name": "Last name",
-            "Company": "Company",
-            "Avatar": "Avatar",
-            "Birthdate": "Birthdate",
-            "Room telephone": "Room telephone",
-            "Mobile phone": "Mobile phone",
-            "Web site": "Web site",
-            "Languages": "Languages",
-            "Email": "Email",
-            "nationality": "nationality",
-            "Gender": "Gender",
-            "Civil status": "Civil status",
-            "Contact Options": "Contact Options",
-            "AddressAddress Line 1": "Address Address Line 1",
-            "AddressAddress Line 2": "Address Address Line 2",
-            "Post Code": "Post Code",
-            "City": "City",
-            "State": "State",
-            "Country": "Country",
-            "Number of children": "Number of children",
-            "Observation": "Observation",
-            "Blood type": "Blood type"
-        }
+    "person": {
+        "_singular": "person",
+        "_plural": "people",
+        "dni": "days",
+        "First name": "First name",
+        "Last name": "Last name",
+        "Company": "Company",
+        "Avatar": "Avatar",
+        "Birthdate": "Birthdate",
+        "Room telephone": "Room telephone",
+        "Mobile phone": "Mobile phone",
+        "Web site": "Web site",
+        "Languages": "Languages",
+        "Email": "Email",
+        "nationality": "nationality",
+        "Gender": "Gender",
+        "Civil status": "Civil status",
+        "Contact Options": "Contact Options",
+        "AddressAddress Line 1": "Address Address Line 1",
+        "AddressAddress Line 2": "Address Address Line 2",
+        "Post Code": "Post Code",
+        "City": "City",
+        "State": "State",
+        "Country": "Country",
+        "Number of children": "Number of children",
+        "Observation": "Observation",
+        "Blood type": "Blood type"
     },
     "user": {
-        "user": {
-            "_singular": "user",
-            "_plural": "users",
-            "Email": "Email",
-            "email verified at": "email verified at",
-            "password": "password",
-            "verification token": "verification token"
-        }
+        "_singular": "user",
+        "_plural": "users",
+        "Email": "Email",
+        "email verified at": "email verified at",
+        "password": "password",
+        "verification token": "verification token"
+    },
+    "property": {
+        "_singular": "property",
+        "_plural": "properties",
+        "property": "property",
+        "value": "value"
     }
 }

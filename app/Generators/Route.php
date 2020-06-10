@@ -9,7 +9,7 @@ class Route extends Generator
     protected $routePath;
     public function generate()
     {
-        $this->routePath    = $this->appPath(['Routes', 'api.php']);
+        $this->routePath    = $this->path(['Routes', 'api.php']);
         $this->routeLaravel();
         //$this->routeVue();
     }
@@ -25,17 +25,17 @@ class Route extends Generator
             $version = env('API_VERSION', 'v1');
             $routeContent .=
             "\n" .
-            "Route::prefix('$version/" . Str::plural($nameRoute) . "')->name('" . Str::plural($nameRoute) . ".')->middleware('auth:api')->group(function () {\n" .
+            "Route::prefix('" . Str::plural($nameRoute) . "')->name('" . Str::plural($nameRoute) . ".')->group(function () {\n" .
             "    Route::get('/', '" . $nameController . "@index')->name('index')\n" .
-            "        ->middleware('can:$nameRoute');\n" .
+            "        ->middleware('permission:$nameRoute');\n" .
             "    Route::get('/{" . $nameRoute . "}', '" . $nameController . "@show')->name('show')\n" .
-            "        ->middleware('can:$nameRoute show');\n" .
+            "        ->middleware('permission:$nameRoute show');\n" .
             "    Route::post('/', '" . $nameController . "@store')->name('store')\n" .
-            "        ->middleware('can:$nameRoute store');\n" .
+            "        ->middleware('permission:$nameRoute store');\n" .
             "    Route::put('/{" . $nameRoute . "}', '" . $nameController . "@update')->name('update')\n" .
-            "        ->middleware('can:$nameRoute update');\n" .
+            "        ->middleware('permission:$nameRoute update');\n" .
             "    Route::delete('/{" . $nameRoute . "}', '" . $nameController . "@destroy')->name('destroy')\n" .
-            "        ->middleware('can:$nameRoute destroy');\n" .
+            "        ->middleware('permission:$nameRoute destroy');\n" .
             "});";
 
             $this->writeFile($this->routePath, $routeContent);

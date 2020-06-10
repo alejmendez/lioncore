@@ -1,6 +1,6 @@
-namespace Modules\{{ $json['module'] }}\Models;
+namespace App\Models;
 
-use Modules\Core\Models\ModelBase;
+use App\Models\ModelBase;
 
 class {{ ucwords($nameModel) }} extends ModelBase
 {

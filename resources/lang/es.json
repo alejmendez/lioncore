@@ -60,44 +60,46 @@
     "new_user": "Nuevo usuario",
     "super": "super",
     "exit": "Salir",
-    "core": {
-        "person": {
-            "_singular": "persona",
-            "_plural": "personas",
-            "dni": "dias",
-            "First name": "Nombre de pila",
-            "Last name": "Apellido",
-            "Company": "Empresa",
-            "Avatar": "Avatar",
-            "Birthdate": "Fecha de nacimiento",
-            "Room telephone": "Tel\u00e9fono de la habitaci\u00f3n",
-            "Mobile phone": "Tel\u00e9fono m\u00f3vil",
-            "Web site": "Sitio web",
-            "Languages": "Idiomas",
-            "Email": "Correo electr\u00f3nico",
-            "nationality": "nacionalidad",
-            "Gender": "G\u00e9nero",
-            "Civil status": "Estado civil",
-            "Contact Options": "Opciones de contacto",
-            "AddressAddress Line 1": "Direcci\u00f3n Direcci\u00f3n L\u00ednea 1",
-            "AddressAddress Line 2": "Direcci\u00f3n Direcci\u00f3n L\u00ednea 2",
-            "Post Code": "C\u00f3digo postal",
-            "City": "Ciudad",
-            "State": "Estado",
-            "Country": "Pa\u00eds",
-            "Number of children": "Numero de ni\u00f1os",
-            "Observation": "Observaci\u00f3n",
-            "Blood type": "Tipo de sangre"
-        }
+    "person": {
+        "_singular": "persona",
+        "_plural": "personas",
+        "dni": "dias",
+        "First name": "Nombre de pila",
+        "Last name": "Apellido",
+        "Company": "Empresa",
+        "Avatar": "Avatar",
+        "Birthdate": "Fecha de nacimiento",
+        "Room telephone": "Tel\u00e9fono de la habitaci\u00f3n",
+        "Mobile phone": "Tel\u00e9fono m\u00f3vil",
+        "Web site": "Sitio web",
+        "Languages": "Idiomas",
+        "Email": "Correo electr\u00f3nico",
+        "nationality": "nacionalidad",
+        "Gender": "G\u00e9nero",
+        "Civil status": "Estado civil",
+        "Contact Options": "Opciones de contacto",
+        "AddressAddress Line 1": "Direcci\u00f3n Direcci\u00f3n L\u00ednea 1",
+        "AddressAddress Line 2": "Direcci\u00f3n Direcci\u00f3n L\u00ednea 2",
+        "Post Code": "C\u00f3digo postal",
+        "City": "Ciudad",
+        "State": "Estado",
+        "Country": "Pa\u00eds",
+        "Number of children": "Numero de ni\u00f1os",
+        "Observation": "Observaci\u00f3n",
+        "Blood type": "Tipo de sangre"
     },
     "user": {
-        "user": {
-            "_singular": "usuario",
-            "_plural": "los usuarios",
-            "Email": "Email",
-            "email verified at": "correo electr\u00f3nico verificado en",
-            "password": "contrase\u00f1a",
-            "verification token": "token de verificaci\u00f3n"
-        }
+        "_singular": "usuario",
+        "_plural": "los usuarios",
+        "Email": "Email",
+        "email verified at": "correo electr\u00f3nico verificado en",
+        "password": "contrase\u00f1a",
+        "verification token": "token de verificaci\u00f3n"
+    },
+    "property": {
+        "_singular": "propiedad",
+        "_plural": "propiedades",
+        "property": "propiedad",
+        "value": "valor"
     }
 }

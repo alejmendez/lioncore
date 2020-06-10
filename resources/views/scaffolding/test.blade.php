@@ -1,6 +1,6 @@
-namespace Modules\{{ $json['module'] }}\Tests\Feature;
+namespace App\Tests\Feature;
 
-use Modules\{{ $json['module'] }}\Models\{{ ucwords($nameModel) }};
+use App\Models\{{ ucwords($nameModel) }};
 use Tests\TestCase;
 
 class {{ ucwords($nameModel) }}Test extends TestCase

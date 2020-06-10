@@ -42,9 +42,7 @@ class Translation extends Generator
     {
         $trans = json_decode(file_get_contents($translationsPath), true);
 
-        $trans[] = [
-            $this->nameModel => $this->jsonTrans
-        ];
+        $trans[$this->nameModel] = $this->jsonTrans;
 
         $trans = json_encode($trans, JSON_PRETTY_PRINT);
 

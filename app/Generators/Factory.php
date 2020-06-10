@@ -17,7 +17,7 @@ class Factory extends Generator
         ]);
 
         $nameFile = ucwords($this->getNameModel()) . "Factory.php";
-        $pathFile = $this->appPath(['Database', 'factories', $nameFile]);
+        $pathFile = $this->path(['Database', 'factories', $nameFile]);
         $this->writeFilePhp($pathFile, $contents);
     }
 }

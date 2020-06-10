@@ -1,6 +1,6 @@
-namespace Modules\{{ $json['module'] }}\Http\Requests;
+namespace App\Http\Requests;
 
-use Modules\Core\Http\Requests\FormRequest;
+use App\Http\Requests\FormRequest;
 
 class {{ ucwords($nameModel) }}Request extends FormRequest
 {

@@ -1,4 +1,4 @@
-
+<?php
 namespace App\Http\Controllers;
 
 // Control Base
@@ -9,38 +9,38 @@ use App\Traits\ApiResponse;
 
 // Request
 use Illuminate\Http\Request;
-use App\Http\Requests\{{ ucwords($nameModel) }}Request;
+use App\Http\Requests\PropertyRequest;
 
 // Modelos
-use App\Models\{{ ucwords($nameModel) }};
+use App\Models\Property;
 
 use DataTables;
 
-class {{ ucwords($nameModel) }}Controller extends BaseController
+class PropertyController extends BaseController
 {
     use ApiResponse;
 
     public function index()
     {
-        $query = {{ ucwords($nameModel) }}::select({!! $fieldsInList !!});
+        $query = Property::select('property', 'value');
         return DataTables::of($query)->make(true);
     }
 
     public function show($id)
     {
-        $instance = {{ ucwords($nameModel) }}::findOrFail($id);
+        $instance = Property::findOrFail($id);
         return $this->showResponse($instance);
     }
 
-    public function store({{ ucwords($nameModel) }}Request $request)
+    public function store(PropertyRequest $request)
     {
-        $instance = {{ ucwords($nameModel) }}::create($request->all());
+        $instance = Property::create($request->all());
         return $this->createdResponse($instance);
     }
 
-    public function update({{ ucwords($nameModel) }}Request $request, $id)
+    public function update(PropertyRequest $request, $id)
     {
-        $instance = {{ ucwords($nameModel) }}::findOrFail($id);
+        $instance = Property::findOrFail($id);
         $instance->fill($request->all());
         $instance->save();
         return $this->showResponse($instance);
@@ -48,7 +48,7 @@ class {{ ucwords($nameModel) }}Controller extends BaseController
 
     public function destroy($id)
     {
-        $instance = {{ ucwords($nameModel) }}::findOrFail($id);
+        $instance = Property::findOrFail($id);
         $instance->delete();
         return $this->deletedResponse();
     }

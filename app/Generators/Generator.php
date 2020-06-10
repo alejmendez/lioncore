@@ -10,12 +10,12 @@ abstract class Generator
         $this->json = $json;
     }
 
-    protected function appPath($path)
+    protected function path($path)
     {
         if (is_array($path)) {
             $path = implode(DIRECTORY_SEPARATOR, $path);
         }
-        return app_path($path);
+        return base_path($path);
     }
 
     protected function getNameModel()

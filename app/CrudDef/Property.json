@@ -31,7 +31,6 @@
         {
             "name": "value",
             "type": "longText",
-            "length": 50,
             "label" : "value",
             "htmlType": "text",
             "validations": "min:3|max:50",
