@@ -13,6 +13,7 @@ use App\Http\Requests\UserRequest;
 
 // Modelos
 use App\Models\User;
+use App\Models\Role;
 use App\Http\Resources\User as UserResource;
 
 use DataTables;
@@ -32,6 +33,29 @@ class UserController extends BaseController
         $instance = User::with('person')->findOrFail($id);
         $userResource = new UserResource($instance);
         return $this->showResponse($userResource);
+    }
+
+    public function filters()
+    {
+        $rolesOptions = Role::all()->map(function($role) {
+            return [
+                'value' => $role->id,
+                'label' => $role->name
+            ];
+        });
+
+        $rolesOptions = Role::all()->map(function($role) {
+            return [
+                'value' => $role->id,
+                'label' => $role->name
+            ];
+        });
+
+        $filters = [
+            'rolesOptions' => $rolesOptions
+        ];
+
+        return $this->showResponse($filters);
     }
 
     public function moduleData()

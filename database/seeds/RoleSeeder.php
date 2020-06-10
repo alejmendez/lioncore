@@ -18,17 +18,24 @@ class RoleSeeder extends Seeder
 
         app()['cache']->forget('spatie.permission.cache');
         $permissions = [];
-        $rest = [
+        $modules = [
             'user',
             'role'
         ];
 
-        foreach ($rest as $r) {
-            $permissions[] = $r;
-            $permissions[] = $r . ' show';
-            $permissions[] = $r . ' store';
-            $permissions[] = $r . ' update';
-            $permissions[] = $r . ' destroy';
+        foreach ($modules as $module) {
+            $permissions[] = $module;
+            $permissions[] = $module . ' show';
+            $permissions[] = $module . ' store';
+            $permissions[] = $module . ' update';
+            $permissions[] = $module . ' destroy';
+            $permissions[] = $module . ' module-data';
+            $permissions[] = $module . ' filters';
+        }
+
+        $permissionsExtra = [];
+        foreach ($permissionsExtra as $permission) {
+            $permissions[] = $permission;
         }
 
         foreach ($permissions as $permission) {
@@ -41,11 +48,10 @@ class RoleSeeder extends Seeder
         ]);
 
         Role::create([
-            'name' => 'writer',
+            'name'       => 'writer',
             'guard_name' => 'api'
         ]);
 
         $roleAdmin->givePermissionTo($permissions);
-
     }
 }

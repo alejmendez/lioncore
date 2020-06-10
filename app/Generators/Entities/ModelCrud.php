@@ -3,21 +3,18 @@
 namespace App\Generators\Entities;
 
 use File;
-use Module;
 use Illuminate\Support\Str;
 
 class ModelCrud
 {
     protected $file;
-    protected $module;
     protected $path;
     protected $fileName;
     protected $name;
 
-    public function __construct($file, $module)
+    public function __construct($file)
     {
         $this->setFile($file);
-        $this->setModule($module->getName());
         $this->setPath($file->getPathname());
         $this->setFileName($file->getBasename());
 
@@ -29,23 +26,20 @@ class ModelCrud
 
     public static function getAllModelsFiles()
     {
-        $modules = Module::all();
         $filesList = [];
         $pathCrudDef = config('workshop.pathCrudDef');
-        foreach ($modules as $module) {
-            $pathCrud = $module->getPath() . '/' . $pathCrudDef;
-            if (!File::exists($pathCrud)) {
+        $pathCrud = app_path($pathCrudDef);
+        if (!File::exists($pathCrud)) {
+            return $filesList;
+        }
+
+        $files = File::allFiles($pathCrud);
+        foreach ($files as $file) {
+            if (!preg_match('/.json$/i', $file->getBasename())) {
                 continue;
             }
-
-            $files = File::allFiles($pathCrud);
-            foreach ($files as $class) {
-                if (!preg_match('/.json$/i', $class->getBasename())) {
-                    continue;
-                }
-                $model = new ModelCrud($class, $module);
-                $filesList[$model->getName()] = $model;
-            }
+            $model = new ModelCrud($file);
+            $filesList[$model->getName()] = $model;
         }
 
         return $filesList;
