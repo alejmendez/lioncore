@@ -17,7 +17,7 @@ class CreatePropertiesTable extends Migration
 
             $table->string('property', 50)->nullable();
             $table->longText('value')->nullable();
-
+            
             $table->timestamps();
             $table->softDeletes();
         });

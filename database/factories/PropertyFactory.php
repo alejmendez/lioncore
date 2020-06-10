@@ -1,5 +1,5 @@
 <?php
-use Modules\Property\Models\Property;
+use App\Models\Property;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 

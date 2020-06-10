@@ -1,7 +1,7 @@
 <?php
-namespace Modules\Property\Tests\Feature;
+namespace App\Tests\Feature;
 
-use Modules\Property\Models\Property;
+use App\Models\Property;
 use Tests\TestCase;
 
 class PropertyTest extends TestCase
