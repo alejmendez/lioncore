@@ -40,6 +40,13 @@ abstract class Generator
         return view($view, $data)->render();
     }
 
+    protected function addNewContent($search, $newContent, $tabBase = 0, $tabChar = "\t")
+    {
+        $tabs = str_repeat($tabChar, $tabBase);
+        $newContent = $newContent . "\n" . $tabs . $search;
+        return str_replace($tabs . $search, $newContent);
+    }
+
     protected function writeFilePhp($pathFile, $contents)
     {
         $this->writeFile($pathFile, "<?php\n" . $contents);

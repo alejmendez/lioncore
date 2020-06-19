@@ -26,6 +26,20 @@ class {{ ucwords($nameModel) }}Controller extends BaseController
         return DataTables::of($query)->make(true);
     }
 
+    public function filters()
+    {
+        $filters = [];
+
+        return $this->showResponse($filters);
+    }
+
+    public function moduleData()
+    {
+        $moduleData = [];
+
+        return $this->showResponse($moduleData);
+    }
+
     public function show($id)
     {
         $instance = {{ ucwords($nameModel) }}::findOrFail($id);

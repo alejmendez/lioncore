@@ -70,9 +70,9 @@ if (mix.inProduction()) {
           host: '0.0.0.0',  // host machine ip
           port: 8080
         },
-        watchOptions:{
-          aggregateTimeout:200,
-          poll:5000
+        watchOptions: {
+          aggregateTimeout: 200,
+          poll: 5000
         }
       }
     });

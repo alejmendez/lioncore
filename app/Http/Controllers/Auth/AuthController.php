@@ -73,7 +73,7 @@ class AuthController extends BaseController
             ], 401);
         }
 
-        return $this->respondWithToken($jwt_token);
+        return $this->respondWithToken($jwt_token, 201);
     }
     /**
      * Get the authenticated User.

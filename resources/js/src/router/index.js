@@ -18,7 +18,7 @@ const user = require('./user.js')
 const login = require('./login.js')
 const errors = require('./errors.js')
 const generic = require('./generic.js')
-
+// requires
 
 const router = new Router({
   mode: 'history',
@@ -31,6 +31,7 @@ const router = new Router({
       path: '',
       component: () => import('@/layouts/main/Main.vue'),
       children: [
+        // content route
         ...dashboard.router,
         ...user.router
       ]

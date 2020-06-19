@@ -56,5 +56,7 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{property}', 'PropertyController@destroy')->name('destroy')
                 ->middleware('permission:property destroy');
         });
+
+        // add router
     });
 });

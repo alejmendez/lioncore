@@ -4,6 +4,13 @@ namespace App\Generators;
 
 use Illuminate\Support\Str;
 
+/*
+resources\js\src\router
+resources\js\src\store
+resources\js\src\views
+resources\js\src\i18n\trans\es.js
+*/
+
 class View extends Generator
 {
     const PATHVIEW = 'scaffolding.views';
@@ -42,7 +49,7 @@ class View extends Generator
 
     protected function getPath()
     {
-        $path = resource_path('assets/js/pages/' . strtolower(Str::of($this->getNameModel())->plural()));
+        $path = resource_path('js/src/views/' . strtolower(Str::of($this->getNameModel())->plural()));
 
         if (!is_dir($path)) {
             @mkdir($path, 0777, true);

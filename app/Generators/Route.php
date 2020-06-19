@@ -11,7 +11,7 @@ class Route extends Generator
     {
         $this->routePath    = $this->path(['Routes', 'api.php']);
         $this->routeLaravel();
-        //$this->routeVue();
+        $this->routeVue();
     }
 
     protected function routeLaravel()
@@ -21,64 +21,70 @@ class Route extends Generator
         $nameRoute      = strtolower($this->getNameModel());
         $nameController = ucwords($this->getNameModel()) . "Controller";
 
-        if (!Str::contains($routeContent, $nameController . '@index')) {
-            $version = env('API_VERSION', 'v1');
-            $routeContent .=
-            "\n" .
-            "Route::prefix('" . Str::plural($nameRoute) . "')->name('" . Str::plural($nameRoute) . ".')->group(function () {\n" .
-            "    Route::get('/', '" . $nameController . "@index')->name('index')\n" .
-            "        ->middleware('permission:$nameRoute');\n" .
-            "    Route::get('/{" . $nameRoute . "}', '" . $nameController . "@show')->name('show')\n" .
-            "        ->middleware('permission:$nameRoute show');\n" .
-            "    Route::post('/', '" . $nameController . "@store')->name('store')\n" .
-            "        ->middleware('permission:$nameRoute store');\n" .
-            "    Route::put('/{" . $nameRoute . "}', '" . $nameController . "@update')->name('update')\n" .
-            "        ->middleware('permission:$nameRoute update');\n" .
-            "    Route::delete('/{" . $nameRoute . "}', '" . $nameController . "@destroy')->name('destroy')\n" .
-            "        ->middleware('permission:$nameRoute destroy');\n" .
-            "});";
-
-            $this->writeFile($this->routePath, $routeContent);
+        if (Str::contains($routeContent, $nameController . '@index')) {
+            return;
         }
+
+        $newRoute = "\n" .
+        "Route::prefix('" . Str::plural($nameRoute) . "')->name('" . Str::plural($nameRoute) . ".')->group(function () {\n" .
+        "\t\t    Route::get('/', '" . $nameController . "@index')->name('index')\n" .
+        "\t\t        ->middleware('permission:$nameRoute');\n" .
+        "\t\t    Route::get('/', '" . $nameController . "@filters')->name('filters')\n" .
+        "\t\t        ->middleware('permission:$nameRoute');\n" .
+        "\t\t    Route::get('/', '" . $nameController . "@moduleData')->name('module-data')\n" .
+        "\t\t        ->middleware('permission:$nameRoute');\n" .
+        "\t\t    Route::get('/{" . $nameRoute . "}', '" . $nameController . "@show')->name('show')\n" .
+        "\t\t        ->middleware('permission:$nameRoute show');\n" .
+        "\t\t    Route::post('/', '" . $nameController . "@store')->name('store')\n" .
+        "\t\t        ->middleware('permission:$nameRoute store');\n" .
+        "\t\t    Route::put('/{" . $nameRoute . "}', '" . $nameController . "@update')->name('update')\n" .
+        "\t\t        ->middleware('permission:$nameRoute update');\n" .
+        "\t\t    Route::delete('/{" . $nameRoute . "}', '" . $nameController . "@destroy')->name('destroy')\n" .
+        "\t\t        ->middleware('permission:$nameRoute destroy');\n" .
+        "\t\t});" .
+        "\t\t// add router";
+        $routeContent = str_replace('// add router', $newRoute);
+
+        $this->writeFile($this->routePath, $routeContent);
     }
 
     protected function routeVue()
     {
-        $this->routePath    = base_path('resources\assets\js\router\routes.js');
-        $routeContent = file_get_contents($this->routePath);
-        $routeContent = explode("\r\n", $routeContent);
+        $this->routeVueModel();
+        $this->routeVueIndex();
+    }
 
-        $posApiResources = 0;
-        $posApiResourcesEnd = 0;
+    protected function routeVueModel()
+    {
+        $nameModel = strtolower($this->getNameModel());
+        $nameModelPlural = Str::plural($nameModel);
 
-        $nameRoute = strtolower($this->getNameModel());
-        $nameRoutePlural = Str::of($nameRoute)->plural();
-        $newContent =  "    { path: '/$nameRoutePlural', name: '$nameRoutePlural', component: require('~/pages/core/$nameRoutePlural/list.vue') },\r\n";
-        $newContent .= "    { path: '/$nameRoute/:id?', name: '$nameRoute', component: require('~/pages/core/$nameRoutePlural/form.vue') },";
+        $contents = $this->view('scaffolding.routeVue', [
+            'nameModel'       => $nameModel,
+            'nameModelPlural' => $nameModelPlural,
+        ]);
 
-        $addNewContent = true;
+        $pathFile = $this->path(['resources', 'js', 'src', 'router', $nameModel . '.js']);
 
-        foreach ($routeContent as $line => $content) {
-            if (strpos($content, '...authGuard([') !== false) {
-                $posApiResources = $line;
-            }
+        $this->writeFile($pathFile, $contents);
+    }
 
-            if (strpos(preg_replace('/\s+/', ' ', $content), "/$nameRoute/:id?") !== false) {
-                $addNewContent = false;
-                break;
-            }
+    protected function routeVueIndex()
+    {
+        $routePath = $this->path(['resources', 'js', 'src', 'router', 'index.js']);
+        $routeContent = file_get_contents($routePath);
+        $nameModel = strtolower($this->getNameModel());
+        $stringRequire = "const $nameModel = require('./$nameModel.js')";
+        $stringContent = "$nameModel.router,";
+        //const generic = require('./generic.js')
 
-            if ($posApiResources !== 0 && strpos($content, ']),') !== false) {
-                $posApiResourcesEnd = $line;
-                break;
-            }
+        if (Str::contains($routeContent, $stringRequire)) {
+            return;
         }
 
-        if ($addNewContent) {
-            array_splice($routeContent, $posApiResourcesEnd, 0, [$newContent]);
-            $routeContent = implode("\r\n", $routeContent);
-
-            $this->writeFile($this->routePath, $routeContent);
-        }
+        $routeContent = str_replace('// requires', $stringRequire);
+        $routeContent = $this->addNewContent('// requires', $stringRequire);
+        $routeContent = $this->addNewContent('// content route', $stringContent, 4, "  ");
+        $this->writeFile($routePath, $routeContent);
     }
 }

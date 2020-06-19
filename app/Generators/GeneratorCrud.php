@@ -22,6 +22,20 @@ class GeneratorCrud implements Generator
     protected $models;
     protected $console;
 
+    protected $allOptionsActive = true;
+    protected $listOptions = [
+        'migration',
+        'model',
+        'formrequest',
+        'controller',
+        'permissions',
+        'view',
+        'route',
+        'translations',
+        'factory',
+        'test',
+    ];
+
     public function __construct(String $models, GenerateGrud $console = null)
     {
         $this->console = $console;
@@ -40,6 +54,12 @@ class GeneratorCrud implements Generator
                 $this->models = $this->getAllModelsFiles();
             }
         }
+
+        foreach ($this->listOptions as $option) {
+            if ($this->getOption($option)) {
+                $this->allOptionsActive = false;
+            }
+        }
     }
 
     public function run()
@@ -52,7 +72,7 @@ class GeneratorCrud implements Generator
             $this->generateFormRequest($json);
             $this->generateController($json);
             $this->generatePermissions($json);
-            // $this->generateViewVue($json);
+            $this->generateViewVue($json);
             $this->generateRoute($json);
             $this->generateTranslations($json);
             $this->generateFactory($json);
@@ -113,6 +133,7 @@ class GeneratorCrud implements Generator
 
     protected function generateMigration($json)
     {
+        if (!$this->getOption('migration')) return;
         $this->info(__('Generating Migration'));
         $generator = new Migration($json);
         $generator->generate();
@@ -120,6 +141,7 @@ class GeneratorCrud implements Generator
 
     protected function generateModel($json)
     {
+        if (!$this->getOption('model')) return;
         $this->info(__('Generating Model'));
         $generator = new Model($json);
         $generator->generate();
@@ -127,6 +149,7 @@ class GeneratorCrud implements Generator
 
     protected function generateFormRequest($json)
     {
+        if (!$this->getOption('formrequest')) return;
         $this->info(__('Generating FormRequest'));
         $generator = new FormRequest($json);
         $generator->generate();
@@ -134,6 +157,7 @@ class GeneratorCrud implements Generator
 
     protected function generateController($json)
     {
+        if (!$this->getOption('controller')) return;
         $this->info(__('Generating Controller'));
         $generator = new Controller($json);
         $generator->generate();
@@ -141,6 +165,7 @@ class GeneratorCrud implements Generator
 
     protected function generatePermissions($json)
     {
+        if (!$this->getOption('permissions')) return;
         $this->info(__('Generating Permissions'));
         $generator = new Permission($json);
         $generator->generate();
@@ -148,6 +173,7 @@ class GeneratorCrud implements Generator
 
     protected function generateViewVue($json)
     {
+        if (!$this->getOption('view')) return;
         $this->info(__('Generating View'));
         $generator = new View($json);
         $generator->generate();
@@ -155,6 +181,7 @@ class GeneratorCrud implements Generator
 
     protected function generateRoute($json)
     {
+        if (!$this->getOption('route')) return;
         $this->info(__('Generating Routes'));
         $generator = new Route($json);
         $generator->generate();
@@ -162,6 +189,7 @@ class GeneratorCrud implements Generator
 
     protected function generateTranslations($json)
     {
+        if (!$this->getOption('translations')) return;
         $this->info(__('Generating Translations'));
         $generator = new Translation($json);
         $generator->generate();
@@ -169,6 +197,7 @@ class GeneratorCrud implements Generator
 
     protected function generateFactory($json)
     {
+        if (!$this->getOption('factory')) return;
         $this->info(__('Generating Factory'));
         $generator = new Factory($json);
         $generator->generate();
@@ -176,6 +205,7 @@ class GeneratorCrud implements Generator
 
     protected function generateTest($json)
     {
+        if (!$this->getOption('test')) return;
         $this->info(__('Generating Test'));
         $generator = new Test($json);
         $generator->generate();
@@ -224,5 +254,10 @@ class GeneratorCrud implements Generator
     {
         $this->info(__('goodbye'));
         exit;
+    }
+
+    protected function getOption($option)
+    {
+        return $this->allOptionsActive ? true : $this->console->option($option);
     }
 }
