@@ -75,16 +75,14 @@ class Route extends Generator
         $routeContent = file_get_contents($routePath);
         $nameModel = strtolower($this->getNameModel());
         $stringRequire = "const $nameModel = require('./$nameModel.js')";
-        $stringContent = "$nameModel.router,";
-        //const generic = require('./generic.js')
+        $stringContent = "...$nameModel.router,";
 
         if (Str::contains($routeContent, $stringRequire)) {
             return;
         }
 
-        $routeContent = str_replace('// requires', $stringRequire);
-        $routeContent = $this->addNewContent('// requires', $stringRequire);
-        $routeContent = $this->addNewContent('// content route', $stringContent, 4, "  ");
+        $routeContent = $this->addNewContent($routeContent, '// requires', $stringRequire);
+        $routeContent = $this->addNewContent($routeContent, '// content route', $stringContent, 4, "  ");
         $this->writeFile($routePath, $routeContent);
     }
 }

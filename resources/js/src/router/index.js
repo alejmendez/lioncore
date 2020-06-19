@@ -18,6 +18,7 @@ const user = require('./user.js')
 const login = require('./login.js')
 const errors = require('./errors.js')
 const generic = require('./generic.js')
+const property = require('./property.js')
 // requires
 
 const router = new Router({
@@ -31,6 +32,7 @@ const router = new Router({
       path: '',
       component: () => import('@/layouts/main/Main.vue'),
       children: [
+        ...property.router,
         // content route
         ...dashboard.router,
         ...user.router
