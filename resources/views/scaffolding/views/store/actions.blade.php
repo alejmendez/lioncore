@@ -41,7 +41,7 @@ export default {
         })
     })
   },
-  fetchUser (context, id) {
+  fetch (context, id) {
     return new Promise((resolve, reject) => {
       axios.get(`{{ $nameModelPlural }}/${id}`)
         .then((response) => {

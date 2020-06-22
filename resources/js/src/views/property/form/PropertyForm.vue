@@ -1,27 +1,48 @@
 <template>
-  <div id="page-{{ $nameModel }}-form">
-    <vs-alert color="danger" title="{{ ucfirst($nameModel) }} Not Found" :active.sync="not_found">
-      <span>{{ ucfirst($nameModel) }} record with id: @{{ $route.params.id }} not found.</span>
+  <div id="page-property-form">
+    <vs-alert color="danger" title="Property Not Found" :active.sync="not_found">
+      <span>Property record with id: {{ $route.params.id }} not found.</span>
       <span>
-        <span>Check </span><router-link :to="{name:'page-{{ $nameModel }}-list'}" class="text-inherit underline">All {{ ucfirst($nameModel) }}s</router-link>
+        <span>Check </span><router-link :to="{name:'page-property-list'}" class="text-inherit underline">All Propertys</router-link>
       </span>
     </vs-alert>
     <ValidationObserver v-slot="{ handleSubmit, reset, invalid }">
       <form @submit.prevent="handleSubmit(save)">
         <vx-card>
           <vs-row>
-            @foreach ($fields as $field)<vs-col vs-type="flex" vs-w="6">
-              <ValidationProvider name="{{ $nameModelPlural }}.{{ $field['name'] }}" rules="{{ $field['validations'] }}" v-slot="{ errors, invalid, validated }">
+            <vs-col vs-type="flex" vs-w="6">
+              <ValidationProvider name="properties.id" rules="" v-slot="{ errors, invalid, validated }">
                 <vs-input
                   class="w-full mt-4"
-                  v-model="data.{{ $field['name'] }}"
+                  v-model="data.id"
                   :danger="invalid && validated"
-                  :label="$t('{{ $nameModelPlural }}.{{ $field['name'] }}')"
+                  :label="$t('properties.id')"
                 />
-                <span class="text-danger text-sm">@{{ errors[0] }}</span>
+                <span class="text-danger text-sm">{{ errors[0] }}</span>
               </ValidationProvider>
             </vs-col>
-            @endforeach
+            <vs-col vs-type="flex" vs-w="6">
+              <ValidationProvider name="properties.name" rules="min:3|max:50" v-slot="{ errors, invalid, validated }">
+                <vs-input
+                  class="w-full mt-4"
+                  v-model="data.name"
+                  :danger="invalid && validated"
+                  :label="$t('properties.name')"
+                />
+                <span class="text-danger text-sm">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </vs-col>
+            <vs-col vs-type="flex" vs-w="6">
+              <ValidationProvider name="properties.value" rules="min:3|max:50" v-slot="{ errors, invalid, validated }">
+                <vs-input
+                  class="w-full mt-4"
+                  v-model="data.value"
+                  :danger="invalid && validated"
+                  :label="$t('properties.value')"
+                />
+                <span class="text-danger text-sm">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </vs-col>
           </vs-row>
           <!-- Save & Reset Button -->
           <vs-row>
@@ -55,7 +76,7 @@
 <script>
 import vSelect from 'vue-select'
 
-import module{{ ucfirst($nameModel) }}Management from '@/store/{{ $nameModel }}-management/module{{ ucfirst($nameModel) }}Management.js'
+import modulePropertyManagement from '@/store/property-management/modulePropertyManagement.js'
 
 export default {
   components: {
@@ -64,8 +85,9 @@ export default {
   data () {
     return {
       data: {
-        @foreach ($fields as $field){{ $field['name'] }}: '',
-        @endforeach
+        id: '',
+        name: '',
+        value: ''
       },
       data_original: {},
       not_found: false,
@@ -74,11 +96,11 @@ export default {
   },
   methods: {
     getModuleData () {
-      this.$store.dispatch('{{ $nameModel }}Management/getModuleData')
+      this.$store.dispatch('propertyManagement/getModuleData')
     },
     fetch_data (id) {
       this.data.id = id
-      this.$store.dispatch('{{ $nameModel }}Management/fetch', id)
+      this.$store.dispatch('propertyManagement/fetch', id)
         .then(res => { this.data = res.data.data })
         .catch(err => {
           if (err.response.status === 404) {
@@ -113,9 +135,9 @@ export default {
     }
   },
   created () {
-    if (!module{{ ucfirst($nameModel) }}Management.isRegistered) {
-      this.$store.registerModule('{{ $nameModel }}Management', module{{ ucfirst($nameModel) }}Management)
-      module{{ ucfirst($nameModel) }}Management.isRegistered = true
+    if (!modulePropertyManagement.isRegistered) {
+      this.$store.registerModule('propertyManagement', modulePropertyManagement)
+      modulePropertyManagement.isRegistered = true
     }
 
     this.data_original = Object.assign({}, this.data)

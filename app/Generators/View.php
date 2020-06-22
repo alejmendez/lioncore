@@ -17,7 +17,7 @@ class View extends Generator
         $this->generateViewList();
         $this->generateViewForm();
         $this->generateStores();
-        $this->generateTrans();
+        //$this->generateTrans();
     }
 
     protected function generateRouteVue()
@@ -70,7 +70,7 @@ class View extends Generator
         $data = $this->getDataView();
 
         $contents = $this->view('scaffolding.views.list.datatable', $data);
-        $pathFile = $this->path(['resources', 'js', 'src', 'views', $data['nameModel'], 'list', ucfirst($data['nameModel']) . 'DataTable.js']);
+        $pathFile = $this->path(['resources', 'js', 'src', 'views', $data['nameModel'], 'list', ucfirst($data['nameModel']) . 'DataTable.vue']);
         $this->writeFile($pathFile, $contents);
     }
 
@@ -79,7 +79,7 @@ class View extends Generator
         $data = $this->getDataView();
 
         $contents = $this->view('scaffolding.views.list.filters', $data);
-        $pathFile = $this->path(['resources', 'js', 'src', 'views', $data['nameModel'], 'list', ucfirst($data['nameModel']) . 'Filters.js']);
+        $pathFile = $this->path(['resources', 'js', 'src', 'views', $data['nameModel'], 'list', ucfirst($data['nameModel']) . 'Filters.vue']);
         $this->writeFile($pathFile, $contents);
     }
 
@@ -88,7 +88,7 @@ class View extends Generator
         $data = $this->getDataView();
 
         $contents = $this->view('scaffolding.views.list.list', $data);
-        $pathFile = $this->path(['resources', 'js', 'src', 'views', $data['nameModel'], 'list', ucfirst($data['nameModel']) . 'List.js']);
+        $pathFile = $this->path(['resources', 'js', 'src', 'views', $data['nameModel'], 'list', ucfirst($data['nameModel']) . 'List.vue']);
         $this->writeFile($pathFile, $contents);
     }
 
@@ -98,7 +98,7 @@ class View extends Generator
 
         $contents = $this->view('scaffolding.views.form', $data);
 
-        $pathFile = $this->path(['resources', 'js', 'src', 'views', $data['nameModel'], 'form', ucfirst($data['nameModel']) . 'Form.js']);
+        $pathFile = $this->path(['resources', 'js', 'src', 'views', $data['nameModel'], 'form', ucfirst($data['nameModel']) . 'Form.vue']);
         $this->writeFile($pathFile, $contents);
     }
 
