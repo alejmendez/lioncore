@@ -1,101 +1,165 @@
 <template>
-  <v-card>
-    <v-card-title primary-title class="grey lighten-4">
-      <h3 class="headline mb-0">@{{ title }}</h3>
-    </v-card-title>
-    <v-divider></v-divider>
-    <v-card-text>
-      @foreach ($this->json as $ele)
-<{{ $ele['htmlType'] }}-input
-        :form="form"
-        :label="$t('{{ $ele['label'] }}')"
-        :v-errors="errors"
-        :value.sync="form.{{ $ele['name'] }}"
-        counter="50"
-        name="{{ $ele['name'] }}"
-        v-validate="'{{ str_replace(',', '|', $ele['validations']) }}'">
-      </{{ $ele['htmlType'] }}-input>
-      @endforeach
-    </v-card-text>
-    <v-btn
-      :loading="busy"
-      :disabled="busy"
-      color="primary"
-      @click="save">
-      @{{ $t('save') }}
-      <v-icon right dark>save</v-icon>
-    </v-btn>
-    <v-btn
-      color="blue-grey"
-      class="white--text"
-      :disabled="busy"
-      @click="cancel">
-      @{{ $t('cancel') }}
-      <v-icon right dark>cancel</v-icon>
-    </v-btn>
-  </v-card>
+  <div id="page-{{ $nameModel }}-form">
+
+    <vs-alert color="danger" title="{{ ucfirst($nameModel) }} Not Found" :active.sync="not_found">
+      <span>{{ ucfirst($nameModel) }} record with id: @{{ $route.params.id }} not found. </span>
+      <span>
+        <span>Check </span><router-link :to="{name:'page-{{ $nameModel }}-list'}" class="text-inherit underline">All {{ ucfirst($nameModel) }}s</router-link>
+      </span>
+    </vs-alert>
+
+    <ValidationObserver v-slot="{ handleSubmit, reset, invalid }">
+      <form @submit.prevent="handleSubmit(save)">
+        <vx-card>
+          <div slot="no-body" class="tabs-container px-6 pt-6">
+            <div class="vx-row">
+                <ValidationProvider name="{{ $nameModelPlural }}.{{ $nameModel }}name" rules="required|alpha_num" v-slot="{ errors, invalid, validated }">
+                    <vs-input
+                    class="w-full mt-4"
+                    v-model="data.{{ $nameModel }}name"
+                    :danger="invalid && validated"
+                    :label="$t('{{ $nameModelPlural }}.{{ $nameModel }}name')"
+                    />
+                    <span class="text-danger text-sm">@{{ errors[0] }}</span>
+                </ValidationProvider>
+
+                <ValidationProvider name="{{ $nameModelPlural }}.first_name" rules="required|alpha_spaces" v-slot="{ errors, invalid, validated }">
+                    <vs-input
+                    class="w-full mt-4"
+                    v-model="data.first_name"
+                    :danger="invalid && validated"
+                    :label="$t('{{ $nameModelPlural }}.first_name')"
+                    />
+                    <span class="text-danger text-sm">@{{ errors[0] }}</span>
+                </ValidationProvider>
+
+                <ValidationProvider name="{{ $nameModelPlural }}.last_name" rules="required|alpha_spaces" v-slot="{ errors, invalid, validated }">
+                    <vs-input
+                    class="w-full mt-4"
+                    v-model="data.last_name"
+                    :danger="invalid && validated"
+                    :label="$t('{{ $nameModelPlural }}.last_name')"
+                    />
+                    <span class="text-danger text-sm">@{{ errors[0] }}</span>
+                </ValidationProvider>
+
+                <ValidationProvider name="{{ $nameModelPlural }}.email" rules="required|email" v-slot="{ errors, invalid, validated }">
+                    <vs-input
+                    type="email"
+                    class="w-full mt-4"
+                    v-model="data.email"
+                    :danger="invalid && validated"
+                    :label="$t('{{ $nameModelPlural }}.email')"
+                    />
+                    <span class="text-danger text-sm">@{{ errors[0] }}</span>
+                </ValidationProvider>
+            </div>
+            <!-- Save & Reset Button -->
+            <div class="vx-row">
+              <div class="vx-col w-full">
+                <div class="mt-8 mb-8 flex flex-wrap items-center justify-end">
+                  <vs-button
+                    class="ml-auto mt-2"
+                    button="submit"
+                    :disabled="!invalid"
+                    >
+                    Save Changes
+                  </vs-button>
+                  <vs-button
+                    class="ml-4 mt-2"
+                    type="border"
+                    button="reset"
+                    color="warning"
+                    @click="reset_data"
+                    >
+                    Reset
+                  </vs-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </vx-card>
+      </form>
+    </ValidationObserver>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
-import Form from 'vform'
-import router from '~/router'
+import vSelect from 'vue-select'
+
+import module{{ ucfirst($nameModel) }}Management from '@/store/{{ $nameModel }}-management/module{{ ucfirst($nameModel) }}Management.js'
 
 export default {
-  name: '{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}-form-view',
-  data: () => ({
-    form: new Form({
-      @foreach ($this->json as $ele)
-      {{ $ele['name'] }}: '',
-      @endforeach
-    }),
-    roles: [],
-    busy: false,
-    title: '',
-    eye: true
-  }),
-  metaInfo () {
-    return { title: this.$t('{{ $title }}') }
+  components: {
+    vSelect,
+    flatPickr
   },
-  mounted () {
-    let id = this.$route.params.id
-    this.form.id = id || ''
-    this.title = id ? this.$t('{{ $nameModel }}._singular') : this.$t('new_{{ $nameModel }}')
-    this.getDataFromApi(id)
+  data () {
+    return {
+      data: {
+        id: '',
+      },
+      data_original: {},
+      not_found: false,
+      activeTab: 0
+    }
   },
   methods: {
-    cancel () {
-      router.push({ name: '{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}' })
+    getModuleData () {
+      this.$store.dispatch('{{ $nameModel }}Management/getModuleData')
     },
-    getDataFromApi (id) {
-      if (!id) {
-        return
-      }
-
-      return axios.get(`/api/v1/{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}/${id}`)
-        .then(response => {
-          let data = response.data.data
-
-          this.form.fill(data)
+    fetch_data (id) {
+      this.data.id = id
+      this.$store.dispatch('{{ $nameModel }}Management/fetch{{ ucfirst($nameModel) }}', id)
+        .then(res => { this.data = res.data.data })
+        .catch(err => {
+          if (err.response.status === 404) {
+            this.not_found = true
+            return
+          }
+          console.error(err)
         })
     },
     save () {
-      let form = this.form
-      let url = `/api/v1/{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}/${form.id}`
-      let promise = form.id ? form.put(url) : form.post(url)
+      /* eslint-disable */
+      if (!this.validateForm) return
 
-      this.$emit('busy', true)
+      // Here will go your API call for updating data
+      // You can get data in "this.data"
 
-      return promise.then(response => {
-          this.$emit('busy', false)
-          router.push({
-            name: '{{ strtolower(Illuminate\Support\Str::plural($nameModel)) }}'
-          })
-        })
-        .catch(() => {
-          this.$emit('busy', false)
-        })
+      /* eslint-enable */
+    },
+    reset_data () {
+      this.data = Object.assign({}, this.data_original)
+    },
+    update_avatar (event) {
+      const input = event.target
+      if (input.files && input.files[0]) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          console.log(e.target.result)
+          this.data.avatar = e.target.result
+        }
+        reader.readAsDataURL(input.files[0])
+      }
+    }
+  },
+  created () {
+    // Register Module {{ ucfirst($nameModel) }}Management Module
+    if (!module{{ ucfirst($nameModel) }}Management.isRegistered) {
+      this.$store.registerModule('{{ $nameModel }}Management', module{{ ucfirst($nameModel) }}Management)
+      module{{ ucfirst($nameModel) }}Management.isRegistered = true
+    }
+
+    this.data_original = Object.assign({}, this.data)
+    this.reset_data()
+
+    this.getModuleData()
+
+    if (this.$route.params.id) {
+      this.fetch_data(this.$route.params.id)
     }
   }
 }
+
 </script>

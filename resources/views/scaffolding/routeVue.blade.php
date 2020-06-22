@@ -2,7 +2,7 @@ exports.router = [
   {
     path: '/{{ $nameModel }}',
     name: '{{ $nameModel }}',
-    component: () => import('@/views/{{ $nameModel }}/{{ $nameModel }}-list/{{ ucfirst($nameModel) }}List.vue'),
+    component: () => import('@/views/{{ $nameModel }}/list/{{ ucfirst($nameModel) }}List.vue'),
     meta: {
       breadcrumb: [
         { title: 'Home', url: '/' },
@@ -16,7 +16,7 @@ exports.router = [
   {
     path: '/{{ $nameModel }}/new',
     name: 'app-{{ $nameModel }}-new',
-    component: () => import('@/views/{{ $nameModel }}/{{ $nameModel }}-form/{{ ucfirst($nameModel) }}Form.vue'),
+    component: () => import('@/views/{{ $nameModel }}/form/{{ ucfirst($nameModel) }}Form.vue'),
     meta: {
       breadcrumb: [
         { title: 'Home', url: '/' },
@@ -30,7 +30,7 @@ exports.router = [
   {
     path: '/{{ $nameModel }}/:id',
     name: 'app-{{ $nameModel }}-edit',
-    component: () => import('@/views/{{ $nameModel }}/{{ $nameModel }}-form/{{ ucfirst($nameModel) }}Form.vue'),
+    component: () => import('@/views/{{ $nameModel }}/form/{{ ucfirst($nameModel) }}Form.vue'),
     meta: {
       breadcrumb: [
         { title: 'Home', url: '/' },

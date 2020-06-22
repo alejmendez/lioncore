@@ -11,7 +11,6 @@ class Route extends Generator
     {
         $this->routePath    = $this->path(['Routes', 'api.php']);
         $this->routeLaravel();
-        $this->routeVue();
     }
 
     protected function routeLaravel()
@@ -46,43 +45,5 @@ class Route extends Generator
         $routeContent = str_replace('// add router', $newRoute);
 
         $this->writeFile($this->routePath, $routeContent);
-    }
-
-    protected function routeVue()
-    {
-        $this->routeVueModel();
-        $this->routeVueIndex();
-    }
-
-    protected function routeVueModel()
-    {
-        $nameModel = strtolower($this->getNameModel());
-        $nameModelPlural = Str::plural($nameModel);
-
-        $contents = $this->view('scaffolding.routeVue', [
-            'nameModel'       => $nameModel,
-            'nameModelPlural' => $nameModelPlural,
-        ]);
-
-        $pathFile = $this->path(['resources', 'js', 'src', 'router', $nameModel . '.js']);
-
-        $this->writeFile($pathFile, $contents);
-    }
-
-    protected function routeVueIndex()
-    {
-        $routePath = $this->path(['resources', 'js', 'src', 'router', 'index.js']);
-        $routeContent = file_get_contents($routePath);
-        $nameModel = strtolower($this->getNameModel());
-        $stringRequire = "const $nameModel = require('./$nameModel.js')";
-        $stringContent = "...$nameModel.router,";
-
-        if (Str::contains($routeContent, $stringRequire)) {
-            return;
-        }
-
-        $routeContent = $this->addNewContent($routeContent, '// requires', $stringRequire);
-        $routeContent = $this->addNewContent($routeContent, '// content route', $stringContent, 4, "  ");
-        $this->writeFile($routePath, $routeContent);
     }
 }

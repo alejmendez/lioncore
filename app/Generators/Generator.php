@@ -54,6 +54,11 @@ abstract class Generator
 
     protected function writeFile($pathFile, $contents)
     {
+        $dir = substr($pathFile, 0, strrpos($pathFile, DIRECTORY_SEPARATOR));
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
         File::put($pathFile, $contents);
     }
 }

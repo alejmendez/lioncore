@@ -2,7 +2,7 @@ exports.router = [
   {
     path: '/property',
     name: 'property',
-    component: () => import('@/views/property/property-list/PropertyList.vue'),
+    component: () => import('@/views/property/list/PropertyList.vue'),
     meta: {
       breadcrumb: [
         { title: 'Home', url: '/' },
@@ -16,7 +16,7 @@ exports.router = [
   {
     path: '/property/new',
     name: 'app-property-new',
-    component: () => import('@/views/property/property-form/PropertyForm.vue'),
+    component: () => import('@/views/property/form/PropertyForm.vue'),
     meta: {
       breadcrumb: [
         { title: 'Home', url: '/' },
@@ -30,7 +30,7 @@ exports.router = [
   {
     path: '/property/:id',
     name: 'app-property-edit',
-    component: () => import('@/views/property/property-form/PropertyForm.vue'),
+    component: () => import('@/views/property/form/PropertyForm.vue'),
     meta: {
       breadcrumb: [
         { title: 'Home', url: '/' },

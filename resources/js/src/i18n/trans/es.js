@@ -10,6 +10,8 @@ import not_authorized from './es/not_authorized'
 import maintenance from './es/maintenance'
 import menu from './es/menu'
 import users from './es/users'
+import property from './es/property'
+// imports
 
 import es from 'vee-validate/dist/locale/es.json'
 
@@ -26,6 +28,8 @@ export default {
   maintenance,
   menu,
   users,
+  property,
+  // content trans
   validation: es.messages,
   Home: 'Inicio',
   Admin: 'Administrador',
