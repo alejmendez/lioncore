@@ -8,6 +8,7 @@ import error404 from './es/error404'
 import error500 from './es/error500'
 import not_authorized from './es/not_authorized'
 import maintenance from './es/maintenance'
+import common from './es/common'
 import menu from './es/menu'
 import users from './es/users'
 import property from './es/property'
@@ -16,6 +17,7 @@ import property from './es/property'
 import es from 'vee-validate/dist/locale/es.json'
 
 export default {
+  common,
   login,
   register,
   forgot_password,

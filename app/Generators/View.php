@@ -81,10 +81,10 @@ class View extends Generator
             return "'" . $field['name'] . "'";
         })->implode(", ");
 
-        $data['thead'] = $fieldsInList->map(function ($field) {
+        $data['thead'] = $fieldsInList->map(function ($field) use($data) {
             return
                 "        {\n" .
-                "          name: $this.t('" . $data['nameModel'] . "." . $field['label'] . "'),\n" .
+                "          name: this.\$t('" . $data['nameModel'] . "." . $field['label'] . "'),\n" .
                 "          key: '" . $field['name'] . "'\n" .
                 "        }";
         })->implode(",\n");

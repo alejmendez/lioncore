@@ -36,10 +36,10 @@ export default {
       this.$vs.dialog({
         type: 'confirm',
         color: 'danger',
-        title: 'Confirm Delete',
-        text: 'Are you sure you want to delete the {{ $nameModel }}?',
+        title: this.$t('confirm_delete'),
+        text: this.$t('common.are_you_sure_you_want_to_delete', { element: '{{ $nameModel }}' }),
         accept: () => this.delete(id),
-        acceptText: 'Delete'
+        acceptText: this.$t('delete')
       })
     },
     deleteRecord (id) {

@@ -11,28 +11,28 @@
         <vx-card>
           <vs-row>
             <vs-col vs-type="flex" vs-w="6">
-              <ValidationProvider name="properties.name" rules="min:3|max:50" v-slot="{ errors, invalid, validated }">
+              <ValidationProvider name="property.name" rules="min:3|max:50" v-slot="{ errors, invalid, validated }">
                 <vs-input
                   class="w-full mt-4"
                   v-model="data.name"
                   :danger="invalid && validated"
-                  :label="$t('properties.name')"
+                  :label="$t('property.name')"
                 />
                 <span class="text-danger text-sm">{{ errors[0] }}</span>
               </ValidationProvider>
             </vs-col>
             <vs-col vs-type="flex" vs-w="6">
-              <ValidationProvider name="properties.value" rules="min:3|max:50" v-slot="{ errors, invalid, validated }">
+              <ValidationProvider name="property.value" rules="min:3|max:50" v-slot="{ errors, invalid, validated }">
                 <vs-textarea
                   class="w-full mt-4"
                   v-model="data.value"
                   :danger="invalid && validated"
-                  :label="$t('properties.value')"
+                  :label="$t('property.value')"
                 />
                 <span class="text-danger text-sm">{{ errors[0] }}</span>
               </ValidationProvider>
             </vs-col>
-          </vs-row>
+                      </vs-row>
           <!-- Save & Reset Button -->
           <vs-row>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="p-4 sm:p-2">
@@ -42,7 +42,7 @@
                   button="submit"
                   :disabled="!invalid"
                 >
-                  Save Changes
+                  {{ $t('common.save_changes') }}
                 </vs-button>
                 <vs-button
                   class="ml-4 mt-2"
@@ -51,7 +51,7 @@
                   color="warning"
                   @click="reset_data"
                 >
-                  Reset
+                  {{ $t('common.reset') }}
                 </vs-button>
               </div>
             </vs-col>

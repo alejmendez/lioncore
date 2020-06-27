@@ -1,5 +1,12 @@
 <template>
-  <vx-card ref="filterCard" title="Filters" class="{{ $nameModel }}-list-filters mb-8" actionButtons @refresh="resetColFilters" @remove="resetColFilters">
+  <vx-card
+    ref="filterCard"
+    class="{{ $nameModel }}-list-filters mb-8"
+    actionButtons
+    :title="$t('common.filters)"
+    @refresh="resetColFilters"
+    @remove="resetColFilters"
+  >
     <div class="vx-row">
 
     </div>

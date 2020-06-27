@@ -11,12 +11,12 @@
         <vx-card>
           <vs-row>
             @foreach ($fields as $field)<vs-col vs-type="flex" vs-w="6">
-              <ValidationProvider name="{{ $nameModelPlural }}.{{ $field['name'] }}" rules="{{ $field['validations'] }}" v-slot="{ errors, invalid, validated }">
+              <ValidationProvider name="{{ $nameModel }}.{{ $field['name'] }}" rules="{{ $field['validations'] }}" v-slot="{ errors, invalid, validated }">
                 <vs-{{ $field['htmlType'] }}
                   class="w-full mt-4"
                   v-model="data.{{ $field['name'] }}"
                   :danger="invalid && validated"
-                  :label="$t('{{ $nameModelPlural }}.{{ $field['name'] }}')"
+                  :label="$t('{{ $nameModel }}.{{ $field['name'] }}')"
                 />
                 <span class="text-danger text-sm">@{{ errors[0] }}</span>
               </ValidationProvider>
@@ -32,7 +32,7 @@
                   button="submit"
                   :disabled="!invalid"
                 >
-                  Save Changes
+                  @{{ $t('common.save_changes') }}
                 </vs-button>
                 <vs-button
                   class="ml-4 mt-2"
@@ -41,7 +41,7 @@
                   color="warning"
                   @click="reset_data"
                 >
-                  Reset
+                  @{{ $t('common.reset') }}
                 </vs-button>
               </div>
             </vs-col>
