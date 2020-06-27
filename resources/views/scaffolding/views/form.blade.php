@@ -12,7 +12,7 @@
           <vs-row>
             @foreach ($fields as $field)<vs-col vs-type="flex" vs-w="6">
               <ValidationProvider name="{{ $nameModelPlural }}.{{ $field['name'] }}" rules="{{ $field['validations'] }}" v-slot="{ errors, invalid, validated }">
-                <vs-input
+                <vs-{{ $field['htmlType'] }}
                   class="w-full mt-4"
                   v-model="data.{{ $field['name'] }}"
                   :danger="invalid && validated"
@@ -55,7 +55,7 @@
 <script>
 import vSelect from 'vue-select'
 
-import module{{ ucfirst($nameModel) }}Management from '@/store/{{ $nameModel }}-management/module{{ ucfirst($nameModel) }}Management.js'
+import module{{ ucfirst($nameModel) }}Management from '@/store/{{ $nameModel }}/module{{ ucfirst($nameModel) }}Management.js'
 
 export default {
   components: {

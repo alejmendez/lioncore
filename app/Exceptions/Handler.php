@@ -17,6 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Spatie\Permission\Exceptions\UnauthorizedException;
+use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 
 use App\Traits\ApiResponse;
 
@@ -53,7 +54,6 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        dd($exception);
         parent::report($exception);
     }
 
@@ -68,7 +68,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        dd($exception);
         if (method_exists($exception, 'render') && $response = $exception->render($request)) {
             return Router::toResponse($request, $response);
         } elseif ($exception instanceof Responsable) {
@@ -86,7 +85,7 @@ class Handler extends ExceptionHandler
             return $this->errorResponse('No existe ninguna instancia de ' . $modelo . ' con el id especificado', 404);
         } elseif ($exception instanceof AuthenticationException) {
             return $this->unauthenticated($request, $exception);
-        } elseif ($exception instanceof AuthorizationException || $exception instanceof UnauthorizedException) {
+        } elseif ($exception instanceof AuthorizationException || $exception instanceof UnauthorizedException || $exception instanceof PermissionDoesNotExist) {
             return $this->errorResponse('No posee permisos para ejecutar esta acción', 403);
         } elseif ($exception instanceof NotFoundHttpException) {
             return $this->errorResponse('No se encontró la URL especificada', 404);

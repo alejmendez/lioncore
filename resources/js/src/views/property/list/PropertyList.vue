@@ -10,7 +10,7 @@ import PropertyFilters from './PropertyFilters.vue'
 import PropertyDataTable from './PropertyDataTable.vue'
 
 // Store Module
-import modulePropertyManagement from '@/store/property-management/modulePropertyManagement.js'
+import modulePropertyManagement from '@/store/property/modulePropertyManagement.js'
 
 export default {
   components: {

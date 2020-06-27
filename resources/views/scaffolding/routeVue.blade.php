@@ -9,7 +9,7 @@ exports.router = [
         { title: '{{ ucfirst($nameModel) }}' },
         { title: 'List', active: true }
       ],
-      pageTitle: '{{ $nameModelPlural }}.title.list',
+      pageTitle: '{{ $nameModel }}.title.list',
       rule: 'editor'
     }
   },
@@ -23,7 +23,7 @@ exports.router = [
         { title: '{{ ucfirst($nameModel) }}', url: '/{{ $nameModel }}' },
         { title: 'New', active: true }
       ],
-      pageTitle: '{{ $nameModelPlural }}.title.new',
+      pageTitle: '{{ $nameModel }}.title.new',
       rule: 'editor'
     }
   },
@@ -37,7 +37,7 @@ exports.router = [
         { title: '{{ ucfirst($nameModel) }}', url: '/{{ $nameModel }}' },
         { title: 'Edit', active: true }
       ],
-      pageTitle: '{{ $nameModelPlural }}.title.edit',
+      pageTitle: '{{ $nameModel }}.title.edit',
       rule: 'editor'
     }
   }

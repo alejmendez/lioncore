@@ -10,7 +10,7 @@ import {{ ucfirst($nameModel) }}Filters from './{{ ucfirst($nameModel) }}Filters
 import {{ ucfirst($nameModel) }}DataTable from './{{ ucfirst($nameModel) }}DataTable.vue'
 
 // Store Module
-import module{{ ucfirst($nameModel) }}Management from '@/store/{{ $nameModel }}-management/module{{ ucfirst($nameModel) }}Management.js'
+import module{{ ucfirst($nameModel) }}Management from '@/store/{{ $nameModel }}/module{{ ucfirst($nameModel) }}Management.js'
 
 export default {
   components: {

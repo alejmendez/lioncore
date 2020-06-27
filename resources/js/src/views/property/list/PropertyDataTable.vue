@@ -8,7 +8,7 @@
     :listColumns="listColumns"
     @edit-record="edit"
     @delete-record="confirmDelete"
-    />
+  />
 </template>
 
 <script>
@@ -18,19 +18,15 @@ export default {
   data () {
     return {
       id: '',
-      listColumns: ['email', 'username', 'person.first_name'],
+      listColumns: ['name', 'value'],
       thead: [
         {
-          name: 'Email',
-          key: 'email'
+          name: 'name',
+          key: 'name'
         },
         {
-          name: 'Username',
-          key: 'username'
-        },
-        {
-          name: 'Name',
-          key: 'person.first_name'
+          name: 'value',
+          key: 'value'
         }
       ]
     }
@@ -48,7 +44,7 @@ export default {
         type: 'confirm',
         color: 'danger',
         title: 'Confirm Delete',
-        text: `Are you sure you want to delete the property?`,
+        text: 'Are you sure you want to delete the property?',
         accept: () => this.delete(id),
         acceptText: 'Delete'
       })

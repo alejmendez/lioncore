@@ -26,7 +26,7 @@
       <template slot="thead">
         <vs-th
           v-for="th in thead"
-          :key="th.name"
+          :key="th.key"
           :sort-key="th.key"
           >
           {{ th.name }}

@@ -10,10 +10,10 @@ class Route extends Generator
     public function generate()
     {
         $this->routePath    = $this->path(['Routes', 'api.php']);
-        $this->routeLaravel();
+        $this->route();
     }
 
-    protected function routeLaravel()
+    protected function route()
     {
         $routeContent = file_get_contents($this->routePath);
 
@@ -26,23 +26,23 @@ class Route extends Generator
 
         $newRoute = "\n" .
         "Route::prefix('" . Str::plural($nameRoute) . "')->name('" . Str::plural($nameRoute) . ".')->group(function () {\n" .
-        "\t\t    Route::get('/', '" . $nameController . "@index')->name('index')\n" .
-        "\t\t        ->middleware('permission:$nameRoute');\n" .
-        "\t\t    Route::get('/', '" . $nameController . "@filters')->name('filters')\n" .
-        "\t\t        ->middleware('permission:$nameRoute');\n" .
-        "\t\t    Route::get('/', '" . $nameController . "@moduleData')->name('module-data')\n" .
-        "\t\t        ->middleware('permission:$nameRoute');\n" .
-        "\t\t    Route::get('/{" . $nameRoute . "}', '" . $nameController . "@show')->name('show')\n" .
-        "\t\t        ->middleware('permission:$nameRoute show');\n" .
-        "\t\t    Route::post('/', '" . $nameController . "@store')->name('store')\n" .
-        "\t\t        ->middleware('permission:$nameRoute store');\n" .
-        "\t\t    Route::put('/{" . $nameRoute . "}', '" . $nameController . "@update')->name('update')\n" .
-        "\t\t        ->middleware('permission:$nameRoute update');\n" .
-        "\t\t    Route::delete('/{" . $nameRoute . "}', '" . $nameController . "@destroy')->name('destroy')\n" .
-        "\t\t        ->middleware('permission:$nameRoute destroy');\n" .
-        "\t\t});" .
-        "\t\t// add router";
-        $routeContent = str_replace('// add router', $newRoute);
+        "            Route::get('/', '" . $nameController . "@index')->name('index')\n" .
+        "                ->middleware('permission:$nameRoute');\n" .
+        "            Route::get('/filters', '" . $nameController . "@filters')->name('filters')\n" .
+        "                ->middleware('permission:$nameRoute');\n" .
+        "            Route::get('/module-data', '" . $nameController . "@moduleData')->name('module-data')\n" .
+        "                ->middleware('permission:$nameRoute');\n" .
+        "            Route::get('/{" . $nameRoute . "}', '" . $nameController . "@show')->name('show')\n" .
+        "                ->middleware('permission:$nameRoute show');\n" .
+        "            Route::post('/', '" . $nameController . "@store')->name('store')\n" .
+        "                ->middleware('permission:$nameRoute store');\n" .
+        "            Route::put('/{" . $nameRoute . "}', '" . $nameController . "@update')->name('update')\n" .
+        "                ->middleware('permission:$nameRoute update');\n" .
+        "            Route::delete('/{" . $nameRoute . "}', '" . $nameController . "@destroy')->name('destroy')\n" .
+        "                ->middleware('permission:$nameRoute destroy');\n" .
+        "        });";
+
+        $routeContent = $this->addNewContent($routeContent, '// add router', $newRoute, 2, '    ');
 
         $this->writeFile($this->routePath, $routeContent);
     }

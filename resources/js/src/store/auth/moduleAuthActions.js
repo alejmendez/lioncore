@@ -355,9 +355,14 @@ export default {
     })
   },
   fetchAccessToken () {
-    return new Promise((resolve) => {
+    return new Promise(() => {
       router.push('/login').catch(() => {})
       // jwt.refreshToken().then(response => { resolve(response) })
+    })
+  },
+  forbidden () {
+    return new Promise(() => {
+      router.push('/not-authorized').catch(() => {})
     })
   }
 }

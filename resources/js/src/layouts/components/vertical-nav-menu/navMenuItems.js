@@ -35,6 +35,14 @@ export default [
     i18n: 'menu.home'
   },
   {
+    url: '/property/',
+    name: 'Property',
+    icon: 'PropertyIcon',
+    slug: 'property',
+    i18n: 'menu.property'
+  },
+  // section menu
+  {
     header: 'Admin',
     icon: 'PackageIcon',
     i18n: 'menu.admin',
@@ -54,5 +62,5 @@ export default [
         i18n: 'menu.role'
       }
     ]
-  },
+  }
 ]

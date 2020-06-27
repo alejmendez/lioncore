@@ -9,7 +9,7 @@ exports.router = [
         { title: 'Property' },
         { title: 'List', active: true }
       ],
-      pageTitle: 'properties.title.list',
+      pageTitle: 'property.title.list',
       rule: 'editor'
     }
   },
@@ -23,7 +23,7 @@ exports.router = [
         { title: 'Property', url: '/property' },
         { title: 'New', active: true }
       ],
-      pageTitle: 'properties.title.new',
+      pageTitle: 'property.title.new',
       rule: 'editor'
     }
   },
@@ -37,7 +37,7 @@ exports.router = [
         { title: 'Property', url: '/property' },
         { title: 'Edit', active: true }
       ],
-      pageTitle: 'properties.title.edit',
+      pageTitle: 'property.title.edit',
       rule: 'editor'
     }
   }

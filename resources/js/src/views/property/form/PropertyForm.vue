@@ -11,17 +11,6 @@
         <vx-card>
           <vs-row>
             <vs-col vs-type="flex" vs-w="6">
-              <ValidationProvider name="properties.id" rules="" v-slot="{ errors, invalid, validated }">
-                <vs-input
-                  class="w-full mt-4"
-                  v-model="data.id"
-                  :danger="invalid && validated"
-                  :label="$t('properties.id')"
-                />
-                <span class="text-danger text-sm">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </vs-col>
-            <vs-col vs-type="flex" vs-w="6">
               <ValidationProvider name="properties.name" rules="min:3|max:50" v-slot="{ errors, invalid, validated }">
                 <vs-input
                   class="w-full mt-4"
@@ -34,7 +23,7 @@
             </vs-col>
             <vs-col vs-type="flex" vs-w="6">
               <ValidationProvider name="properties.value" rules="min:3|max:50" v-slot="{ errors, invalid, validated }">
-                <vs-input
+                <vs-textarea
                   class="w-full mt-4"
                   v-model="data.value"
                   :danger="invalid && validated"
@@ -76,7 +65,7 @@
 <script>
 import vSelect from 'vue-select'
 
-import modulePropertyManagement from '@/store/property-management/modulePropertyManagement.js'
+import modulePropertyManagement from '@/store/property/modulePropertyManagement.js'
 
 export default {
   components: {
@@ -85,10 +74,9 @@ export default {
   data () {
     return {
       data: {
-        id: '',
         name: '',
-        value: ''
-      },
+        value: '',
+              },
       data_original: {},
       not_found: false,
       activeTab: 0

@@ -44,8 +44,12 @@ Route::prefix('v1')->group(function () {
                 ->middleware('permission:user destroy');
         });
 
-        Route::prefix('v1/properties')->name('properties.')->middleware('auth:api')->group(function () {
+        Route::prefix('properties')->name('properties.')->group(function () {
             Route::get('/', 'PropertyController@index')->name('index')
+                ->middleware('permission:property');
+            Route::get('/filters', 'PropertyController@filters')->name('filters')
+                ->middleware('permission:property');
+            Route::get('/module-data', 'PropertyController@moduleData')->name('module-data')
                 ->middleware('permission:property');
             Route::get('/{property}', 'PropertyController@show')->name('show')
                 ->middleware('permission:property show');
@@ -56,7 +60,6 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{property}', 'PropertyController@destroy')->name('destroy')
                 ->middleware('permission:property destroy');
         });
-
         // add router
     });
 });

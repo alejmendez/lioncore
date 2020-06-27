@@ -23,6 +23,11 @@ export default {
       const originalRequest = config
 
       // if (status === 401) {
+      if (response && response.status === 403) {
+        store.dispatch('auth/forbidden')
+          .then(() => {})
+      }
+
       if (response && response.status === 401) {
         if (!isAlreadyFetchingAccessToken) {
           isAlreadyFetchingAccessToken = true

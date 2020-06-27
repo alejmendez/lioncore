@@ -1,7 +1,7 @@
 export default {
-  titles: {
+  title: {
     new: 'Nueva Propiedad',
-    list: 'Propiedad De Lista',
+    list: 'Lista de propiedades',
     view: 'Propiedad',
     edit: 'Editar Propiedad'
   },

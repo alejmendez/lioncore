@@ -18,6 +18,7 @@ class View extends Generator
         $this->generateViewForm();
         $this->generateStores();
         //$this->generateTrans();
+        $this->generateMenu();
     }
 
     protected function generateRouteVue()
@@ -69,6 +70,25 @@ class View extends Generator
     {
         $data = $this->getDataView();
 
+        $data['fields'] = $fields = $data['fields']->reject(function ($field) {
+            return $field['name'] == 'id';
+        });
+        $data['fieldsInList'] = $fieldsInList = $fields->reject(function ($field) {
+            return !$field['inList'];
+        });
+
+        $data['listColumns'] = $fieldsInList->map(function ($field) {
+            return "'" . $field['name'] . "'";
+        })->implode(", ");
+
+        $data['thead'] = $fieldsInList->map(function ($field) {
+            return
+                "        {\n" .
+                "          name: $this.t('" . $data['nameModel'] . "." . $field['label'] . "'),\n" .
+                "          key: '" . $field['name'] . "'\n" .
+                "        }";
+        })->implode(",\n");
+
         $contents = $this->view('scaffolding.views.list.datatable', $data);
         $pathFile = $this->path(['resources', 'js', 'src', 'views', $data['nameModel'], 'list', ucfirst($data['nameModel']) . 'DataTable.vue']);
         $this->writeFile($pathFile, $contents);
@@ -95,6 +115,10 @@ class View extends Generator
     protected function generateViewForm()
     {
         $data = $this->getDataView();
+
+        $data['fields'] = $fields = $data['fields']->reject(function ($field) {
+            return $field['name'] == 'id';
+        });
 
         $contents = $this->view('scaffolding.views.form', $data);
 
@@ -168,6 +192,30 @@ class View extends Generator
         ];
     }
 
+    protected function generateMenu()
+    {
+        $nameModel = strtolower($this->getNameModel());
+        $pathFile = $this->path(['resources', 'js', 'src', 'layouts', 'components', 'vertical-nav-menu', 'navMenuItems.js']);
+        $stringSearch = "  url: '/$nameModel/',";
+        $stringImport = "{\n" .
+            "  " . $stringSearch . "\n" .
+            "    name: '" . ucfirst($nameModel) . "',\n" .
+            "    icon: '" . ucfirst($nameModel) . "Icon',\n" .
+            "    slug: '$nameModel',\n" .
+            "    i18n: 'menu.$nameModel'\n" .
+        "  },";
+
+        $stringContent = "$nameModel,";
+        $content = file_get_contents($pathFile);
+
+        if (Str::contains($content, $stringSearch)) {
+            return;
+        }
+
+        $content = $this->addNewContent($content, '// section menu', $stringImport, 1, "  ");
+        $this->writeFile($pathFile, $content);
+    }
+
     protected function generateTrans()
     {
         $data = $this->getDataView();
@@ -228,7 +276,7 @@ class View extends Generator
             $title = ucwords($this->traslate($title));
         }
 
-        $this->jsonTrans['titles'] = $titles;
+        $this->jsonTrans['title'] = $titles;
     }
 
     protected function defineFieldLabels()
