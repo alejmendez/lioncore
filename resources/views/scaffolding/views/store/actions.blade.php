@@ -50,6 +50,21 @@ export default {
         .catch((error) => { reject(error) })
     })
   },
+  save (context, data) {
+    return new Promise((resolve, reject) => {
+      let promise;
+      if (data.id == '') {
+        promise = axios.post(`{{ $nameModelPlural }}`, data)
+      } else {
+        promise = axios.put(`{{ $nameModelPlural }}/${data.id}`, data)
+      }
+      promise
+        .then((response) => {
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
   removeRecord ({ commit }, id) {
     return new Promise((resolve, reject) => {
       axios.delete(`{{ $nameModelPlural }}/${id}`)

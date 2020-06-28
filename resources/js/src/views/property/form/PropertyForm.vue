@@ -11,7 +11,7 @@
         <vx-card>
           <vs-row>
             <vs-col vs-type="flex" vs-w="6">
-              <ValidationProvider name="property.name" rules="min:3|max:50" v-slot="{ errors, invalid, validated }">
+              <ValidationProvider name="property.name" rules="required|min:3|max:50" v-slot="{ errors, invalid, validated }">
                 <vs-input
                   class="w-full mt-4"
                   v-model="data.name"
@@ -22,7 +22,7 @@
               </ValidationProvider>
             </vs-col>
             <vs-col vs-type="flex" vs-w="6">
-              <ValidationProvider name="property.value" rules="min:3|max:50" v-slot="{ errors, invalid, validated }">
+              <ValidationProvider name="property.value" rules="required|min:3" v-slot="{ errors, invalid, validated }">
                 <vs-textarea
                   class="w-full mt-4"
                   v-model="data.value"
@@ -36,24 +36,32 @@
           <!-- Save & Reset Button -->
           <vs-row>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="p-4 sm:p-2">
-            <div class="mt-8 mb-8 flex flex-wrap items-center justify-end">
-                <vs-button
-                  class="ml-auto mt-2"
-                  button="submit"
-                  :disabled="!invalid"
-                >
-                  {{ $t('common.save_changes') }}
-                </vs-button>
-                <vs-button
-                  class="ml-4 mt-2"
-                  type="border"
-                  button="reset"
-                  color="warning"
-                  @click="reset_data"
-                >
-                  {{ $t('common.reset') }}
-                </vs-button>
-              </div>
+              <vs-button
+                class="mr-auto mt-2 float-left"
+                color="dark"
+                icon="arrow_back"
+                @click="back"
+              >
+                {{ $t('common.back') }}
+              </vs-button>
+              <vs-button
+                class="ml-auto mt-2 float-right"
+                button="submit"
+                icon="save"
+                :disabled="invalid"
+              >
+                {{ $t('common.save_changes') }}
+              </vs-button>
+              <vs-button
+                class="ml-4 mt-2 float-right"
+                type="border"
+                button="reset"
+                color="warning"
+                icon="replay"
+                @click="reset"
+              >
+                {{ $t('common.reset') }}
+              </vs-button>
             </vs-col>
           </vs-row>
         </vx-card>
@@ -74,9 +82,10 @@ export default {
   data () {
     return {
       data: {
+        id: '',
         name: '',
-        value: '',
-              },
+        value: ''
+      },
       data_original: {},
       not_found: false,
       activeTab: 0
@@ -86,7 +95,7 @@ export default {
     getModuleData () {
       this.$store.dispatch('propertyManagement/getModuleData')
     },
-    fetch_data (id) {
+    fetchData (id) {
       this.data.id = id
       this.$store.dispatch('propertyManagement/fetch', id)
         .then(res => { this.data = res.data.data })
@@ -102,24 +111,38 @@ export default {
       /* eslint-disable */
       if (!this.validateForm) return
 
-      // Here will go your API call for updating data
-      // You can get data in "this.data"
+      this.$store
+        .dispatch('propertyManagement/save', this.data)
+        .then(() => {
+          this.showSuccess()
+          this.back()
+        })
+        .catch(err => {
+          this.showError()
+          console.error(err)
+        })
 
       /* eslint-enable */
     },
-    reset_data () {
+    back () {
+      this.$router.push('/property').catch(() => {})
+    },
+    reset () {
       this.data = Object.assign({}, this.data_original)
     },
-    update_avatar (event) {
-      const input = event.target
-      if (input.files && input.files[0]) {
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          console.log(e.target.result)
-          this.data.avatar = e.target.result
-        }
-        reader.readAsDataURL(input.files[0])
-      }
+    showSuccess () {
+      this.$vs.notify({
+        color: 'success',
+        title: this.$t('save_success'),
+        text: this.$t('the_record_has_been_saved_successfully')
+      })
+    },
+    showError () {
+      this.$vs.notify({
+        color: 'danger',
+        title: this.$t('save_error'),
+        text: this.$t('an_exception_occurred_while_saving')
+      })
     }
   },
   created () {
@@ -129,12 +152,12 @@ export default {
     }
 
     this.data_original = Object.assign({}, this.data)
-    this.reset_data()
+    this.reset()
 
     this.getModuleData()
 
     if (this.$route.params.id) {
-      this.fetch_data(this.$route.params.id)
+      this.fetchData(this.$route.params.id)
     }
   }
 }
