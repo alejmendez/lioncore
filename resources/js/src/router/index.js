@@ -13,12 +13,12 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const dashboard = require('./dashboard.js')
-const user = require('./user.js')
-const login = require('./login.js')
-const errors = require('./errors.js')
-const generic = require('./generic.js')
-const property = require('./property.js')
+import dashboard from './dashboard.js'
+import user from './user.js'
+import login from './login.js'
+import errors from './errors.js'
+import generic from './generic.js'
+import property from './property.js'
 // requires
 
 const router = new Router({

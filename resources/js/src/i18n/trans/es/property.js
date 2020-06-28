@@ -5,6 +5,6 @@ export default {
     view: 'Propiedad',
     edit: 'Editar Propiedad'
   },
-  name: 'nombre',
-  value: 'valor'
+  name: 'Nombre',
+  value: 'Valor'
 }

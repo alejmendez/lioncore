@@ -3,7 +3,7 @@
     ref="filterCard"
     class="property-list-filters mb-8"
     actionButtons
-    :title="$t('common.filters)"
+    :title="$t('common.filters')"
     @refresh="resetColFilters"
     @remove="resetColFilters"
   >

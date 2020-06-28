@@ -18,7 +18,7 @@
             @click="addNew"
           >
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <span class="ml-2 text-base text-primary">Add new {{ entityName }}</span>
+            <span class="ml-2 text-base text-primary">{{ $t('common.add_new', { entityName }) }}</span>
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
           >
           {{ th.name }}
         </vs-th>
-        <vs-th>Action</vs-th>
+        <vs-th>{{ $t('common.action') }}</vs-th>
       </template>
 
       <template slot-scope="{data}">
@@ -61,9 +61,9 @@
       <vs-row class="mt-5">
         <vs-col vs-type="flex" vs-w="6">
           <!-- ITEMS PER PAGE -->
-          Showing
+          {{ $t('common.table.showing') }}
           {{ currentPage * itemsPerPage - (itemsPerPage - 1) }}
-          to
+          {{ $t('common.table.to') }}
           <vs-dropdown>
             <a class="a-icon" href="#">
               {{ itemsPerPage }}
@@ -77,9 +77,9 @@
               </vs-dropdown-menu>
             </div>
           </vs-dropdown>
-          of
+          {{ $t('common.table.of') }}
           {{ queriedItems }}
-          entries
+          {{ $t('common.table.entries') }}
         </vs-col>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
           <vs-pagination :total="numberOfPages" v-model="page"></vs-pagination>
@@ -215,8 +215,8 @@ export default {
       this.getData()
       this.$vs.notify({
         color: 'success',
-        title: 'Record Deleted',
-        text: `The selected ${ this.entityName } was successfully deleted.`
+        title: this.$t('record_deleted'),
+        text: this.$t('common.the_selected_entityname_was_successfully_deleted', { entityName: this.entityName })
       })
     },
     getData () {

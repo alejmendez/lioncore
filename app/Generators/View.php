@@ -47,7 +47,7 @@ class View extends Generator
         $routePath = $this->path(['resources', 'js', 'src', 'router', 'index.js']);
         $routeContent = file_get_contents($routePath);
         $nameModel = strtolower($this->getNameModel());
-        $stringRequire = "const $nameModel = require('./$nameModel.js')";
+        $stringRequire = "import $nameModel from './$nameModel.js'";
         $stringContent = "...$nameModel.router,";
 
         if (Str::contains($routeContent, $stringRequire)) {

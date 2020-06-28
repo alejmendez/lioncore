@@ -1,9 +1,9 @@
 <template>
   <table-crud
-    entityName="{{ $nameModel }}"
     newRoute="/{{ $nameModel }}/new"
     getDataAction="{{ $nameModel }}Management/list"
     management="{{ $nameModel }}Management"
+    :entityName="$t('{{ $nameModel }}.title.view')"
     :thead="thead"
     :listColumns="listColumns"
     @edit-record="edit"
@@ -37,7 +37,7 @@ export default {
         type: 'confirm',
         color: 'danger',
         title: this.$t('confirm_delete'),
-        text: this.$t('common.are_you_sure_you_want_to_delete', { element: '{{ $nameModel }}' }),
+        text: this.$t('common.are_you_sure_you_want_to_delete', { entityName: this.$t('{{ $nameModel }}.title.view') }),
         accept: () => this.delete(id),
         acceptText: this.$t('delete')
       })
