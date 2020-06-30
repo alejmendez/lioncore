@@ -25,7 +25,7 @@ $factory->define(Person::class, function (Faker $faker) {
         "birthdate" => $faker->date('Y-m-d', '-18 years') ,
         "room_telephone" => $faker->phoneNumber,
         "mobile_phone" => $faker->phoneNumber,
-        "website" => $faker->url,
+        "website" => '',
         "languages" => $faker->randomElement(['english', 'spanish', 'french', 'russian', 'german', 'arabic', 'sanskrit']),
         "email" => $faker->unique()->safeEmail,
         "nationality" => $faker->randomElement(['C', 'E']),

@@ -20,7 +20,8 @@ class RoleSeeder extends Seeder
         $permissions = [];
         $modules = [
             'user',
-            'role'
+            'role',
+            'property'
         ];
 
         foreach ($modules as $module) {

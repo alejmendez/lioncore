@@ -18,9 +18,11 @@ class PropertySeeder extends Seeder
 
         Property::truncate();
 
+        /*
         Property::create([
             'name'  => '',
             'value' => ''
         ]);
+        */
     }
 }
