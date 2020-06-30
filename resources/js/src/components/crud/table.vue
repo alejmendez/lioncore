@@ -140,14 +140,11 @@ export default {
     },
     loading () {
       this.$emit('loading')
-      this.$vs.loading({
-        container: '.tableContainerCrud',
-        scale: 0.6
-      })
+      this.$vs.loading()
     },
     loaded () {
       this.$emit('loaded')
-      this.$vs.loading.close('.tableContainerCrud > .con-vs-loading')
+      this.$vs.loading.close()
     },
     search (searching) {
       if (this.timer) {

@@ -39,7 +39,6 @@
                 class="ml-auto mt-2 float-right vs-con-loading__container"
                 button="submit"
                 icon="save"
-                ref="saveButton"
                 :disabled="invalid || loading"
               >
                 @{{ $t('common.save_changes') }}
@@ -102,25 +101,20 @@ export default {
         })
     },
     save () {
-        this.loading = true
-      this.$vs.loading({
-        background: 'primary',
-        color: '#fff',
-        container: this.$refs.saveButton.$el,
-        scale: 0.45
-      })
+      this.loading = true
+      this.$vs.loading()
       this.$store
         .dispatch('{{ $nameModel }}Management/save', this.data)
         .then(() => {
           this.loading = false
           this.showSuccess()
           this.back()
-          this.$vs.loading.close(this.$refs.saveButton.$el)
+          this.$vs.loading.close()
         })
         .catch(err => {
           this.loading = false
           this.showError()
-          this.$vs.loading.close(this.$refs.saveButton.$el)
+          this.$vs.loading.close()
           console.error(err)
         })
     },

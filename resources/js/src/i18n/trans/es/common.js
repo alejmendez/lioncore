@@ -10,7 +10,7 @@ export default {
   'filters': 'Filtros',
   'delete': 'Eliminar',
   'no_data_text': 'Datos no disponibles.',
-  'record_deleted': 'Registro Rliminado',
+  'record_deleted': 'Registro Eliminado',
   'confirm_delete': 'Confirmar Eliminación',
   'are_you_sure_you_want_to_delete': '¿Estás segura de que quieres eliminar el {entityName}?',
   'the_selected_entityname_was_successfully_deleted': 'La {entityName} seleccionada se eliminó con éxito.',

@@ -16,7 +16,6 @@ import VxBreadcrumb from './layouts/components/VxBreadcrumb.vue'
 import FeatherIcon from './components/FeatherIcon.vue'
 import VxInputGroup from './components/vx-input-group/VxInputGroup.vue'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import VJstree from 'vue-jstree'
 
 Vue.component(VxTooltip.name, VxTooltip)
 Vue.component(VxCard.name, VxCard)

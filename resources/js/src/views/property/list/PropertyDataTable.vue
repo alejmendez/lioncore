@@ -60,10 +60,10 @@ export default {
       this.$refs.table.getData()
     },
     loading () {
-      this.$refs.table.loading()
+      this.$vs.loading()
     },
     loaded () {
-      this.$refs.table.loaded()
+      this.$vs.loading.close()
     },
     edit (id) {
       this.$router.push(`/property/${id}`).catch(() => {})

@@ -53,6 +53,12 @@ export default {
     getData () {
       this.$refs.table.getData()
     },
+    loading () {
+      this.$vs.loading()
+    },
+    loaded () {
+      this.$vs.loading.close()
+    },
     edit (id) {
       this.$router.push(`/{{ $nameModel }}/${id}`).catch(() => {})
     },
@@ -68,12 +74,14 @@ export default {
       })
     },
     delete (id) {
+      this.loading()
       this.$store
         .dispatch('{{ $nameModel }}Management/delete', id)
         .then(() => {
           this.showDeleteSuccess()
         })
         .catch(err => {
+          this.showDeleteError()
           console.error(err)
         })
     },
