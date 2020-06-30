@@ -16,14 +16,5 @@ export default {
   },
   RECORDS_TOTAL (state, recordsTotal) {
     state.recordsTotal = recordsTotal
-  },
-  GET (state, id) {
-    console.log('GET', id)
-  },
-  SAVE (state, id) {
-    console.log('SAVE', id)
-  },
-  DELETE (state, id) {
-    console.log('delete', id)
   }
 }

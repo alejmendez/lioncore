@@ -8,11 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable implements JWTSubject, Auditable
 {
-    use Notifiable, \OwenIt\Auditing\Auditable, HasRoles;
+    use Notifiable, \OwenIt\Auditing\Auditable, HasRoles, SoftDeletes;
 
     public $incrementing = false;
 

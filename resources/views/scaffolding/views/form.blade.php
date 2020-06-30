@@ -10,8 +10,8 @@
       <form @submit.prevent="handleSubmit(save)">
         <vx-card>
           <vs-row>
-            @foreach ($fields as $field)<vs-col vs-type="flex" vs-w="6">
-              <ValidationProvider name="{{ $nameModel }}.{{ $field['name'] }}" rules="{{ $field['validations'] }}" v-slot="{ errors, invalid, validated }">
+            @foreach ($fields as $field)<vs-col class="px-2" vs-w="6">
+              <ValidationProvider class="w-full" name="{{ $nameModel }}.{{ $field['name'] }}" rules="{{ $field['validations'] }}" v-slot="{ errors, invalid, validated }">
                 <vs-{{ $field['htmlType'] }}
                   class="w-full mt-4"
                   v-model="data.{{ $field['name'] }}"
@@ -30,15 +30,17 @@
                 class="mr-auto mt-2 float-left"
                 color="dark"
                 icon="arrow_back"
+                :disabled="loading"
                 @click="back"
               >
                 @{{ $t('common.back') }}
               </vs-button>
               <vs-button
-                class="ml-auto mt-2 float-right"
+                class="ml-auto mt-2 float-right vs-con-loading__container"
                 button="submit"
                 icon="save"
-                :disabled="invalid"
+                ref="saveButton"
+                :disabled="invalid || loading"
               >
                 @{{ $t('common.save_changes') }}
               </vs-button>
@@ -48,6 +50,7 @@
                 button="reset"
                 color="warning"
                 icon="replay"
+                :disabled="loading"
                 @click="reset"
               >
                 @{{ $t('common.reset') }}
@@ -61,14 +64,9 @@
 </template>
 
 <script>
-import vSelect from 'vue-select'
-
 import module{{ ucfirst($nameModel) }}Management from '@/store/{{ $nameModel }}/module{{ ucfirst($nameModel) }}Management.js'
 
 export default {
-  components: {
-    vSelect
-  },
   data () {
     return {
       data: {
@@ -78,7 +76,7 @@ export default {
       },
       data_original: {},
       not_found: false,
-      activeTab: 0
+      loading: false
     }
   },
   methods: {
@@ -86,10 +84,16 @@ export default {
       this.$store.dispatch('{{ $nameModel }}Management/getModuleData')
     },
     fetchData (id) {
+      this.loading = true
       this.data.id = id
       this.$store.dispatch('{{ $nameModel }}Management/fetch', id)
-        .then(res => { this.data = res.data.data })
+        .then(res => {
+          this.loading = false
+          this.data = res.data.data
+        })
         .catch(err => {
+          this.data.id = ''
+          this.loading = false
           if (err.response.status === 404) {
             this.not_found = true
             return
@@ -98,21 +102,27 @@ export default {
         })
     },
     save () {
-      /* eslint-disable */
-      if (!this.validateForm) return
-
+        this.loading = true
+      this.$vs.loading({
+        background: 'primary',
+        color: '#fff',
+        container: this.$refs.saveButton.$el,
+        scale: 0.45
+      })
       this.$store
         .dispatch('{{ $nameModel }}Management/save', this.data)
         .then(() => {
+          this.loading = false
           this.showSuccess()
           this.back()
+          this.$vs.loading.close(this.$refs.saveButton.$el)
         })
         .catch(err => {
+          this.loading = false
           this.showError()
+          this.$vs.loading.close(this.$refs.saveButton.$el)
           console.error(err)
         })
-
-      /* eslint-enable */
     },
     back () {
       this.$router.push('/{{ $nameModel }}').catch(() => {})
@@ -123,15 +133,15 @@ export default {
     showSuccess () {
       this.$vs.notify({
         color: 'success',
-        title: this.$t('save_success'),
-        text: this.$t('the_record_has_been_saved_successfully')
+        title: this.$t('common.save_success'),
+        text: this.$t('common.the_record_has_been_saved_successfully')
       })
     },
     showError () {
       this.$vs.notify({
         color: 'danger',
-        title: this.$t('save_error'),
-        text: this.$t('an_exception_occurred_while_saving')
+        title: this.$t('common.save_error'),
+        text: this.$t('common.an_exception_occurred_while_saving')
       })
     }
   },

@@ -1,14 +1,36 @@
 <template>
   <table-crud
-    entityName="user"
     newRoute="/user/new"
     getDataAction="userManagement/list"
     management="userManagement"
+    ref="table"
+    :entityName="$t('user.title.view')"
     :thead="thead"
     :listColumns="listColumns"
-    @edit-record="edit"
-    @delete-record="confirmDelete"
-    />
+  >
+    <template slot-scope="{data}">
+      <tbody>
+        <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+          <vs-td>{{ tr.email }}</vs-td>
+          <vs-td>{{ tr.username }}</vs-td>
+          <vs-td>{{ tr.person.first_name }} {{ tr.person.last_name }}</vs-td>
+          <vs-td class="whitespace-no-wrap">
+            <feather-icon
+              icon="EditIcon"
+              svgClasses="w-5 h-5 hover:text-primary stroke-current"
+              @click.stop="edit(tr.id)"
+            />
+            <feather-icon
+              icon="TrashIcon"
+              svgClasses="w-5 h-5 hover:text-danger stroke-current"
+              class="ml-2"
+              @click.stop="confirmDelete(tr.id)"
+            />
+          </vs-td>
+        </vs-tr>
+      </tbody>
+    </template>
+  </table-crud>
 </template>
 
 <script>
@@ -39,6 +61,15 @@ export default {
     'table-crud': table
   },
   methods: {
+    getData () {
+      this.$refs.table.getData()
+    },
+    loading () {
+      this.$refs.table.loading()
+    },
+    loaded () {
+      this.$refs.table.loaded()
+    },
     edit (id) {
       this.$router.push(`/user/${id}`).catch(() => {})
     },
@@ -47,21 +78,38 @@ export default {
       this.$vs.dialog({
         type: 'confirm',
         color: 'danger',
-        title: 'Confirm Delete',
-        text: `Are you sure you want to delete the ${ this.entityName }?`,
+        title: this.$t('common.confirm_delete'),
+        text: this.$t('common.are_you_sure_you_want_to_delete', { entityName: this.$t('user.title.view') }),
         accept: () => this.delete(id),
-        acceptText: 'Delete'
+        acceptText: this.$t('common.delete')
       })
     },
-    deleteRecord (id) {
+    delete (id) {
+      this.loading()
       this.$store
-        .dispatch('userManagement/removeRecord', id)
+        .dispatch('userManagement/delete', id)
         .then(() => {
           this.showDeleteSuccess()
         })
         .catch(err => {
           console.error(err)
         })
+    },
+    showDeleteSuccess () {
+      this.getData()
+      this.$vs.notify({
+        color: 'success',
+        title: this.$t('common.record_deleted'),
+        text: this.$t('common.the_selected_entityname_was_successfully_deleted', { entityName: this.$t('user.title.view') })
+      })
+    },
+    showDeleteError () {
+      this.getData()
+      this.$vs.notify({
+        color: 'danger',
+        title: this.$t('common.record_deleted'),
+        text: this.$t('common.an_error_was_generated_while_trying_to_delete_the_record')
+      })
     }
   }
 }

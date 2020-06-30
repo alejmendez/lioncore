@@ -52,9 +52,9 @@ export default {
   },
   save (context, data) {
     return new Promise((resolve, reject) => {
-      let promise;
-      if (data.id == '') {
-        promise = axios.post(`{{ $nameModelPlural }}`, data)
+      let promise = null
+      if (data.id === '' || data.id === 0 || data.id === '0') {
+        promise = axios.post('{{ $nameModelPlural }}', data)
       } else {
         promise = axios.put(`{{ $nameModelPlural }}/${data.id}`, data)
       }
@@ -65,11 +65,10 @@ export default {
         .catch((error) => { reject(error) })
     })
   },
-  removeRecord ({ commit }, id) {
+  delete ({ commit }, id) {
     return new Promise((resolve, reject) => {
       axios.delete(`{{ $nameModelPlural }}/${id}`)
         .then((response) => {
-          commit('REMOVE_RECORD', id)
           resolve(response)
         })
         .catch((error) => { reject(error) })

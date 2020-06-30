@@ -7,6 +7,7 @@
       :sst="true"
       :data="tableData"
       :max-items="itemsPerPage"
+      :noDataText="$t('common.no_data_text')"
       @search="search"
       @sort="sort"
     >
@@ -28,33 +29,14 @@
           v-for="th in thead"
           :key="th.key"
           :sort-key="th.key"
-          >
+        >
           {{ th.name }}
         </vs-th>
         <vs-th>{{ $t('common.action') }}</vs-th>
       </template>
 
       <template slot-scope="{data}">
-        <tbody>
-          <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-            <vs-td>{{ tr.email }}</vs-td>
-            <vs-td>{{ tr.username }}</vs-td>
-            <vs-td>{{ tr.person.first_name }} {{ tr.person.last_name }}</vs-td>
-            <vs-td class="whitespace-no-wrap">
-              <feather-icon
-                icon="EditIcon"
-                svgClasses="w-5 h-5 hover:text-primary stroke-current"
-                @click.stop="editRecord(tr.id)"
-              />
-              <feather-icon
-                icon="TrashIcon"
-                svgClasses="w-5 h-5 hover:text-danger stroke-current"
-                class="ml-2"
-                @click.stop="deleteRecord(tr.id)"
-              />
-            </vs-td>
-          </vs-tr>
-        </tbody>
+        <slot :data="data"></slot>
       </template>
     </vs-table>
     <div>
@@ -204,20 +186,6 @@ export default {
       this.datatable.length = cant
       this.itemsPerPage = cant
       this.getData()
-    },
-    editRecord (id) {
-      this.$emit('edit-record', id)
-    },
-    deleteRecord (id) {
-      this.$emit('delete-record', id)
-    },
-    showDeleteSuccess () {
-      this.getData()
-      this.$vs.notify({
-        color: 'success',
-        title: this.$t('record_deleted'),
-        text: this.$t('common.the_selected_entityname_was_successfully_deleted', { entityName: this.entityName })
-      })
     },
     getData () {
       this.$emit('get-data')

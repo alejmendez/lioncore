@@ -1,6 +1,5 @@
 <template>
   <div id="page-property-list">
-    <property-filters></property-filters>
     <property-data-table></property-data-table>
   </div>
 </template>

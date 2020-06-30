@@ -1,26 +1,7 @@
-/*=========================================================================================
-  File Name: moduleCalendarActions.js
-  Description: Calendar Module Actions
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
 import axios from '@/axios.js'
 import qs from 'qs'
 
 export default {
-  // addItem({ commit }, item) {
-  //   return new Promise((resolve, reject) => {
-  //     axios.post("/api/data-list/products/", {item: item})
-  //       .then((response) => {
-  //         commit('ADD_ITEM', Object.assign(item, {id: response.data.id}))
-  //         resolve(response)
-  //       })
-  //       .catch((error) => { reject(error) })
-  //   })
-  // },
   getFiltersValues ({ commit }, data) {
     return new Promise((resolve, reject) => {
       axios.get('users/filters', data)
@@ -69,11 +50,25 @@ export default {
         .catch((error) => { reject(error) })
     })
   },
-  removeRecord ({ commit }, id) {
+  save (context, data) {
+    return new Promise((resolve, reject) => {
+      let promise = null
+      if (data.id === '' || data.id === 0 || data.id === '0') {
+        promise = axios.post('users', data)
+      } else {
+        promise = axios.put(`users/${data.id}`, data)
+      }
+      promise
+        .then((response) => {
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  delete ({ commit }, id) {
     return new Promise((resolve, reject) => {
       axios.delete(`users/${id}`)
         .then((response) => {
-          commit('REMOVE_RECORD', id)
           resolve(response)
         })
         .catch((error) => { reject(error) })
