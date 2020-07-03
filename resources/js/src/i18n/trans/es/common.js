@@ -19,6 +19,7 @@ export default {
   'the_record_has_been_saved_successfully': 'Se ha guardado el registro satisfactoriamente.',
   'save_error': 'Error guardando.',
   'an_exception_occurred_while_saving': 'Se ha producido una excepción al guardar.',
+  'all_rights_reserved': 'Todos los derechos reservados',
   'table': {
     'showing': 'Mostrando del',
     'to': 'al',

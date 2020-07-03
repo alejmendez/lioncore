@@ -40,7 +40,6 @@
                 class="mr-auto mt-2 float-left"
                 color="dark"
                 icon="arrow_back"
-                :disabled="loading"
                 @click="back"
               >
                 {{ $t('common.back') }}
@@ -49,7 +48,7 @@
                 class="ml-auto mt-2 float-right vs-con-loading__container"
                 button="submit"
                 icon="save"
-                :disabled="invalid || loading"
+                :disabled="invalid"
               >
                 {{ $t('common.save_changes') }}
               </vs-button>
@@ -59,7 +58,6 @@
                 button="reset"
                 color="warning"
                 icon="replay"
-                :disabled="loading"
                 @click="reset"
               >
                 {{ $t('common.reset') }}
@@ -84,22 +82,27 @@ export default {
         value: ''
       },
       data_original: {},
-      not_found: false,
-      loading: false
+      not_found: false
     }
   },
   methods: {
+    loading () {
+      this.$vs.loading()
+    },
+    loaded () {
+      this.$vs.loading.close()
+    },
     fetchData (id) {
-      this.loading = true
+      this.loading()
       this.data.id = id
       this.$store.dispatch('propertyManagement/fetch', id)
         .then(res => {
-          this.loading = false
+          this.loaded()
           this.data = res.data.data
         })
         .catch(err => {
+          this.loaded()
           this.data.id = ''
-          this.loading = false
           if (err.response.status === 404) {
             this.not_found = true
             return
@@ -108,20 +111,17 @@ export default {
         })
     },
     save () {
-      this.loading = true
-      this.$vs.loading()
+      this.loading()
       this.$store
         .dispatch('propertyManagement/save', this.data)
         .then(() => {
-          this.loading = false
+          this.loaded()
           this.showSuccess()
           this.back()
-          this.$vs.loading.close()
         })
         .catch(err => {
-          this.loading = false
+          this.loaded()
           this.showError()
-          this.$vs.loading.close()
           console.error(err)
         })
     },

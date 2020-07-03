@@ -22,7 +22,11 @@ export default {
       const { config, response } = error
       const originalRequest = config
 
-      // if (status === 401) {
+      if (response.status >= 400) {
+        //console.log(Vue.prototype.$vs)
+        //Vue.prototype.$vs.loading.close()
+      }
+
       if (response && response.status === 403) {
         store.dispatch('auth/forbidden')
           .then(() => {})

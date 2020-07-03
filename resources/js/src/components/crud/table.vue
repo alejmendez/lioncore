@@ -46,19 +46,12 @@
           {{ $t('common.table.showing') }}
           {{ currentPage * itemsPerPage - (itemsPerPage - 1) }}
           {{ $t('common.table.to') }}
-          <vs-dropdown>
-            <a class="a-icon" href="#">
-              {{ itemsPerPage }}
-              <vs-icon class="" icon="expand_more"></vs-icon>
-            </a>
-            <div style="margin-left: 5px; height: 18px;">
-              <vs-dropdown-menu>
-                <vs-dropdown-item :key="item.id" v-for="item in optionsListCalc" @click="changeItemsPerPage(item)">
-                  {{ item.option }}
-                </vs-dropdown-item>
-              </vs-dropdown-menu>
-            </div>
-          </vs-dropdown>
+          <vs-select
+            class="mx-2 select-paginate"
+            v-model="itemsPerPage"
+          >
+            <vs-select-item :key="item.option" :value="item.option" :text="item.option" v-for="item in optionsListCalc" />
+          </vs-select>
           {{ $t('common.table.of') }}
           {{ queriedItems }}
           {{ $t('common.table.entries') }}
@@ -70,6 +63,16 @@
     </div>
   </div>
 </template>
+
+<style lang="scss">
+  .select-paginate {
+    width: 50px;
+
+    input {
+      height: 10px;
+    }
+  }
+</style>
 
 <script>
 import { datatables } from '@/utils'
@@ -87,11 +90,6 @@ export default {
       type: Array,
       default: () => [10, 25, 50]
     },
-    itemsPerPage: {
-      type: Number,
-      default: 10
-    },
-
     management: String,
 
     getDataAction: String,
@@ -100,6 +98,7 @@ export default {
   data () {
     return {
       timer: null,
+      itemsPerPage: 10,
       isMounted: false
     }
   },
@@ -131,6 +130,9 @@ export default {
   watch: {
     page (val) {
       this.changePage(val)
+    },
+    itemsPerPage (val) {
+      this.changeItemsPerPage(val)
     }
   },
   methods: {
@@ -181,7 +183,6 @@ export default {
     },
     changeItemsPerPage (cant) {
       this.datatable.length = cant
-      this.itemsPerPage = cant
       this.getData()
     },
     getData () {
@@ -198,6 +199,7 @@ export default {
   },
   mounted () {
     this.isMounted = TextTrackCueList
+    this.optionsListSelected = this.itemsPerPage
   },
   created () {
     setTimeout(() => {

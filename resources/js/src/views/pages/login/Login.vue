@@ -46,6 +46,9 @@ import LoginJwt from './LoginJWT.vue'
 export default {
   components: {
     LoginJwt
+  },
+  mounted () {
+    this.$vs.loading.close()
   }
 }
 </script>

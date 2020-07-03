@@ -12,10 +12,11 @@ import Vue from 'vue'
 import App from './App.vue'
 
 // Vuesax Component Framework
-import Vuesax from 'vuesax'
+//import Vuesax from 'vuesax'
+//Vue.use(Vuesax)
 
-Vue.use(Vuesax)
-
+// Theme Configurations
+import '../themeConfig.js'
 
 // axios
 import axios from './axios.js'
@@ -23,9 +24,6 @@ Vue.prototype.$http = axios
 
 // API Calls
 import './http/requests'
-// Theme Configurations
-import '../themeConfig.js'
-
 
 // Firebase
 import '@/firebase/firebaseConfig'

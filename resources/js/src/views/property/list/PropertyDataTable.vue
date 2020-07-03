@@ -11,9 +11,9 @@
     <template slot-scope="{data}">
       <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-          <vs-td>{{ tr.name }}</vs-td>
-          <vs-td>{{ tr.value }}</vs-td>
-          <vs-td class="whitespace-no-wrap">
+          <vs-td style="width:30%">{{ tr.name }}</vs-td>
+          <vs-td style="width:70%">{{ tr.value }}</vs-td>
+          <vs-td class="whitespace-no-wrap" style="width:90px">
             <feather-icon
               icon="EditIcon"
               svgClasses="w-5 h-5 hover:text-primary stroke-current"

@@ -1,13 +1,3 @@
-<!-- =========================================================================================
-  File Name: Profile.vue
-  Description: Profile Page
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
-
 <template>
     <div id="profile-page">
 
