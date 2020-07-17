@@ -29,7 +29,7 @@ export default {
   // API CALLS
   sendChatMessage ({ getters, commit, dispatch }, payload) {
     return new Promise((resolve, reject) => {
-      axios.post('/api/apps/chat/msg', {payload})
+      axios.post('/chat/msg', {payload})
         .then((response) => {
           payload.chatData = getters.chatDataOfUser(payload.id)
           if (!payload.chatData) { dispatch('fetchChatContacts') }
@@ -43,7 +43,7 @@ export default {
   // Get contacts from server. Also change in store
   fetchContacts ({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('/api/apps/chat/contacts', {params: {q: ''}})
+      axios.get('/chat/contacts', {params: {q: ''}})
         .then((response) => {
           commit('UPDATE_CONTACTS', response.data)
           resolve(response)
@@ -55,7 +55,7 @@ export default {
   // Get chat-contacts from server. Also change in store
   fetchChatContacts ({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('/api/apps/chat/chat-contacts', {params: {q: ''}})
+      axios.get('/chat/chat-contacts', {params: {q: ''}})
         .then((response) => {
           commit('UPDATE_CHAT_CONTACTS', response.data)
           resolve(response)
@@ -67,7 +67,7 @@ export default {
   // Get chats from server. Also change in store
   fetchChats ({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('/api/apps/chat/chats')
+      axios.get('/chat/chats')
         .then((response) => {
           commit('UPDATE_CHATS', response.data)
           resolve(response)
@@ -79,7 +79,7 @@ export default {
   markSeenAllMessages ({ getters, commit }, id) {
 
     return new Promise((resolve, reject) => {
-      axios.post('/api/apps/chat/mark-all-seen', {id})
+      axios.post('/chat/mark-all-seen', {id})
         .then((response) => {
           commit('MARK_SEEN_ALL_MESSAGES', {
             id,
@@ -93,7 +93,7 @@ export default {
 
   toggleIsPinned ({ commit }, payload) {
     return new Promise((resolve, reject) => {
-      axios.post('/api/apps/chat/set-pinned/', {contactId: payload.id,
+      axios.post('/chat/set-pinned/', {contactId: payload.id,
         value: payload.value})
         .then((response) => {
           commit('TOGGLE_IS_PINNED', payload)

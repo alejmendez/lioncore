@@ -39,6 +39,8 @@ class RoleSeeder extends Seeder
             $permissions[] = $permission;
         }
 
+        $permissions[] = 'chat';
+
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
         }

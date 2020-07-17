@@ -12,6 +12,7 @@ import common from './es/common'
 import menu from './es/menu'
 import users from './es/users'
 import property from './es/property'
+import chat from './es/chat'
 // imports
 
 import es from 'vee-validate/dist/locale/es.json'
@@ -31,6 +32,7 @@ export default {
   menu,
   users,
   property,
+  chat,
   // content trans
   validation: es.messages,
   Home: 'Inicio',

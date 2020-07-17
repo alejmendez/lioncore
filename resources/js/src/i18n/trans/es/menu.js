@@ -3,5 +3,6 @@ export default {
   admin: 'Administrador',
   user: 'Usuarios',
   role: 'Perfiles',
-  property: 'Propiedades'
+  property: 'Propiedades',
+  chat: 'Chat'
 }

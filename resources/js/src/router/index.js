@@ -19,6 +19,7 @@ import login from './login.js'
 import errors from './errors.js'
 import generic from './generic.js'
 import property from './property.js'
+import chat from './chat.js'
 // requires
 
 const router = new Router({
@@ -33,6 +34,7 @@ const router = new Router({
       component: () => import('@/layouts/main/Main.vue'),
       children: [
         ...property.router,
+        ...chat.router,
         // content route
         ...dashboard.router,
         ...user.router

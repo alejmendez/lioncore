@@ -41,6 +41,13 @@ export default [
     slug: 'property',
     i18n: 'menu.property'
   },
+  {
+    url: '/chat/',
+    name: 'Chat',
+    icon: 'ChatIcon',
+    slug: 'chat',
+    i18n: 'menu.chat'
+  },
   // section menu
   {
     header: 'Admin',
