@@ -5,7 +5,7 @@ export default {
       name: 'page-error-404',
       component: () => import('@/views/pages/Error404.vue'),
       meta: {
-        rule: 'editor'
+        Auth: false
       }
     },
     {
@@ -13,7 +13,7 @@ export default {
       name: 'page-error-500',
       component: () => import('@/views/pages/Error500.vue'),
       meta: {
-        rule: 'editor'
+        Auth: false
       }
     },
     {
@@ -21,7 +21,7 @@ export default {
       name: 'page-not-authorized',
       component: () => import('@/views/pages/NotAuthorized.vue'),
       meta: {
-        rule: 'editor'
+        Auth: false
       }
     },
     {
@@ -29,7 +29,7 @@ export default {
       name: 'page-maintenance',
       component: () => import('@/views/pages/Maintenance.vue'),
       meta: {
-        rule: 'editor'
+        Auth: false
       }
     }
   ]

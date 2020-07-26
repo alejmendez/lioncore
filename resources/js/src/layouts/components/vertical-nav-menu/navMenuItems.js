@@ -37,14 +37,14 @@ export default [
   {
     url: '/property/',
     name: 'Property',
-    icon: 'PropertyIcon',
+    icon: 'ListIcon',
     slug: 'property',
     i18n: 'menu.property'
   },
   {
     url: '/chat/',
     name: 'Chat',
-    icon: 'ChatIcon',
+    icon: 'MessageSquareIcon',
     slug: 'chat',
     i18n: 'menu.chat'
   },

@@ -96,9 +96,11 @@ class AuthService extends EventEmitter {
       this.tokenExpiry = null
       this.profile = null
 
+      /*
       webAuth.logout({
         returnTo: window.location.origin + process.env.BASE_URL
       })
+      */
 
       this.emit(loginEvent, { loggedIn: false })
     }

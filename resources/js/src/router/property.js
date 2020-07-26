@@ -13,7 +13,7 @@ export default {
           { title: i18n.t('common.list'), active: true }
         ],
         pageTitle: 'property.title.list',
-        rule: 'editor'
+        permission: 'property'
       }
     },
     {
@@ -27,7 +27,7 @@ export default {
           { title: i18n.t('common.new'), active: true }
         ],
         pageTitle: 'property.title.new',
-        rule: 'editor'
+        permission: 'property'
       }
     },
     {
@@ -41,7 +41,7 @@ export default {
           { title: i18n.t('common.edit'), active: true }
         ],
         pageTitle: 'property.title.edit',
-        rule: 'editor'
+        permission: 'property'
       }
     }
   ]

@@ -5,7 +5,7 @@ export default {
       name: 'auth-callback',
       component: () => import('@/views/Callback.vue'),
       meta: {
-        rule: 'editor'
+        Auth: true
       }
     },
     {
@@ -13,7 +13,7 @@ export default {
       name: 'page-lock-screen',
       component: () => import('@/views/pages/LockScreen.vue'),
       meta: {
-        rule: 'editor'
+        Auth: true
       }
     },
     {
@@ -21,7 +21,7 @@ export default {
       name: 'page-coming-soon',
       component: () => import('@/views/pages/ComingSoon.vue'),
       meta: {
-        rule: 'editor'
+        Auth: true
       }
     }
   ]

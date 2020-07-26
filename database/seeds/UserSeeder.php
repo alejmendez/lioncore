@@ -20,11 +20,13 @@ class UserSeeder extends Seeder
 
         User::truncate();
 
-        $person = Person::create([
+        $person = factory(Person::class)->create();
+        $person->fill([
             'dni' => '19',
             'first_name' => 'Administrador',
             'email' => 'admin@test.cl',
         ]);
+        $person->save();
 
         $user = User::create([
             'person_id' => $person->id,
@@ -39,11 +41,14 @@ class UserSeeder extends Seeder
         $roleAdmin = Role::findByName('admin');
         $user->assignRole($roleAdmin);
 
-        $person = Person::create([
+        $person = factory(Person::class)->create();
+        $person->fill([
             'dni' => '266046677',
-            'first_name' => 'Alejandro Méndez',
+            'first_name' => 'Alejandro',
+            'last_name' => 'Méndez',
             'email' => 'alejmendez.87@gmail.com',
         ]);
+        $person->save();
         $user = User::create([
             'person_id' => $person->id,
             'email' => $person->email,

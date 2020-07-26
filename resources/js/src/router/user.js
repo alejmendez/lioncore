@@ -11,7 +11,7 @@ export default {
           { title: 'List', active: true }
         ],
         pageTitle: 'users.title.list',
-        rule: 'editor'
+        permission: 'user'
       }
     },
     {
@@ -25,7 +25,7 @@ export default {
           { title: 'New', active: true }
         ],
         pageTitle: 'users.title.new',
-        rule: 'editor'
+        permission: 'user'
       }
     },
     {
@@ -39,7 +39,7 @@ export default {
           { title: 'Edit', active: true }
         ],
         pageTitle: 'users.title.edit',
-        rule: 'editor'
+        permission: 'user'
       }
     }
   ]

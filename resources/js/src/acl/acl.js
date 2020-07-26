@@ -1,21 +1,23 @@
 import Vue from 'vue'
-import { AclInstaller, AclCreate, AclRule } from 'vue-acl'
 import router from '@/router'
 
-Vue.use(AclInstaller)
+router.beforeEach((to, from, next) => {
+  const meta = to.meta
+  const requiredPermission = meta.permission
+  const requiredAuth = meta.Auth || true
 
-let initialRole = 'admin'
-
-const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-if (userInfo && userInfo.userRole) initialRole = userInfo.userRole
-
-export default new AclCreate({
-  initial  : initialRole,
-  notfound : '/pages/not-authorized',
-  router,
-  acceptLocalRules : true,
-  globalRules: {
-    admin  : new AclRule('admin').generate(),
-    editor : new AclRule('editor').or('admin').generate()
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+  const permissions = userInfo.userPermissions
+  
+  if (!window.localStorage.getItem('accessToken')) {
+    next({ path: '/login' });
+  } else if (requiredAuth) {
+    if (requiredPermission == undefined) {
+      next();
+    } else if (!permissions.includes(requiredPermission)) {
+      next({ path: '/not-authorized' });
+    }
+  } else {
+    next();
   }
-})
+});

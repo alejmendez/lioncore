@@ -45,7 +45,7 @@ export default {
     return new Promise((resolve, reject) => {
       axios.get('/chat/contacts', {params: {q: ''}})
         .then((response) => {
-          commit('UPDATE_CONTACTS', response.data)
+          commit('UPDATE_CONTACTS', response.data.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })
@@ -57,7 +57,7 @@ export default {
     return new Promise((resolve, reject) => {
       axios.get('/chat/chat-contacts', {params: {q: ''}})
         .then((response) => {
-          commit('UPDATE_CHAT_CONTACTS', response.data)
+          commit('UPDATE_CHAT_CONTACTS', response.data.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })
@@ -69,7 +69,7 @@ export default {
     return new Promise((resolve, reject) => {
       axios.get('/chat/chats')
         .then((response) => {
-          commit('UPDATE_CHATS', response.data)
+          commit('UPDATE_CHATS', response.data.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })

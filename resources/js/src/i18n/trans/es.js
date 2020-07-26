@@ -161,5 +161,8 @@ export default {
   DisabledMenu: 'Menú deshabilitado',
   Support: 'Apoyo',
   Documentation: 'Documentación',
-  RaiseSupport: 'Elevar apoyo'
+  RaiseSupport: 'Elevar apoyo',
+  profile: 'Perfil',
+  chat: 'Chat',
+  logout: 'Salir'
 }
