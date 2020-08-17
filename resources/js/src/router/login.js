@@ -1,3 +1,5 @@
+import authService from '../auth/authService'
+
 export default {
   router: [
     {
@@ -5,12 +7,10 @@ export default {
       name: 'page-login',
       component: () => import('@/views/pages/login/Login.vue'),
       meta: {
-        permission: 'editor'
+        Auth: false
       },
       beforeEnter: (to, from, next) => {
-        // Si existe un token, la sesion existe, por lo cual, redirecciona a home
-        // if (window.localStorage.getItem('_token')) {
-        if (!!window.localStorage.getItem('accessToken')) {
+        if (authService.isAuthenticated()) {
           next({ path: '/' });
         } else {
           next();

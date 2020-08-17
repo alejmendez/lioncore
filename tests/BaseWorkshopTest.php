@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Tests;
+namespace Tests;
 
 use Tests\TestCase;
-use App\Repositories\PersonRepository;
-use App\Repositories\UserRepository;
 
 abstract class BaseWorkshopTest extends TestCase
 {

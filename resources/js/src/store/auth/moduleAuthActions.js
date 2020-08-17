@@ -313,6 +313,10 @@ export default {
 
             // Set accessToken
             localStorage.setItem('accessToken', response.data.token)
+            let tokenExpireAt = new Date();
+            tokenExpireAt.setSeconds(tokenExpireAt.getSeconds() + response.data.expires_in);
+
+            localStorage.setItem('tokenExpireAt', tokenExpireAt.getTime())
 
             // Update user details
             commit('UPDATE_USER_INFO', response.data.user, {root: true})

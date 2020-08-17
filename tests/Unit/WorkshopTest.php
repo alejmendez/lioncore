@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Feature;
+namespace Tests\Feature;
 
-use App\Tests\BaseWorkshopTest as TestCase;
+use Tests\BaseWorkshopTest as TestCase;
 
 use App\Generators\GeneratorCrud;
 
@@ -16,7 +16,7 @@ class WorkshopTest extends TestCase
     /** @test */
     public function getAllJsonsOfModules()
     {
-        $generatorCrud = new GeneratorCrud("", "");
+        $generatorCrud = new GeneratorCrud("");
 
         $allModelsFiles = $this->invokeMethod($generatorCrud, 'getAllModelsFiles');
 
@@ -26,10 +26,10 @@ class WorkshopTest extends TestCase
     /** @test */
     public function getJsonContent()
     {
-        $generatorCrud = new GeneratorCrud("", "");
+        $generatorCrud = new GeneratorCrud("");
 
         $jsonContentAll = $this->invokeMethod($generatorCrud, 'getJsonContent', [false]);
 
-        dump($allModelsFiles);
+        dump($jsonContentAll);
     }
 }

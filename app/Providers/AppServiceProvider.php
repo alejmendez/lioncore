@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserRepository::class, function () {
             $repository = new EloquentUserRepository(new User());
 
-            if (! config('app.cache')) {
+            if (!config('app.cache')) {
                 return $repository;
             }
 
@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PersonRepository::class, function () {
             $repository = new EloquentPersonRepository(new Person());
 
-            if (! config('app.cache')) {
+            if (!config('app.cache')) {
                 return $repository;
             }
 
