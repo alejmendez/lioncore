@@ -38,6 +38,7 @@ class CreatePeopleTable extends Migration
             $table->string('country', 80)->nullable();
             $table->smallInteger('number_children')->nullable()->default(0);
             $table->string('observation', 255)->nullable();
+            $table->string('about', 255)->nullable();
             $table->string('blood_type', 5)->nullable();
 
             $table->timestamps();

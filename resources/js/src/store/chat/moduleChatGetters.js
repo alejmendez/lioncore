@@ -12,7 +12,7 @@
 
 export default {
   chatDataOfUser: state => id => {
-    return state.chats[Object.keys(state.chats).find(key => Number(key) === id)]
+    return state.chats[Object.keys(state.chats).find(key => key === id)]
   },
   chatContacts: (state, getters) => {
     const chatContacts = state.chatContacts.filter((contact) => contact.displayName.toLowerCase().includes(state.chatSearchQuery.toLowerCase()))

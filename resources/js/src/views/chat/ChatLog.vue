@@ -1,12 +1,3 @@
-<!-- =========================================================================================
-    File Name: ChatLog.vue
-    Description: Chat Application - Log of chat
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 <template>
     <div id="component-chat-log" class="m-8" v-if="chatData">
         <div v-for="(msg, index) in chatData.msg" class="msg-grp-container" :key="index">
@@ -47,7 +38,7 @@
 export default{
   props: {
     userId: {
-      type: Number,
+      type: String,
       required: true
     }
   },
@@ -77,7 +68,7 @@ export default{
                 date_time_to.getDate() === date_time_from.getDate()
     },
     toDate (time) {
-      const locale = 'en-us'
+      const locale = 'es-ES'
       const date_obj = new Date(Date.parse(time))
       const monthName = date_obj.toLocaleString(locale, {
         month: 'short'

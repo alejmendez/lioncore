@@ -34,7 +34,7 @@ class PersonTest extends TestCase
             'number_children' => $faker->numberBetween(0, 5),
             'observation' => $faker->text(250),
             'blood_type' => $faker->text(5),
-                    ];
+        ];
     }
 
     /**

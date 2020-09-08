@@ -10,16 +10,16 @@
 import axios from '@/axios.js'
 
 export default {
-  setChatSearchQuery ({ commit }, query) {
+  setChatSearchQuery({ commit }, query) {
     commit('SET_CHAT_SEARCH_QUERY', query)
   },
-  updateAboutChat ({ commit, rootState }, value) {
+  updateAboutChat({ commit, rootState }, value) {
     commit('UPDATE_ABOUT_CHAT', {
       rootState,
       value
     })
   },
-  updateStatusChat ({ commit, rootState }, value) {
+  updateStatusChat({ commit, rootState }, value) {
     commit('UPDATE_STATUS_CHAT', {
       rootState,
       value
@@ -27,9 +27,9 @@ export default {
   },
 
   // API CALLS
-  sendChatMessage ({ getters, commit, dispatch }, payload) {
+  sendChatMessage({ getters, commit, dispatch }, payload) {
     return new Promise((resolve, reject) => {
-      axios.post('/chat/msg', {payload})
+      axios.post('/chat/msg', { payload })
         .then((response) => {
           payload.chatData = getters.chatDataOfUser(payload.id)
           if (!payload.chatData) { dispatch('fetchChatContacts') }
@@ -41,9 +41,9 @@ export default {
   },
 
   // Get contacts from server. Also change in store
-  fetchContacts ({ commit }) {
+  fetchContacts({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('/chat/contacts', {params: {q: ''}})
+      axios.get('/chat/contacts', { params: { q: '' } })
         .then((response) => {
           commit('UPDATE_CONTACTS', response.data.data)
           resolve(response)
@@ -53,9 +53,9 @@ export default {
   },
 
   // Get chat-contacts from server. Also change in store
-  fetchChatContacts ({ commit }) {
+  fetchChatContacts({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('/chat/chat-contacts', {params: {q: ''}})
+      axios.get('/chat/chat-contacts', { params: { q: '' } })
         .then((response) => {
           commit('UPDATE_CHAT_CONTACTS', response.data.data)
           resolve(response)
@@ -65,7 +65,7 @@ export default {
   },
 
   // Get chats from server. Also change in store
-  fetchChats ({ commit }) {
+  fetchChats({ commit }) {
     return new Promise((resolve, reject) => {
       axios.get('/chat/chats')
         .then((response) => {
@@ -76,10 +76,10 @@ export default {
     })
   },
 
-  markSeenAllMessages ({ getters, commit }, id) {
+  markSeenAllMessages({ getters, commit }, id) {
 
     return new Promise((resolve, reject) => {
-      axios.post('/chat/mark-all-seen', {id})
+      axios.post('/chat/mark-all-seen', { id })
         .then((response) => {
           commit('MARK_SEEN_ALL_MESSAGES', {
             id,
@@ -91,10 +91,12 @@ export default {
     })
   },
 
-  toggleIsPinned ({ commit }, payload) {
+  toggleIsPinned({ commit }, payload) {
     return new Promise((resolve, reject) => {
-      axios.post('/chat/set-pinned/', {contactId: payload.id,
-        value: payload.value})
+      axios.post('/chat/set-pinned/', {
+        contactId: payload.id,
+        value: payload.value
+      })
         .then((response) => {
           commit('TOGGLE_IS_PINNED', payload)
           resolve(response)

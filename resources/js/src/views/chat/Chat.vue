@@ -1,13 +1,3 @@
-<!-- =========================================================================================
-    File Name: Chat.vue
-    Description: Chat Application - Stay connected
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
-
 <template>
     <div id="chat-app" class="border border-solid d-theme-border-grey-light rounded relative overflow-hidden">
         <vs-sidebar class="items-no-padding" parent="#chat-app" :click-not-close="clickNotClose" :hidden-background="clickNotClose" v-model="isChatSidebarActive" id="chat-list-sidebar">
@@ -192,7 +182,6 @@ export default {
         'isPinned': this.isChatPinned,
         'msg': {
           'textContent' : this.typedMessage,
-          'time'        : String(new Date()),
           'isSent'      : true,
           'isSeen'      : false
         },
@@ -240,9 +229,7 @@ export default {
     this.$store.dispatch('chat/setChatSearchQuery', '')
   }
 }
-
 </script>
-
 
 <style lang="scss">
 @import "@sass/vuexy/apps/chat.scss";

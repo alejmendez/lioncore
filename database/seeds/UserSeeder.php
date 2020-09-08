@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
         $person->fill([
             'dni' => '19',
             'first_name' => 'Administrador',
+            'last_name' => '',
             'email' => 'admin@test.cl',
         ]);
         $person->save();
@@ -31,7 +32,7 @@ class UserSeeder extends Seeder
         $user = User::create([
             'person_id' => $person->id,
             'email' => $person->email,
-            'password' => '1234',
+            'password' => 'cq43351la',
             'verification_token' => '',
             'email_verified_at' => now(),
             'username' => 'admin',
@@ -60,11 +61,6 @@ class UserSeeder extends Seeder
         ]);
         $user->assignRole($roleAdmin);
 
-        factory(User::class, 100)->create()->each(function($user) {
-            $person = factory(Person::class)->create();
-
-            $user->person_id = $person->id;
-            $user->save();
-        });
+        factory(User::class, 3)->create();
     }
 }

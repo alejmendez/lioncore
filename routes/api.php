@@ -62,12 +62,18 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::prefix('chat')->name('chat.')->group(function () {
-            Route::post('msg', 'ChatController@msg')->name('msg')->middleware('permission:chat');
-            Route::get('contacts', 'ChatController@contacts')->name('contacts')->middleware('permission:chat');
-            Route::get('chat-contacts', 'ChatController@chatContacts')->name('chat-contacts')->middleware('permission:chat');
-            Route::get('chats', 'ChatController@chats')->name('chats')->middleware('permission:chat');
-            Route::post('mark-all-seen', 'ChatController@markAllSeen')->name('mark-all-seen')->middleware('permission:chat');
-            Route::post('set-pinned', 'ChatController@setPinned')->name('set-pinned')->middleware('permission:chat');
+            Route::post('msg', 'ChatController@msg')->name('msg')
+                ->middleware('permission:chat');
+            Route::get('contacts', 'ChatController@contacts')->name('contacts')
+                ->middleware('permission:chat');
+            Route::get('chat-contacts', 'ChatController@chatContacts')->name('chat-contacts')
+                ->middleware('permission:chat');
+            Route::get('chats', 'ChatController@chats')->name('chats')
+                ->middleware('permission:chat');
+            Route::post('mark-all-seen', 'ChatController@markAllSeen')->name('mark-all-seen')
+                ->middleware('permission:chat');
+            Route::post('set-pinned', 'ChatController@setPinned')->name('set-pinned')
+                ->middleware('permission:chat');
         });
         // add router
     });

@@ -16,12 +16,14 @@ use App\Models\Person;
 */
 
 $factory->define(User::class, function (Faker $faker) {
-    $email = $faker->unique()->safeEmail;
+    $person = factory(Person::class)->create();
+
+    $email = $person->email;
     $username = explode('@', $email);
     $username = $username[0];
 
     return [
-        'person_id' => Person::inRandomOrder()->first()->id,
+        'person_id' => $person->id,
         'email' => $email,
         'email_verified_at' => $faker->dateTime(),
         'password' => Str::random(16),

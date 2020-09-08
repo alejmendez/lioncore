@@ -95,7 +95,7 @@ class User extends Authenticatable implements JWTSubject, Auditable
             'id'              => $this->id,
             'uid'             => $this->id,
             'displayName'     => $this->getFullNameAttribute(),
-            'about'           => '',
+            'about'           => $this->person->about,
             'photoURL'        => $this->person->avatar,
             'userRole'        => $role->name,
             'userPermissions' => $permissions,

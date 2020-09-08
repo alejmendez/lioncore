@@ -293,6 +293,18 @@
             "faker": "text(250)"
         },
         {
+            "name": "about",
+            "type": "string",
+            "length": 255,
+            "label" : "About",
+            "htmlType": "text",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": false,
+            "faker": "text(250)"
+        },
+        {
             "name": "blood_type",
             "type": "string",
             "length": 5,

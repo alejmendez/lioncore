@@ -31,18 +31,3 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-
-const arrBusqueda = [
-  1, 2, 3, 4, 2, 3, 4, 5, 1, 6, 2
-]
-
-let arrControl = []
-
-for (let i = 0; i < arrBusqueda.length; i++) {
-  const ele = arrBusqueda[i]
-  if (!arrControl.indexOf(ele)) {
-    arrControl.push(ele)
-  }
-}
-
-console.log(arrControl, arrControl.length)

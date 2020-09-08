@@ -1,12 +1,3 @@
-<!-- =========================================================================================
-    File Name: ChatNavbar.vue
-    Description: Chat Application - Chat navbar
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 <template>
     <div v-if="userId != null" class="chat__header">
         <vs-navbar class="p-4 flex navbar-custom" color="white" type="flat">
@@ -26,7 +17,7 @@
 export default {
   props: {
     userId: {
-      type: Number,
+      type: String,
       required: true
     },
     isPinnedProp: {

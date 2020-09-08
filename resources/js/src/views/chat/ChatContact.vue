@@ -1,12 +1,3 @@
-<!-- =========================================================================================
-    File Name: ChatContact.vue
-    Description: Chat contact - single component for chat
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 <template>
     <div class="chat__contact flex items-center px-2 pt-4 pb-2" :class="{'bg-primary-gradient text-white shadow-lg': isActiveChatUser}">
         <div class="contact__avatar mr-1">
