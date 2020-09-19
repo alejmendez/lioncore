@@ -47,7 +47,8 @@ class ChatController extends BaseController
     public function contacts ()
     {
         $query = request('q');
-        $contacts = User::all()->map(function($user) {
+        $currentUser = auth()->user();
+        $contacts = User::where('id', '!=', $currentUser->id)->get()->map(function($user) {
             return [
                 'uid' => $user->id,
                 'displayName' => $user->fullName,
@@ -93,7 +94,7 @@ class ChatController extends BaseController
                     'textContent' => $msg->body,
                     'time' => $msg->created_at,
                     'isSent' => $msg->sender->id == $currentUser->id,
-                    'isSeen' => true
+                    'isSeen' => $msg->getNotification($currentUser)->is_seen == 1
                 ];
             });
 

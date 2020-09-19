@@ -28,5 +28,17 @@ export default {
     list: 'Lista de Usuario',
     view: 'Usuario',
     edit: 'Editar Usuario'
+  },
+  server: {
+    save: {
+      success: {
+        title: 'Guardado',
+        msg: 'Se ha guardado el usuario satisfactoriamente'
+      },
+      error: {
+        title: 'Error',
+        msg: 'Se ha producido un error al intentar guardar el usuario'
+      }
+    }
   }
 }

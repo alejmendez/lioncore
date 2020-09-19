@@ -1,3 +1,5 @@
+import i18n from '@/i18n/i18n'
+
 export default {
   router: [
     {
@@ -7,8 +9,8 @@ export default {
       meta: {
         breadcrumb: [
           { title: 'Home', url: '/' },
-          { title: 'User' },
-          { title: 'List', active: true }
+          { title: i18n.t('users.title.view') },
+          { title: i18n.t('common.list'), active: true }
         ],
         pageTitle: 'users.title.list',
         permission: 'user'
@@ -21,8 +23,8 @@ export default {
       meta: {
         breadcrumb: [
           { title: 'Home', url: '/' },
-          { title: 'User', url: '/user' },
-          { title: 'New', active: true }
+          { title: i18n.t('users.title.view'), url: '/user' },
+          { title: i18n.t('common.new'), active: true }
         ],
         pageTitle: 'users.title.new',
         permission: 'user'
@@ -35,8 +37,8 @@ export default {
       meta: {
         breadcrumb: [
           { title: 'Home', url: '/' },
-          { title: 'User', url: '/user' },
-          { title: 'Edit', active: true }
+          { title: i18n.t('users.title.view'), url: '/user' },
+          { title: i18n.t('common.edit'), active: true }
         ],
         pageTitle: 'users.title.edit',
         permission: 'user'

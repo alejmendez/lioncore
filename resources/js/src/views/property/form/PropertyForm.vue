@@ -92,7 +92,7 @@ export default {
     loaded () {
       this.$vs.loading.close()
     },
-    fetchData (id) {
+    fetch (id) {
       this.loading()
       this.data.id = id
       this.$store.dispatch('propertyManagement/fetch', id)
@@ -156,7 +156,7 @@ export default {
     this.reset()
 
     if (this.$route.params.id) {
-      this.fetchData(this.$route.params.id)
+      this.fetch(this.$route.params.id)
     }
   }
 }

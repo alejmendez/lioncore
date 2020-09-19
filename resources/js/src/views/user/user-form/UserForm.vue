@@ -1,12 +1,3 @@
-<!-- =========================================================================================
-  File Name: UserForm.vue
-  Description: User Form Page
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 <template>
   <div id="page-user-form">
 
@@ -17,7 +8,7 @@
       </span>
     </vs-alert>
 
-    <ValidationObserver v-slot="{ handleSubmit, reset, invalid }">
+    <ValidationObserver v-slot="{ handleSubmit, invalid }">
       <form @submit.prevent="handleSubmit(save)">
         <vx-card>
           <div slot="no-body" class="tabs-container px-6 pt-6">
@@ -39,7 +30,7 @@
                             class="mr-4"
                             size="80px"
                             :src="data.avatar"
-                            />
+                          />
                           <div>
                             <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">
                               {{ data.first_name }} {{ data.last_name }}
@@ -51,7 +42,7 @@
                               class="mr-4 mb-4"
                               icon="cloud_upload"
                               @click="$refs.update_avatar_input.click()"
-                              >
+                            >
                               {{ $t('users.change_avatar') }}
                             </vs-button>
 
@@ -60,7 +51,7 @@
                               color="danger"
                               icon="clear"
                               @click="data.avatar = null"
-                              >
+                            >
                               {{ $t('users.remove_avatar') }}
                             </vs-button>
                           </div>
@@ -77,7 +68,7 @@
                             v-model="data.username"
                             :danger="invalid && validated"
                             :label="$t('users.username')"
-                            />
+                          />
                           <span class="text-danger text-sm">{{ errors[0] }}</span>
                         </ValidationProvider>
 
@@ -87,7 +78,7 @@
                             v-model="data.first_name"
                             :danger="invalid && validated"
                             :label="$t('users.first_name')"
-                            />
+                          />
                           <span class="text-danger text-sm">{{ errors[0] }}</span>
                         </ValidationProvider>
 
@@ -97,7 +88,7 @@
                             v-model="data.last_name"
                             :danger="invalid && validated"
                             :label="$t('users.last_name')"
-                            />
+                          />
                           <span class="text-danger text-sm">{{ errors[0] }}</span>
                         </ValidationProvider>
 
@@ -108,7 +99,7 @@
                             v-model="data.email"
                             :danger="invalid && validated"
                             :label="$t('users.email')"
-                            />
+                          />
                           <span class="text-danger text-sm">{{ errors[0] }}</span>
                         </ValidationProvider>
                       </div>
@@ -123,7 +114,7 @@
                               :clearable="false"
                               :options="statusOptions"
                               :dir="$vs.rtl ? 'rtl' : 'ltr'"
-                              />
+                            />
                             <span class="text-danger text-sm">{{ errors[0] }}</span>
                           </ValidationProvider>
                         </div>
@@ -136,7 +127,7 @@
                               :clearable="false"
                               :options="roleOptions"
                               :dir="$vs.rtl ? 'rtl' : 'ltr'"
-                              />
+                            />
                             <span class="text-danger text-sm">{{ errors[0] }}</span>
                           </ValidationProvider>
                         </div>
@@ -147,7 +138,7 @@
                             v-model="data.company"
                             :danger="invalid && validated"
                             :label="$t('users.company')"
-                            />
+                          />
                           <span class="text-danger text-sm">{{ errors[0] }}</span>
                         </ValidationProvider>
 
@@ -209,28 +200,31 @@
                                 class="w-full"
                                 v-model="data.birthdate"
                                 :config="{ dateFormat: 'd F Y', maxDate: new Date() }"
-                                />
+                              />
                               <span class="text-danger text-sm">{{ errors[0] }}</span>
                             </ValidationProvider>
                           </div>
 
-                          <ValidationProvider name="users.mobile_phone" rules="{regex: '^\\+?([0-9]+)$' }" v-slot="{ errors, invalid, validated }">
+                          <ValidationProvider name="users.mobile_phone" :rules="{ regex: /^\+?([0-9]+)$/ }" v-slot="{ errors, invalid, validated }">
                             <vs-input
                               class="w-full mt-4"
                               v-model="data.mobile_phone"
                               :danger="invalid && validated"
                               :label="$t('users.mobile')"
-                              />
+                            />
                             <span class="text-danger text-sm">{{ errors[0] }}</span>
                           </ValidationProvider>
 
-                          <ValidationProvider name="users.website" rules="url:require_protocol" v-slot="{ errors, invalid, validated }">
+                          <ValidationProvider
+                            name="users.website"
+                            :rules="{ regex: /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/ }"
+                            v-slot="{ errors, invalid, validated }">
                             <vs-input
                               class="w-full mt-4"
                               v-model="data.website"
                               :danger="invalid && validated"
                               :label="$t('users.website')"
-                              />
+                            />
                             <span class="text-danger text-sm">{{ errors[0] }}</span>
                           </ValidationProvider>
 
@@ -243,7 +237,7 @@
                                 :closeOnSelect="false"
                                 :options="langOptions"
                                 :dir="$vs.rtl ? 'rtl' : 'ltr'"
-                                />
+                              />
                               <span class="text-danger text-sm">{{ errors[0] }}</span>
                             </ValidationProvider>
                           </div>
@@ -287,7 +281,7 @@
                                 v-model="data.address"
                                 :danger="invalid && validated"
                                 :label="$t('users.address_line_1')"
-                                />
+                              />
                               <span class="text-danger text-sm">{{ errors[0] }}</span>
                             </ValidationProvider>
 
@@ -295,7 +289,7 @@
                               class="w-full mt-4"
                               v-model="data.address2"
                               :label="$t('users.address_line_2')"
-                              />
+                            />
 
                             <ValidationProvider name="users.postcode" rules="required|numeric" v-slot="{ errors, invalid, validated }">
                               <vs-input
@@ -303,37 +297,37 @@
                                 v-model="data.postcode"
                                 :danger="invalid && validated"
                                 :label="$t('users.postcode')"
-                                />
+                              />
                               <span class="text-danger text-sm">{{ errors[0] }}</span>
                             </ValidationProvider>
 
-                            <ValidationProvider name="users.city" rules="required|alpha" v-slot="{ errors, invalid, validated }">
+                            <ValidationProvider name="users.city" rules="required|alpha_spaces" v-slot="{ errors, invalid, validated }">
                               <vs-input
                                 class="w-full mt-4"
                                 v-model="data.city"
                                 :danger="invalid && validated"
                                 :label="$t('users.city')"
-                                />
+                              />
                               <span class="text-danger text-sm">{{ errors[0] }}</span>
                             </ValidationProvider>
 
-                            <ValidationProvider name="users.state" rules="required|alpha" v-slot="{ errors, invalid, validated }">
+                            <ValidationProvider name="users.state" rules="required|alpha_spaces" v-slot="{ errors, invalid, validated }">
                               <vs-input
                                 class="w-full mt-4"
                                 v-model="data.state"
                                 :danger="invalid && validated"
                                 :label="$t('users.state')"
-                                />
+                              />
                               <span class="text-danger text-sm">{{ errors[0] }}</span>
                             </ValidationProvider>
 
-                            <ValidationProvider name="users.country" rules="required|alpha" v-slot="{ errors, invalid, validated }">
+                            <ValidationProvider name="users.country" rules="required|alpha_spaces" v-slot="{ errors, invalid, validated }">
                               <vs-input
                                 class="w-full mt-4"
                                 v-model="data.country"
                                 :danger="invalid && validated"
                                 :label="$t('users.country')"
-                                />
+                              />
                               <span class="text-danger text-sm">{{ errors[0] }}</span>
                             </ValidationProvider>
 
@@ -351,8 +345,8 @@
                   <vs-button
                     class="ml-auto mt-2"
                     button="submit"
-                    :disabled="!invalid"
-                    >
+                    :disabled="invalid"
+                  >
                     Save Changes
                   </vs-button>
                   <vs-button
@@ -360,8 +354,8 @@
                     type="border"
                     button="reset"
                     color="warning"
-                    @click="reset_data"
-                    >
+                    @click="reset"
+                  >
                     Reset
                   </vs-button>
                 </div>
@@ -432,12 +426,39 @@ export default {
     }
   },
   methods: {
+    loading () {
+      this.$vs.loading()
+    },
+    loaded () {
+      this.$vs.loading.close()
+    },
+    back () {
+      this.$router.push('/user').catch(() => {})
+    },
+    reset () {
+      this.data = Object.assign({}, this.data_original)
+    },
+    showSuccess () {
+      this.$vs.notify({
+        color: 'success',
+        title: this.$t('common.save_success'),
+        text: this.$t('common.the_record_has_been_saved_successfully')
+      })
+    },
+    showError () {
+      this.$vs.notify({
+        color: 'danger',
+        title: this.$t('common.save_error'),
+        text: this.$t('common.an_exception_occurred_while_saving')
+      })
+    },
     getModuleData () {
       this.$store.dispatch('userManagement/getModuleData')
     },
-    fetch_data (id) {
+    fetch (id) {
+      this.loading()
       this.data.id = id
-      this.$store.dispatch('userManagement/fetchUser', id)
+      this.$store.dispatch('userManagement/fetch', id)
         .then(res => { this.data = res.data.data })
         .catch(err => {
           if (err.response.status === 404) {
@@ -448,16 +469,18 @@ export default {
         })
     },
     save () {
-      /* eslint-disable */
-      if (!this.validateForm) return
-
-      // Here will go your API call for updating data
-      // You can get data in "this.data"
-
-      /* eslint-enable */
-    },
-    reset_data () {
-      this.data = Object.assign({}, this.data_original)
+      this.loading()
+      this.$store.dispatch('userManagement/save', this.data)
+        .then(() => {
+          this.loaded()
+          this.showSuccess()
+          this.back()
+        })
+        .catch((err) => {
+          this.loaded()
+          this.showError()
+          console.error(err)
+        })
     },
     update_avatar (event) {
       const input = event.target
@@ -479,12 +502,12 @@ export default {
     }
 
     this.data_original = Object.assign({}, this.data)
-    this.reset_data()
+    this.reset()
 
     this.getModuleData()
 
     if (this.$route.params.id) {
-      this.fetch_data(this.$route.params.id)
+      this.fetch(this.$route.params.id)
     }
   }
 }

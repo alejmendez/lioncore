@@ -41,7 +41,7 @@ export default {
         })
     })
   },
-  fetchUser (context, id) {
+  fetch (context, id) {
     return new Promise((resolve, reject) => {
       axios.get(`users/${id}`)
         .then((response) => {
@@ -53,7 +53,7 @@ export default {
   save (context, data) {
     return new Promise((resolve, reject) => {
       let promise = null
-      if (data.id === '' || data.id === 0 || data.id === '0') {
+      if (data.id === '') {
         promise = axios.post('users', data)
       } else {
         promise = axios.put(`users/${data.id}`, data)
