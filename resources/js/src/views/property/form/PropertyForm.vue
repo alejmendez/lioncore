@@ -126,7 +126,7 @@ export default {
         })
     },
     back () {
-      this.$router.push('/property').catch(() => {})
+      this.$router.push({ name: 'property' }).catch(() => {})
     },
     reset () {
       this.data = Object.assign({}, this.data_original)

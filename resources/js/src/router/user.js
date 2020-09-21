@@ -18,7 +18,7 @@ export default {
     },
     {
       path: '/user/new',
-      name: 'app-user-new',
+      name: 'user-new',
       component: () => import('@/views/user/user-form/UserForm.vue'),
       meta: {
         breadcrumb: [
@@ -32,7 +32,7 @@ export default {
     },
     {
       path: '/user/:id',
-      name: 'app-user-edit',
+      name: 'user-edit',
       component: () => import('@/views/user/user-form/UserForm.vue'),
       meta: {
         breadcrumb: [

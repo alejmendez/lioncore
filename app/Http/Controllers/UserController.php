@@ -13,6 +13,7 @@ use App\Http\Requests\UserRequest;
 
 // Modelos
 use App\Models\User;
+use App\Models\Person;
 use App\Models\Role;
 use App\Models\Property;
 use App\Http\Resources\User as UserResource;
@@ -40,7 +41,7 @@ class UserController extends BaseController
     {
         $rolesOptions = Role::all()->map(function($role) {
             return [
-                'value' => $role->id,
+                'value' => $role->name,
                 'label' => $role->name
             ];
         })->prepend([
@@ -65,7 +66,7 @@ class UserController extends BaseController
     {
         $rolesOptions = Role::all()->map(function($role) {
             return [
-                'value' => $role->id,
+                'value' => $role->name,
                 'label' => $role->name
             ];
         });
@@ -84,22 +85,45 @@ class UserController extends BaseController
 
     public function store(UserRequest $request)
     {
+        $data = $request->all();
+        $data['languages'] = implode(',', $data['languages']);
+        $data['gender'] = implode(',', $data['gender']);
+        $data['contact_options'] = implode(',', $data['contact_options']);
+
+        $person = Person::create($data);
+        $data['person_id'] = $person->id;
+        $user = User::create($data);
+
+        $role = Role::findByName($data['role']);
+        $user->assignRole($role);
+
         $instance = User::create($request->all());
         return $this->createdResponse($instance);
     }
 
     public function update(UserRequest $request, $id)
     {
-        $instance = User::findOrFail($id);
-        $instance->fill($request->all());
-        $instance->save();
-        return $this->showResponse($instance);
+        $data = $request->all();
+        $data['languages'] = implode(',', $data['languages']);
+        $data['contact_options'] = implode(',', $data['contact_options']);
+
+        $user = User::findOrFail($id);
+        $user->fill($data);
+        $user->save();
+
+        $role = Role::findByName($data['role']);
+        $user->assignRole($role);
+
+        $person = $user->person;
+        $person->fill($data);
+        $person->save();
+
+        return $this->showResponse($user);
     }
 
     public function destroy($id)
     {
-        $instance = User::findOrFail($id);
-        $instance->delete();
+        User::findOrFail($id)->delete();
         return $this->deletedResponse();
     }
 }

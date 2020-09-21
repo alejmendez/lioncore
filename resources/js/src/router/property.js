@@ -18,7 +18,7 @@ export default {
     },
     {
       path: '/property/new',
-      name: 'app-property-new',
+      name: 'property-new',
       component: () => import('@/views/property/form/PropertyForm.vue'),
       meta: {
         breadcrumb: [
@@ -32,7 +32,7 @@ export default {
     },
     {
       path: '/property/:id',
-      name: 'app-property-edit',
+      name: 'property-edit',
       component: () => import('@/views/property/form/PropertyForm.vue'),
       meta: {
         breadcrumb: [

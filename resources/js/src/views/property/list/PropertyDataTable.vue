@@ -66,7 +66,7 @@ export default {
       this.$vs.loading.close()
     },
     edit (id) {
-      this.$router.push(`/property/${id}`).catch(() => {})
+      this.$router.push({ name: 'property-edit', params: { id } }).catch(() => {})
     },
     confirmDelete (id) {
       this.id = id

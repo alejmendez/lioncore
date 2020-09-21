@@ -176,7 +176,7 @@
                             </ValidationProvider>
                           </div>
 
-                          <ValidationProvider name="users.mobile_phone" :rules="{ regex: /^\+?([0-9]+)$/ }" v-slot="{ errors, invalid, validated }">
+                          <ValidationProvider name="users.mobile_phone" :rules="{ regex: /^\+?([0-9 ]+)$/ }" v-slot="{ errors, invalid, validated }">
                             <vs-input
                               class="w-full mt-4"
                               v-model="data.mobile_phone"
@@ -416,7 +416,7 @@ export default {
       this.$vs.loading.close()
     },
     back () {
-      this.$router.push('/user').catch(() => {})
+      this.$router.push({ name: 'user' }).catch(() => {})
     },
     reset () {
       this.data = Object.assign({}, this.data_original)
@@ -444,6 +444,7 @@ export default {
       this.$store.dispatch('userManagement/fetch', id)
         .then(res => {
           this.data = res.data.data
+          this.data_original = Object.assign({}, this.data)
           this.loaded()
         })
         .catch(err => {

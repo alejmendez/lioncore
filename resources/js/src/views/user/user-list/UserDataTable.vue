@@ -71,7 +71,7 @@ export default {
       this.$vs.loading.close()
     },
     edit (id) {
-      this.$router.push(`/user/${id}`).catch(() => {})
+      this.$router.push({ name: 'user-edit', params: { id } }).catch(() => {})
     },
     confirmDelete (id) {
       this.id = id
