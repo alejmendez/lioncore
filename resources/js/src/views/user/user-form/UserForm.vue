@@ -1,11 +1,8 @@
 <template>
   <div id="page-user-form">
 
-    <vs-alert color="danger" title="User Not Found" :active.sync="user_not_found">
-      <span>User record with id: {{ $route.params.id }} not found. </span>
-      <span>
-        <span>Check </span><router-link :to="{name:'page-user-list'}" class="text-inherit underline">All Users</router-link>
-      </span>
+    <vs-alert color="danger" :title="$t('users.user_not_found')" :active.sync="user_not_found">
+      <span>{{ $t('users.user_not_found_detail', { id: $route.params.id }) }}</span>
     </vs-alert>
 
     <ValidationObserver v-slot="{ handleSubmit, invalid }">
@@ -110,6 +107,8 @@
                           <ValidationProvider name="users.status" rules="required" v-slot="{ errors }">
                             <label class="vs-input--label">{{ $t('users.status') }}</label>
                             <v-select
+                              label="label"
+                              :reduce="data => data.value"
                               v-model="data.status"
                               :clearable="false"
                               :options="statusOptions"
@@ -123,6 +122,8 @@
                           <ValidationProvider name="users.role" rules="required" v-slot="{ errors }">
                             <label class="vs-input--label">{{ $t('users.role') }}</label>
                             <v-select
+                              label="label"
+                              :reduce="data => data.value"
                               v-model="data.role"
                               :clearable="false"
                               :options="roleOptions"
@@ -144,36 +145,6 @@
 
                       </div>
                     </div>
-
-                    <!-- Permissions -->
-                    <vx-card class="mt-base" no-shadow card-border>
-
-                      <div class="vx-row">
-                        <div class="vx-col w-full">
-                          <div class="flex items-end px-3">
-                            <feather-icon svgClasses="w-6 h-6" icon="LockIcon" class="mr-2" />
-                            <span class="font-medium text-lg leading-none">Permissions</span>
-                          </div>
-                          <vs-divider />
-                        </div>
-                      </div>
-
-                      <div class="block overflow-x-auto">
-                        <table class="w-full">
-                          <tr>
-                            <th class="font-semibold text-base text-left px-3 py-2" v-for="heading in ['Module', 'Read', 'Write', 'Create', 'Delete']" :key="heading">{{ heading }}</th>
-                          </tr>
-
-                          <tr v-for="(val, name) in permissions" :key="name">
-                            <td class="px-3 py-2">{{ name }}</td>
-                            <td v-for="(permission, name) in val" class="px-3 py-2" :key="name+permission">
-                              <vs-checkbox v-model="val[name]" />
-                            </td>
-                          </tr>
-                        </table>
-                      </div>
-
-                    </vx-card>
                   </div>
                 </div>
               </vs-tab>
@@ -233,6 +204,8 @@
                               <label class="text-sm">Languages</label>
                               <v-select
                                 multiple
+                                label="label"
+                                :reduce="data => data.value"
                                 v-model="data.languages"
                                 :closeOnSelect="false"
                                 :options="langOptions"
@@ -343,20 +316,30 @@
               <div class="vx-col w-full">
                 <div class="mt-8 mb-8 flex flex-wrap items-center justify-end">
                   <vs-button
-                    class="ml-auto mt-2"
-                    button="submit"
-                    :disabled="invalid"
+                    class="mr-auto mt-2 float-left"
+                    color="dark"
+                    icon="arrow_back"
+                    @click="back"
                   >
-                    Save Changes
+                    {{ $t('common.back') }}
                   </vs-button>
                   <vs-button
-                    class="ml-4 mt-2"
+                    class="ml-auto mt-2 float-right vs-con-loading__container"
+                    button="submit"
+                    icon="save"
+                    :disabled="invalid"
+                  >
+                    {{ $t('common.save_changes') }}
+                  </vs-button>
+                  <vs-button
+                    class="ml-4 mt-2 float-right"
                     type="border"
                     button="reset"
                     color="warning"
+                    icon="replay"
                     @click="reset"
                   >
-                    Reset
+                    {{ $t('common.reset') }}
                   </vs-button>
                 </div>
               </div>
@@ -459,8 +442,12 @@ export default {
       this.loading()
       this.data.id = id
       this.$store.dispatch('userManagement/fetch', id)
-        .then(res => { this.data = res.data.data })
+        .then(res => {
+          this.data = res.data.data
+          this.loaded()
+        })
         .catch(err => {
+          this.loaded()
           if (err.response.status === 404) {
             this.user_not_found = true
             return

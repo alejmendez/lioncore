@@ -1,4 +1,5 @@
 export default {
+  'all': 'Todo',
   'new': 'Nuevo',
   'list': 'Lista',
   'edit': 'Editar',

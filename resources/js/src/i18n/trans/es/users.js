@@ -23,22 +23,12 @@ export default {
   mobile: 'Telefono mobil',
   change_avatar: 'Cambiar Avatar',
   remove_avatar: 'Remover Avatar',
+  user_not_found: 'Usuario no encontrado.',
+  user_not_found_detail: 'Registro de usuario con id: {id} no encontrado.',
   title: {
     new: 'Nuevo Usuario',
     list: 'Lista de Usuario',
     view: 'Usuario',
     edit: 'Editar Usuario'
-  },
-  server: {
-    save: {
-      success: {
-        title: 'Guardado',
-        msg: 'Se ha guardado el usuario satisfactoriamente'
-      },
-      error: {
-        title: 'Error',
-        msg: 'Se ha producido un error al intentar guardar el usuario'
-      }
-    }
   }
 }

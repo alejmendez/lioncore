@@ -69,7 +69,7 @@
         "vue-quill-editor": "^3.0.6",
         "vue-router": "^3.0.6",
         "vue-select": "^3.1.0",
-        "vue-simple-calendar": "^4.2.2",
+        "vue-simple-calendar": "^5.0.0",
         "vue-simple-suggest": "^1.9.5",
         "vue-star-rating": "^1.6.1",
         "vue-template-compiler": "^2.6.10",
@@ -81,7 +81,7 @@
         "vuecode.js": "0.0.27",
         "vuedraggable": "^2.21.0",
         "vuejs-datepicker": "^1.5.4",
-        "vuepress": "0.14.11",
+        "vuepress": "^1.5.4",
         "vuesax": "3.11.13",
         "vuex": "^3.1.1",
         "xlsx": "^0.15.0"

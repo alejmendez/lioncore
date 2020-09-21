@@ -101,5 +101,6 @@
         "_plural": "propiedades",
         "name": "nombre",
         "value": "valor"
-    }
+    },
+    "all": "Todo"
 }

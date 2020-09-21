@@ -18,11 +18,56 @@ class PropertySeeder extends Seeder
 
         Property::truncate();
 
-        /*
         Property::create([
-            'name'  => '',
-            'value' => ''
+            'name'  => 'userStatus',
+            'value' => json_encode([
+                [
+                    'value' => 'active',
+                    'label' => 'Active'
+                ],
+                [
+                    'value' => 'blocked',
+                    'label' => 'Blocked'
+                ],
+                [
+                    'value' => 'deactivated',
+                    'label' => 'Deactivated'
+                ]
+            ])
         ]);
-        */
+
+        Property::create([
+            'name'  => 'userLangs',
+            'value' => json_encode([
+                [
+                    'value' => 'english',
+                    'label' => 'English'
+                ],
+                [
+                    'value' => 'spanish',
+                    'label' => 'Spanish'
+                ],
+                [
+                    'value' => 'french',
+                    'label' => 'French'
+                ],
+                [
+                    'value' => 'russian',
+                    'label' => 'Russian'
+                ],
+                [
+                    'value' => 'german',
+                    'label' => 'German'
+                ],
+                [
+                    'value' => 'arabic',
+                    'label' => 'Arabic'
+                ],
+                [
+                    'value' => 'sanskrit',
+                    'label' => 'Sanskrit'
+                ]
+            ])
+        ]);
     }
 }

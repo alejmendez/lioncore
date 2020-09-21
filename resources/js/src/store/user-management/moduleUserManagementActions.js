@@ -53,7 +53,7 @@ export default {
   save (context, data) {
     return new Promise((resolve, reject) => {
       let promise = null
-      if (data.id === '') {
+      if (data.id === '' || data.id === 0 || data.id === '0') {
         promise = axios.post('users', data)
       } else {
         promise = axios.put(`users/${data.id}`, data)

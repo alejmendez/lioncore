@@ -12,4 +12,10 @@ class Property extends ModelBase
         'name',
         'value',
     ];
+
+    public static function getProperty($name) {
+        $value = self::where('name', $name)->first()->value;
+        $value = json_decode($value);
+        return collect($value);
+    }
 }

@@ -25,14 +25,15 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
+        $roles = $this->roles->pluck('name');
         return [
             'id'              => $this->id,
             'name'            => $this->name,
             'email'           => $this->email,
             'username'        => $this->username,
             'status'          => $this->status,
-            'role'            => $this->role,
-            'roles'           => [$this->role],
+            'role'            => $roles->first(),
+            'roles'           => $roles,
             'dni'             => $this->person->dni,
             'first_name'      => $this->person->first_name,
             'last_name'       => $this->person->last_name,

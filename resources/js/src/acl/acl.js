@@ -11,7 +11,7 @@ router.beforeEach((to, from, next) => {
   const tokenExpireAt = parseInt(localStorage.getItem('tokenExpireAt'))
   const tokenExpired = (new Date().getTime()) > (isNaN(tokenExpireAt) ? 0 : tokenExpireAt)
 
-  if (requiredAuth == undefined) {
+  if (requiredAuth === undefined) {
     requiredAuth = true
   }
 

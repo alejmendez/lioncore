@@ -14,6 +14,7 @@ use App\Http\Requests\UserRequest;
 // Modelos
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Property;
 use App\Http\Resources\User as UserResource;
 
 use DataTables;
@@ -30,7 +31,7 @@ class UserController extends BaseController
 
     public function show($id)
     {
-        $instance = User::with('person')->findOrFail($id);
+        $instance = User::with('person', 'roles')->findOrFail($id);
         $userResource = new UserResource($instance);
         return $this->showResponse($userResource);
     }
@@ -42,17 +43,19 @@ class UserController extends BaseController
                 'value' => $role->id,
                 'label' => $role->name
             ];
-        });
+        })->prepend([
+            'value' => '',
+            'label' => __('all')
+        ]);
 
-        $rolesOptions = Role::all()->map(function($role) {
-            return [
-                'value' => $role->id,
-                'label' => $role->name
-            ];
-        });
+        $statusOptions = Property::getProperty('userStatus')->prepend([
+            'value' => '',
+            'label' => __('all')
+        ]);
 
         $filters = [
-            'rolesOptions' => $rolesOptions
+            'rolesOptions' => $rolesOptions,
+            'statusOptions' => $statusOptions
         ];
 
         return $this->showResponse($filters);
@@ -60,68 +63,20 @@ class UserController extends BaseController
 
     public function moduleData()
     {
-        $moduleData = [
-            'status' => [
-                [
-                    'label' => 'Active',
-                    'value' => 'active'
-                ],
-                [
-                    'label' => 'Blocked',
-                    'value' => 'blocked'
-                ],
-                [
-                    'label' => 'Deactivated',
-                    'value' => 'deactivated'
-                ]
-            ],
-            'roles' => [
-                [
-                    'label' => 'Admin',
-                    'value' => 'admin'
-                ],
-                [
-                    'label' => 'User',
-                    'value' => 'user'
-                ],
-                [
-                    'label' => 'Staff',
-                    'value' => 'staff'
-                ]
-            ],
-            'langs' => [
-                [
-                    'label' => 'English',
-                    'value' => 'english'
-                ],
-                [
-                    'label' => 'Spanish',
-                    'value' => 'spanish'
-                ],
-                [
-                    'label' => 'French',
-                    'value' => 'french'
-                ],
-                [
-                    'label' => 'Russian',
-                    'value' => 'russian'
-                ],
-                [
-                    'label' => 'German',
-                    'value' => 'german'
-                ],
-                [
-                    'label' => 'Arabic',
-                    'value' => 'arabic'
-                ],
-                [
-                    'label' => 'Sanskrit',
-                    'value' => 'sanskrit'
-                ]
-            ],
-            'permissions' => [
+        $rolesOptions = Role::all()->map(function($role) {
+            return [
+                'value' => $role->id,
+                'label' => $role->name
+            ];
+        });
 
-            ]
+        $statusOptions = Property::getProperty('userStatus');
+        $langsOptions = Property::getProperty('userLangs');
+
+        $moduleData = [
+            'status' => $statusOptions,
+            'roles' => $rolesOptions,
+            'langs' => $langsOptions
         ];
 
         return $this->showResponse($moduleData);

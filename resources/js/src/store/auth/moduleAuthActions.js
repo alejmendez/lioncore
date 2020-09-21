@@ -308,13 +308,10 @@ export default {
 
           // If there's user data in response
           if (response.data.user) {
-            // Navigate User to homepage
-            router.push(router.currentRoute.query.to || '/')
-
             // Set accessToken
             localStorage.setItem('accessToken', response.data.token)
-            let tokenExpireAt = new Date();
-            tokenExpireAt.setSeconds(tokenExpireAt.getSeconds() + response.data.expires_in);
+            const tokenExpireAt = new Date()
+            tokenExpireAt.setSeconds(tokenExpireAt.getSeconds() + response.data.expires_in)
 
             localStorage.setItem('tokenExpireAt', tokenExpireAt.getTime())
 
@@ -324,6 +321,8 @@ export default {
             // Set bearer token in axios
             commit('SET_BEARER', response.data.token)
 
+            // Navigate User to homepage
+            router.push(router.currentRoute.query.to || '/')
             resolve(response)
           } else {
             reject({message: 'Wrong Email or Password'})

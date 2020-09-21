@@ -98,5 +98,6 @@
         "_plural": "properties",
         "name": "name",
         "value": "value"
-    }
+    },
+    "all": "All"
 }

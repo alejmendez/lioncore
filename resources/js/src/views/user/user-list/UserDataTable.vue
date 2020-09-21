@@ -4,7 +4,7 @@
     getDataAction="userManagement/list"
     management="userManagement"
     ref="table"
-    :entityName="$t('user.title.view')"
+    :entityName="$t('users.title.view')"
     :thead="thead"
     :listColumns="listColumns"
   >
@@ -43,15 +43,15 @@ export default {
       listColumns: ['email', 'username', 'person.first_name'],
       thead: [
         {
-          name: 'Email',
+          name: this.$t('users.email'),
           key: 'email'
         },
         {
-          name: 'Username',
+          name: this.$t('users.username'),
           key: 'username'
         },
         {
-          name: 'Name',
+          name: this.$t('users.first_name'),
           key: 'person.first_name'
         }
       ]
@@ -79,7 +79,7 @@ export default {
         type: 'confirm',
         color: 'danger',
         title: this.$t('common.confirm_delete'),
-        text: this.$t('common.are_you_sure_you_want_to_delete', { entityName: this.$t('user.title.view') }),
+        text: this.$t('common.are_you_sure_you_want_to_delete', { entityName: this.$t('users.title.view') }),
         accept: () => this.delete(id),
         acceptText: this.$t('common.delete')
       })
@@ -100,7 +100,7 @@ export default {
       this.$vs.notify({
         color: 'success',
         title: this.$t('common.record_deleted'),
-        text: this.$t('common.the_selected_entityname_was_successfully_deleted', { entityName: this.$t('user.title.view') })
+        text: this.$t('common.the_selected_entityname_was_successfully_deleted', { entityName: this.$t('users.title.view') })
       })
     },
     showDeleteError () {
