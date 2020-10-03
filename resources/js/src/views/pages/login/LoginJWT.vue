@@ -77,7 +77,6 @@ export default {
       return true
     },
     loginJWT () {
-      console.log('login...')
       // Loading
       this.$vs.loading()
 
@@ -95,7 +94,7 @@ export default {
           this.$vs.loading.close()
           this.$vs.notify({
             title: 'Error',
-            text: error.message,
+            text: this.$t('login.error.unauthorized'),
             iconPack: 'feather',
             icon: 'icon-alert-circle',
             color: 'danger'

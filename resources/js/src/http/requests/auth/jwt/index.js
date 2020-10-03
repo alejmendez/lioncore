@@ -21,18 +21,19 @@ export default {
       // const { config, response: { status } } = error
       const { config, response } = error
       const originalRequest = config
+      const status = response ? response.status : 0
 
-      if (response.status >= 400) {
+      if (status >= 400) {
         //console.log(Vue.prototype.$vs)
         //Vue.prototype.$vs.loading.close()
       }
 
-      if (response && response.status === 403) {
+      if (status === 403) {
         store.dispatch('auth/forbidden')
           .then(() => {})
       }
 
-      if (response && response.status === 401) {
+      if (status === 401 && !/\/login$/.test(originalRequest.url)) {
         if (!isAlreadyFetchingAccessToken) {
           isAlreadyFetchingAccessToken = true
           store.dispatch('auth/fetchAccessToken')
