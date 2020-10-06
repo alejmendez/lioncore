@@ -23,7 +23,9 @@ class PropertyController extends BaseController
     public function index()
     {
         $query = Property::select('id', 'name', 'value');
-        return DataTables::of($query)->make(true);
+        return DataTables::of($query)
+            ->rawColumns(['value'])
+            ->make(true);
     }
 
     public function filters()

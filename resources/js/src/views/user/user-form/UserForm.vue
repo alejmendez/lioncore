@@ -440,6 +440,7 @@ export default {
     },
     fetch (id) {
       this.loading()
+      this.not_found = false
       this.data.id = id
       this.$store.dispatch('userManagement/fetch', id)
         .then(res => {

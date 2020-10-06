@@ -18,7 +18,7 @@ export default {
     },
     {
       path: '/{{ $nameModel }}/new',
-      name: 'app-{{ $nameModel }}-new',
+      name: '{{ $nameModel }}-new',
       component: () => import('@/views/{{ $nameModel }}/form/{{ ucfirst($nameModel) }}Form.vue'),
       meta: {
         breadcrumb: [
@@ -32,7 +32,7 @@ export default {
     },
     {
       path: '/{{ $nameModel }}/:id',
-      name: 'app-{{ $nameModel }}-edit',
+      name: '{{ $nameModel }}-edit',
       component: () => import('@/views/{{ $nameModel }}/form/{{ ucfirst($nameModel) }}Form.vue'),
       meta: {
         breadcrumb: [

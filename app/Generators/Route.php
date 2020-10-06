@@ -27,11 +27,11 @@ class Route extends Generator
         $newRoute = "\n" .
         "Route::prefix('" . Str::plural($nameRoute) . "')->name('" . Str::plural($nameRoute) . ".')->group(function () {\n" .
         "            Route::get('/', '" . $nameController . "@index')->name('index')\n" .
-        "                ->middleware('permission:$nameRoute');\n" .
+        "                ->middleware('permission:$nameRoute list');\n" .
         "            Route::get('/filters', '" . $nameController . "@filters')->name('filters')\n" .
-        "                ->middleware('permission:$nameRoute');\n" .
+        "                ->middleware('permission:$nameRoute list');\n" .
         "            Route::get('/module-data', '" . $nameController . "@moduleData')->name('module-data')\n" .
-        "                ->middleware('permission:$nameRoute');\n" .
+        "                ->middleware('permission:$nameRoute list');\n" .
         "            Route::get('/{" . $nameRoute . "}', '" . $nameController . "@show')->name('show')\n" .
         "                ->middleware('permission:$nameRoute show');\n" .
         "            Route::post('/', '" . $nameController . "@store')->name('store')\n" .

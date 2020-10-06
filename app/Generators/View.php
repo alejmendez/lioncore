@@ -17,7 +17,7 @@ class View extends Generator
         $this->generateViewList();
         $this->generateViewForm();
         $this->generateStores();
-        //$this->generateTrans();
+        $this->generateTrans();
         $this->generateMenu();
     }
 

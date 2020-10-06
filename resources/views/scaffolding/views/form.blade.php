@@ -85,8 +85,9 @@ export default {
     getModuleData () {
       this.$store.dispatch('{{ $nameModel }}Management/getModuleData')
     },
-    fetchData (id) {
+    fetch (id) {
       this.loading()
+      this.not_found = false
       this.data.id = id
       this.$store.dispatch('{{ $nameModel }}Management/fetch', id)
         .then(res => {
@@ -119,7 +120,7 @@ export default {
         })
     },
     back () {
-      this.$router.push('/{{ $nameModel }}').catch(() => {})
+      this.$router.push({ name: '{{ $nameModel }}' }).catch(() => {})
     },
     reset () {
       this.data = Object.assign({}, this.data_original)

@@ -20,6 +20,7 @@ import errors from './errors.js'
 import generic from './generic.js'
 import property from './property.js'
 import chat from './chat.js'
+import role from './role.js'
 // requires
 
 const router = new Router({
@@ -35,6 +36,7 @@ const router = new Router({
       children: [
         ...property.router,
         ...chat.router,
+        ...role.router,
         // content route
         ...dashboard.router,
         ...user.router

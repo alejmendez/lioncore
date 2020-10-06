@@ -22,7 +22,7 @@ class GeneratorCrud implements Generator
     protected $models;
     protected $console;
 
-    protected $allOptionsActive = true;
+    protected $allOptionsActive = false;
     protected $listOptions = [
         'migration',
         'model',
@@ -55,11 +55,13 @@ class GeneratorCrud implements Generator
             }
         }
 
+        $cantOptions = 0;
         foreach ($this->listOptions as $option) {
             if ($this->getOption($option)) {
-                $this->allOptionsActive = false;
+                $cantOptions++;
             }
         }
+        $this->allOptionsActive = $cantOptions === 0;
     }
 
     public function run()

@@ -1,19 +1,17 @@
 <template>
   <table-crud
-    newRoute="/{{ $nameModel }}/new"
-    getDataAction="{{ $nameModel }}Management/list"
-    management="{{ $nameModel }}Management"
+    newRoute="/role/new"
+    getDataAction="roleManagement/list"
+    management="roleManagement"
     ref="table"
-    :entityName="$t('{{ $nameModel }}.title.view')"
+    :entityName="$t('role.title.view')"
     :thead="thead"
     :listColumns="listColumns"
   >
     <template slot-scope="{data}">
       <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-          @foreach ($fields as $field)
-          <vs-td style="width:{{ floor(100 / count($fields)) }}%">{{ "{{ tr." . $field['name'] . " }}" }}</vs-td>
-          @endforeach
+          <vs-td style="width:100%">{{ tr.name }}</vs-td>
           <vs-td class="whitespace-no-wrap" style="width:90px">
             <feather-icon
               icon="EditIcon"
@@ -40,9 +38,12 @@ export default {
   data () {
     return {
       id: '',
-      listColumns: [{!! $listColumns !!}],
+      listColumns: ['name'],
       thead: [
-{!! $thead !!}
+        {
+          name: this.$t('role.name'),
+          key: 'name'
+        }
       ]
     }
   },
@@ -60,7 +61,7 @@ export default {
       this.$vs.loading.close()
     },
     edit (id) {
-      this.$router.push({ name: '{{ $nameModel }}-edit', params: { id } }).catch(() => {})
+      this.$router.push({ name: 'role-edit', params: { id } }).catch(() => {})
     },
     confirmDelete (id) {
       this.id = id
@@ -68,7 +69,7 @@ export default {
         type: 'confirm',
         color: 'danger',
         title: this.$t('common.confirm_delete'),
-        text: this.$t('common.are_you_sure_you_want_to_delete', { entityName: this.$t('{{ $nameModel }}.title.view') }),
+        text: this.$t('common.are_you_sure_you_want_to_delete', { entityName: this.$t('role.title.view') }),
         accept: () => this.delete(id),
         acceptText: this.$t('common.delete')
       })
@@ -76,7 +77,7 @@ export default {
     delete (id) {
       this.loading()
       this.$store
-        .dispatch('{{ $nameModel }}Management/delete', id)
+        .dispatch('roleManagement/delete', id)
         .then(() => {
           this.showDeleteSuccess()
         })
@@ -90,7 +91,7 @@ export default {
       this.$vs.notify({
         color: 'success',
         title: this.$t('common.record_deleted'),
-        text: this.$t('common.the_selected_entityname_was_successfully_deleted', { entityName: this.$t('{{ $nameModel }}.title.view') })
+        text: this.$t('common.the_selected_entityname_was_successfully_deleted', { entityName: this.$t('role.title.view') })
       })
     },
     showDeleteError () {

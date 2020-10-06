@@ -99,5 +99,10 @@
         "name": "name",
         "value": "value"
     },
-    "all": "All"
+    "all": "All",
+    "role": {
+        "_singular": "role",
+        "_plural": "roles",
+        "Name": "Name"
+    }
 }

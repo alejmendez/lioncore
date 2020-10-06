@@ -16,7 +16,7 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::prefix('person')->name('person.')->group(function () {
             Route::get('/', 'PersonController@index')->name('index')
-                ->middleware('permission:person');
+                ->middleware('permission:person list');
             Route::get('/{person}', 'PersonController@show')->name('show')
                 ->middleware('permission:person show');
             Route::post('/', 'PersonController@store')->name('store')
@@ -29,11 +29,11 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('users')->name('users.')->group(function () {
             Route::get('/', 'UserController@index')->name('index')
-                ->middleware('permission:user');
+                ->middleware('permission:user list');
             Route::get('/filters', 'UserController@filters')->name('filters')
-                ->middleware('permission:user');
+                ->middleware('permission:user list');
             Route::get('/module-data', 'UserController@moduleData')->name('module-data')
-                ->middleware('permission:user');
+                ->middleware('permission:user list');
             Route::get('/{user}', 'UserController@show')->name('show')
                 ->middleware('permission:user show');
             Route::post('/', 'UserController@store')->name('store')
@@ -46,11 +46,11 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('properties')->name('properties.')->group(function () {
             Route::get('/', 'PropertyController@index')->name('index')
-                ->middleware('permission:property');
+                ->middleware('permission:property list');
             Route::get('/filters', 'PropertyController@filters')->name('filters')
-                ->middleware('permission:property');
+                ->middleware('permission:property list');
             Route::get('/module-data', 'PropertyController@moduleData')->name('module-data')
-                ->middleware('permission:property');
+                ->middleware('permission:property list');
             Route::get('/{property}', 'PropertyController@show')->name('show')
                 ->middleware('permission:property show');
             Route::post('/', 'PropertyController@store')->name('store')
@@ -63,17 +63,34 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('chat')->name('chat.')->group(function () {
             Route::post('msg', 'ChatController@msg')->name('msg')
-                ->middleware('permission:chat');
+                ->middleware('permission:chat view');
             Route::get('contacts', 'ChatController@contacts')->name('contacts')
-                ->middleware('permission:chat');
+                ->middleware('permission:chat view');
             Route::get('chat-contacts', 'ChatController@chatContacts')->name('chat-contacts')
-                ->middleware('permission:chat');
+                ->middleware('permission:chat view');
             Route::get('chats', 'ChatController@chats')->name('chats')
-                ->middleware('permission:chat');
+                ->middleware('permission:chat view');
             Route::post('mark-all-seen', 'ChatController@markAllSeen')->name('mark-all-seen')
-                ->middleware('permission:chat');
+                ->middleware('permission:chat view');
             Route::post('set-pinned', 'ChatController@setPinned')->name('set-pinned')
-                ->middleware('permission:chat');
+                ->middleware('permission:chat view');
+        });
+
+        Route::prefix('roles')->name('roles.')->group(function () {
+            Route::get('/', 'RoleController@index')->name('index')
+                ->middleware('permission:role list');
+            Route::get('/filters', 'RoleController@filters')->name('filters')
+                ->middleware('permission:role list');
+            Route::get('/module-data', 'RoleController@moduleData')->name('module-data')
+                ->middleware('permission:role list');
+            Route::get('/{role}', 'RoleController@show')->name('show')
+                ->middleware('permission:role show');
+            Route::post('/', 'RoleController@store')->name('store')
+                ->middleware('permission:role store');
+            Route::put('/{role}', 'RoleController@update')->name('update')
+                ->middleware('permission:role update');
+            Route::delete('/{role}', 'RoleController@destroy')->name('destroy')
+                ->middleware('permission:role destroy');
         });
         // add router
     });
