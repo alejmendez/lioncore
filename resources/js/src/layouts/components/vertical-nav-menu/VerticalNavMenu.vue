@@ -168,6 +168,7 @@ export default {
     },
     menuItemsUpdated () {
       const clone = this.navMenuItems.slice()
+      const userPermissions = this.$store.state.AppActiveUser.userPermissions
 
       for (const [index, item] of this.navMenuItems.entries()) {
         if (item.header && item.items.length && (index || 1)) {
@@ -178,7 +179,18 @@ export default {
         }
       }
 
-      return clone
+      const cloneMenu = clone.filter(item => {
+        if (item.items) {
+          item.items.filter(subItem => {
+            return userPermissions.includes(subItem.permission)
+          })
+          return item.items.length || userPermissions.includes(item.permission)
+        }
+        return userPermissions.includes(item.permission)
+      })
+
+      console.log(cloneMenu)
+      return cloneMenu
     },
     isVerticalNavMenuActive: {
       get ()    { return this.$store.state.isVerticalNavMenuActive },

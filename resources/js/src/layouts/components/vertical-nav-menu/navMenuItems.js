@@ -39,14 +39,16 @@ export default [
     name: 'Property',
     icon: 'ListIcon',
     slug: 'property',
-    i18n: 'menu.property'
+    i18n: 'menu.property',
+    permission: 'property list'
   },
   {
     url: '/chat/',
     name: 'Chat',
     icon: 'MessageSquareIcon',
     slug: 'chat',
-    i18n: 'menu.chat'
+    i18n: 'menu.chat',
+    permission: 'chat'
   },
   // section menu
   {
@@ -59,14 +61,16 @@ export default [
         name: 'User',
         icon: 'UserIcon',
         slug: 'user',
-        i18n: 'menu.user'
+        i18n: 'menu.user',
+        permission: 'user list'
       },
       {
         url: '/role/',
         name: 'Role',
         icon: 'UsersIcon',
         slug: 'role',
-        i18n: 'menu.role'
+        i18n: 'menu.role',
+        permission: 'role list'
       }
     ]
   }

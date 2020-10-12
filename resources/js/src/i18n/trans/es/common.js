@@ -26,5 +26,7 @@ export default {
     'to': 'al',
     'of': 'de un total de',
     'entries': 'entradas'
-  }
+  },
+  'notifications' : 'Notificaciones',
+  'view_all_notifications' : 'Ver todas las notificaciones'
 }

@@ -38,13 +38,11 @@ import acl from './acl/acl'
 // Globally Registered Components
 import './globalComponents.js'
 
-// Vue Router
-import router from './router/index'
-
-
 // Vuex Store
 import store from './store/store'
 
+// Vue Router
+import router from './router/index'
 
 // i18n
 import i18n from './i18n/i18n'

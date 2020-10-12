@@ -19,7 +19,7 @@ const userDefaults = {
   uid         : 0,  // From Auth
   displayName : '', // From Auth
   about       : '',
-  photoURL    : require('@assets/images/portrait/small/avatar-s-11.jpg'), // From Auth
+  photoURL    : '', // From Auth
   status      : 'online',
   userRole    : 'admin'
 }

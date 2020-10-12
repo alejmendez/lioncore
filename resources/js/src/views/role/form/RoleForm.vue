@@ -23,14 +23,21 @@
             </vs-col>
           </vs-row>
           <vs-row class="mt-8">
-            <h2>Permisos</h2>
-          </vs-row>
-          <vs-row class="mt-8" vs-justify="center">
             <vs-col
+              class="p-2"
+              type="flex"
+              vs-w="12"
+            >
+              <h2>Permisos</h2>
+            </vs-col>
+          </vs-row>
+          <vs-row class="mt-3" vs-justify="center">
+            <vs-col
+              class="p-2"
               type="flex"
               vs-justify="center"
               vs-align="center"
-              vs-w="12"
+              vs-w="6"
               v-for="(permissionsGroup, moduleName) in permissionsList"
               :key="moduleName"
             >

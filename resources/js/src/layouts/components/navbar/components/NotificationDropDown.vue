@@ -6,8 +6,8 @@
     <vs-dropdown-menu class="notification-dropdown dropdown-custom vx-navbar-dropdown">
 
       <div class="notification-top text-center p-5 bg-primary text-white">
-        <h3 class="text-white">{{ unreadNotifications.length }} New</h3>
-        <p class="opacity-75">App Notifications</p>
+        <h3 class="text-white">{{ unreadNotifications.length }} {{ $t('common.new') }}</h3>
+        <p class="opacity-75">{{ $t('common.notifications') }}</p>
       </div>
 
       <component :is="scrollbarTag" ref="mainSidebarPs" class="scroll-area--nofications-dropdown p-0 mb-10" :settings="settings" :key="$vs.rtl">
@@ -42,7 +42,7 @@
         border-solid
         d-theme-border-grey-light
         cursor-pointer">
-        <span>View All Notifications</span>
+        <span>{{ $t('common.view_all_notifications') }}</span>
       </div>
     </vs-dropdown-menu>
   </vs-dropdown>
