@@ -11,6 +11,9 @@
 |
 */
 
-Route::group(['middleware' => 'web'], function () {
+Route::group([
+    'middleware' => 'web',
+    'domain' => '{tenant}.lioncore.oo'
+], function () {
     Route::get('/{any?}', 'ApplicationController')->where('any', '^(?!api\/)[\/\w\.-]*');
 });

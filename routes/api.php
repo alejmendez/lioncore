@@ -1,15 +1,17 @@
 <?php
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')
+->domain('{tenant}.lioncore.oo')
+->group(function () {
     Route::prefix('auth')->name('auth.')->group(function () {
-        Route::post('login', 'AuthController@login')->name('login');
-        Route::post('register', 'AuthController@register')->name('register');
-        Route::post('refresh', 'AuthController@refresh')->name('refresh');
-        Route::get('current/user', 'AuthController@currentUser')->name('current.user');
+        Route::post('login', 'Auth\AuthController@login')->name('login');
+        Route::post('register', 'Auth\AuthController@register')->name('register');
+        Route::post('refresh', 'Auth\AuthController@refresh')->name('refresh');
+        Route::get('current/user', 'Auth\AuthController@currentUser')->name('current.user');
 
         Route::group(['middleware' => 'auth:api'], function(){
-            Route::get('logout', 'AuthController@logout')->name('logout');
-            Route::post('user', 'AuthController@user')->name('user');
+            Route::get('logout', 'Auth\AuthController@logout')->name('logout');
+            Route::post('user', 'Auth\AuthController@user')->name('user');
         });
     });
 

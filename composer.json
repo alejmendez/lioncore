@@ -17,7 +17,6 @@
         "musonza/chat": "^4.4",
         "owen-it/laravel-auditing": "^10.0",
         "spatie/laravel-permission": "^3.11",
-        "stancl/tenancy": "^3.1",
         "stichoza/google-translate-php": "^4.1",
         "tymon/jwt-auth": "dev-develop",
         "yajra/laravel-datatables-oracle": "^9.10"
