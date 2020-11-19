@@ -1,0 +1,110 @@
+{
+    "model": "Alumno",
+    "module": "core",
+    "title": "Alumno",
+    "dateMigration": "2020_11_08_000001",
+    "inDB": false,
+    "fields":[
+        {
+            "name": "id",
+            "type": "increments",
+            "htmlType": "",
+            "validations": "",
+            "searchable": false,
+            "fillable": false,
+            "primary": true,
+            "inForm": false,
+            "inList": false
+        },
+        {
+            "name": "firstName",
+            "type": "string",
+            "length": 50,
+            "label": "firstName",
+            "htmlType": "text",
+            "validations": "required,min:3,max:50",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "firstName"
+        },
+        {
+            "name": "lastname",
+            "type": "string",
+            "length": 50,
+            "label": "lastname",
+            "htmlType": "text",
+            "validations": "required,min:3,max:50",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "lastName"
+        },
+        {
+            "name": "phone",
+            "type": "string",
+            "length": 50,
+            "label": "phone",
+            "htmlType": "text",
+            "validations": "required,min:8,max:50",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "phoneNumber"
+        },
+        {
+            "name": "email",
+            "type": "string",
+            "length": 80,
+            "label" : "Email",
+            "htmlType": "text",
+            "validations": "email|min:10|max:80",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "unique()->safeEmail"
+        },
+        {
+            "name": "specialty",
+            "type": "string",
+            "length": 50,
+            "label": "specialty",
+            "htmlType": "select",
+            "list": [
+                "Sistemas",
+                "Infromatica",
+                "Mantenimiento",
+                "Ambiental"
+            ],
+            "validations": "required,min:3,max:20",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "randomElement(['Sistemas', 'Infromatica', 'Mantenimiento', 'Ambiental'])"
+        },
+        {
+            "name": "semester",
+            "type": "string",
+            "length": 50,
+            "label": "semester",
+            "htmlType": "select",
+            "list": [
+                "I-2016",
+                "II-2016",
+                "I-2017",
+                "II-2017",
+                "I-2018",
+                "II-2018",
+                "I-2019",
+                "II-2019",
+                "I-2020",
+                "II-2020"
+            ],
+            "validations": "required,min:3,max:20",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "randomElement(['I-2016', 'II-2016', 'I-2017', 'II-2017', 'I-2018', 'II-2018', 'I-2019', 'II-2019', 'I-2020', 'II-2020'])"
+        }
+    ]
+}

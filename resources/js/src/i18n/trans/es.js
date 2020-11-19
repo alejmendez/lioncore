@@ -14,6 +14,9 @@ import users from './es/users'
 import property from './es/property'
 import chat from './es/chat'
 import role from './es/role'
+import alumno from './es/alumno'
+import registro from './es/registro'
+import grafica from './es/grafica'
 // imports
 
 import es from 'vee-validate/dist/locale/es.json'
@@ -35,6 +38,9 @@ export default {
   property,
   chat,
   role,
+  alumno,
+  registro,
+  grafica,
   // content trans
   validation: es.messages,
   Home: 'Inicio',

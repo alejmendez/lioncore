@@ -21,6 +21,9 @@ import generic from './generic.js'
 import property from './property.js'
 import chat from './chat.js'
 import role from './role.js'
+import alumno from './alumno.js'
+import registro from './registro.js'
+import grafica from './grafica.js'
 // requires
 
 const router = new Router({
@@ -37,6 +40,9 @@ const router = new Router({
         ...property.router,
         ...chat.router,
         ...role.router,
+        ...alumno.router,
+        ...registro.router,
+        ...grafica.router,
         // content route
         ...dashboard.router,
         ...user.router

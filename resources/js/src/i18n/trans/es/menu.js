@@ -4,5 +4,7 @@ export default {
   user: 'Usuarios',
   role: 'Perfiles',
   property: 'Propiedades',
+  alumno: 'Alumnos',
+  registro: 'Registros',
   chat: 'Chat'
 }

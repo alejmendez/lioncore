@@ -1,6 +1,6 @@
 <?php
 
-namespace App\uds;
+namespace App\Generators\cruds;
 
 class Controller extends Generator
 {

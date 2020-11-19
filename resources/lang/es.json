@@ -107,5 +107,31 @@
         "_singular": "papel",
         "_plural": "roles",
         "Name": "Nombre"
+    },
+    "alumno": {
+        "_singular": "alumno",
+        "_plural": "alumnos",
+        "firstName": "nombre de pila",
+        "lastname": "apellido",
+        "phone": "tel\u00e9fono",
+        "Email": "Correo electr\u00f3nico",
+        "specialty": "especialidad",
+        "semester": "semestre"
+    },
+    "registro": {
+        "_singular": "registro",
+        "_plural": "registros",
+        "title": "t\u00edtulo",
+        "tutor": "tutor",
+        "consultancies": "consultor\u00edas",
+        "documentation": "documentaci\u00f3n",
+        "assignedDate": "fecha asignada",
+        "presentation": "presentaci\u00f3n",
+        "finalTome": "finalTome"
+    },
+    "grafica": {
+        "_singular": "gr\u00e1ficos",
+        "_plural": "graficas",
+        "title": "t\u00edtulo"
     }
 }

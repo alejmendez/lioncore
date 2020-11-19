@@ -21,7 +21,9 @@ class RoleSeeder extends Seeder
         $modules = [
             'user',
             'role',
-            'property'
+            'property',
+            'alumno',
+            'registro'
         ];
 
         foreach ($modules as $module) {
@@ -40,6 +42,7 @@ class RoleSeeder extends Seeder
         }
 
         $permissions[] = 'chat view';
+        $permissions[] = 'grafica view';
 
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);

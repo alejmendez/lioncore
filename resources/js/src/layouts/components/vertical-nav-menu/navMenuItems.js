@@ -48,7 +48,30 @@ export default [
     icon: 'MessageSquareIcon',
     slug: 'chat',
     i18n: 'menu.chat',
-    permission: 'chat'
+    permission: 'chat view'
+  },
+  {
+    url: '/alumno/',
+    name: 'Alumno',
+    icon: 'AlumnoIcon',
+    slug: 'alumno',
+    i18n: 'menu.alumno',
+    permission: 'alumno list'
+  },
+  {
+    url: '/registro/',
+    name: 'Registro',
+    icon: 'RegistroIcon',
+    slug: 'registro',
+    i18n: 'menu.registro',
+    permission: 'registro list'
+  },
+  {
+    url: '/grafica/',
+    name: 'Grafica',
+    icon: 'GraficaIcon',
+    slug: 'grafica',
+    i18n: 'menu.grafica'
   },
   // section menu
   {

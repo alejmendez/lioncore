@@ -104,5 +104,31 @@
         "_singular": "role",
         "_plural": "roles",
         "Name": "Name"
+    },
+    "alumno": {
+        "_singular": "student",
+        "_plural": "students",
+        "firstName": "firstName",
+        "lastname": "lastname",
+        "phone": "phone",
+        "Email": "Email",
+        "specialty": "specialty",
+        "semester": "semester"
+    },
+    "registro": {
+        "_singular": "registry",
+        "_plural": "records",
+        "title": "title",
+        "tutor": "tutor",
+        "consultancies": "consultancies",
+        "documentation": "documentation",
+        "assignedDate": "assignedDate",
+        "presentation": "presentation",
+        "finalTome": "finalTome"
+    },
+    "grafica": {
+        "_singular": "graphics",
+        "_plural": "graphics",
+        "title": "title"
     }
 }
