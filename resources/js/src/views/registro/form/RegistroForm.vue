@@ -10,7 +10,7 @@
       <form @submit.prevent="handleSubmit(save)">
         <vx-card>
           <vs-row>
-            <vs-col class="px-2" vs-w="6">
+            <vs-col class="px-2" vs-w="12">
               <ValidationProvider class="w-full" name="registro.title" rules="required|min:3|max:250" v-slot="{ errors, invalid, validated }">
                 <vs-input
                   class="w-full mt-4"
@@ -21,7 +21,21 @@
                 <span class="text-danger text-sm">{{ errors[0] }}</span>
               </ValidationProvider>
             </vs-col>
-            <vs-col class="px-2" vs-w="6">
+            <vs-col class="px-2 mt-4" vs-w="12">
+              <ValidationProvider class="w-full" name="registro.alumno" rules="required" v-slot="{ errors, invalid, validated }">
+                <label class="vs-input--label">{{ $t('registro.alumno') }}</label>
+                <v-select
+                  label="label"
+                  v-model="data.alumno_idSelect"
+                  :reduce="data => data.value"
+                  :clearable="false"
+                  :options="alumnoList"
+                  :danger="invalid && validated"
+                />
+                <span class="text-danger text-sm">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </vs-col>
+            <vs-col class="px-2" vs-w="12">
               <ValidationProvider class="w-full" name="registro.tutor" rules="required|min:3|max:50" v-slot="{ errors, invalid, validated }">
                 <vs-input
                   class="w-full mt-4"
@@ -87,15 +101,20 @@
 
 <script>
 import moduleRegistroManagement from '@/store/registro/moduleRegistroManagement.js'
+import vSelect from 'vue-select'
 
 export default {
+  components: {
+    vSelect
+  },
   data () {
     return {
-      switch1: false,
       data: {
         id: '',
         title: '',
         tutor: '',
+        alumno_idSelect: '',
+        alumno_id: '',
         consultancies: false,
         documentation: false,
         assignedDate: false,
@@ -104,6 +123,11 @@ export default {
       },
       data_original: {},
       not_found: false
+    }
+  },
+  computed: {
+    alumnoList () {
+      return this.$store.state.registroManagement.moduleData.alumnos
     }
   },
   methods: {
@@ -124,10 +148,12 @@ export default {
         .then(res => {
           this.loaded()
           this.data = res.data.data
+          this.data.alumno_idSelect = res.data.data.alumno_id
         })
         .catch(err => {
           this.loaded()
           this.data.id = ''
+          console.log(err)
           if (err.response.status === 404) {
             this.not_found = true
             return
@@ -137,6 +163,7 @@ export default {
     },
     save () {
       this.loading()
+      this.data.alumno_id = this.data.alumno_idSelect
       this.$store
         .dispatch('registroManagement/save', this.data)
         .then(() => {

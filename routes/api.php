@@ -130,20 +130,8 @@ Route::prefix('v1')
         });
 
         Route::prefix('graficas')->name('graficas.')->group(function () {
-            Route::get('/', 'GraficaController@index')->name('index')
-                ->middleware('permission:grafica list');
-            Route::get('/filters', 'GraficaController@filters')->name('filters')
-                ->middleware('permission:grafica list');
-            Route::get('/module-data', 'GraficaController@moduleData')->name('module-data')
-                ->middleware('permission:grafica list');
-            Route::get('/{grafica}', 'GraficaController@show')->name('show')
-                ->middleware('permission:grafica show');
-            Route::post('/', 'GraficaController@store')->name('store')
-                ->middleware('permission:grafica store');
-            Route::put('/{grafica}', 'GraficaController@update')->name('update')
-                ->middleware('permission:grafica update');
-            Route::delete('/{grafica}', 'GraficaController@destroy')->name('destroy')
-                ->middleware('permission:grafica destroy');
+            Route::get('/data', 'GraficaController@data')->name('data')
+                ->middleware('permission:grafica view');
         });
         // add router
     });

@@ -14,6 +14,7 @@ use App\Http\Requests\RegistroRequest;
 
 // Modelos
 use App\Models\Registro;
+use App\Models\Alumno;
 
 use DataTables;
 
@@ -27,7 +28,7 @@ class RegistroController extends BaseController
             'alumno' => function ($query) {
                 $query->select('firstName', 'lastname', 'semester');
             }
-        ])->select('registros.*', 'firstName', 'lastname', 'semester')->where('alumno_id', '26b92204-bffd-4375-976e-df7dbf60b003');
+        ])->select('registros.*', 'firstName', 'lastname', 'semester');
 
         return DataTables::eloquent($query)->only([
             'id',
@@ -51,7 +52,18 @@ class RegistroController extends BaseController
 
     public function moduleData()
     {
-        $moduleData = [];
+        $moduleData = [
+            'alumnos' => Alumno::select('id', 'firstName', 'lastname', 'semester')
+                ->orderBy('firstName')
+                ->orderBy('lastname')
+                ->get()
+                ->map(function ($alumno) {
+                return [
+                    'value' => $alumno->id,
+                    'label' => $alumno->firstName . ' ' . $alumno->lastname . ' (' . $alumno->semester . ')'
+                ];
+            })
+        ];
 
         return $this->showResponse($moduleData);
     }

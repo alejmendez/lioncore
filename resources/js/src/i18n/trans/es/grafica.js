@@ -1,3 +1,5 @@
 export default {
-  title: 't\u00edtulo'
+  title: {
+    view: 'Grafica'
+  }
 }

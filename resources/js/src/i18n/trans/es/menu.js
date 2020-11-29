@@ -6,5 +6,6 @@ export default {
   property: 'Propiedades',
   alumno: 'Alumnos',
   registro: 'Registros',
-  chat: 'Chat'
+  chat: 'Chat',
+  grafica: 'Graficos'
 }

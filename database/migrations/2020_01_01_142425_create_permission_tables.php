@@ -67,6 +67,8 @@ class CreatePermissionTables extends Migration
             );
         });
 
+
+        
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {
             $table->uuid('permission_id');
             $table->uuid('role_id');

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 // Control Base
@@ -7,63 +8,65 @@ use App\Http\Controllers\Controller as BaseController;
 // Traits
 use App\Traits\ApiResponse;
 
-// Request
-use Illuminate\Http\Request;
-use App\Http\Requests\GraficaRequest;
-
 // Modelos
-use App\Models\Grafica;
-
-use DataTables;
+use DB;
 
 class GraficaController extends BaseController
 {
     use ApiResponse;
 
-    public function index()
+    public function data()
     {
-        $query = Grafica::select('title');
-        return DataTables::of($query)->make(true);
-    }
+        $grupo = request('grupo');
+        $indicador = request('indicador');
 
-    public function filters()
-    {
-        $filters = [];
+        if ($grupo == 'semester') {
+            $groupBy = 'semester';
+            $legend = ['I-2016', 'II-2016', 'I-2017', 'II-2017', 'I-2018', 'II-2018', 'I-2019', 'II-2019', 'I-2020', 'II-2020'];
+        } else {
+            $groupBy = 'specialty';
+            $legend = ['Sistemas', 'Informática', 'Mantenimiento', 'Ambiental'];
+        }
 
-        return $this->showResponse($filters);
-    }
+        $sql = DB::table('registros')
+            ->select($groupBy . ' as name', DB::raw('count(*) as value'))
+            ->leftJoin('alumnos', 'alumnos.id', '=', 'registros.alumno_id')
+            ->groupBy($groupBy)
+            ->orderBy($groupBy);
 
-    public function moduleData()
-    {
-        $moduleData = [];
+        switch ($indicador) {
+            case 'aprobados_por_semestre':
+                $sql->where('registros.tutor', 0);
+                break;
+            case 'sin_tutor_académico_asignado':
+                $sql->where('registros.tutor', 0);
+                break;
+            case 'inasistentes_a_asesorías_académicas':
+                $sql->where('registros.consultancies', 0);
+                break;
+            case 'sin_completar_requisitos_académicos':
+                $sql->where('registros.tutor', 0);
+                $sql->where('registros.consultancies', 0);
+                $sql->where('registros.documentation', 0);
+                $sql->where('registros.assignedDate', 0);
+                $sql->where('registros.presentation', 0);
+                $sql->where('registros.finalTome', 0);
+                break;
+            case 'inasistentes_a_presentación_de_teg':
+                $sql->where('registros.presentation', 0);
+                break;
+            case 'sin_entrega_de_tomo_final_de_teg':
+                $sql->where('registros.finalTome', 0);
+                break;
+        }
 
-        return $this->showResponse($moduleData);
-    }
+        $data = $sql->get();
 
-    public function show($id)
-    {
-        $instance = Grafica::findOrFail($id);
-        return $this->showResponse($instance);
-    }
 
-    public function store(GraficaRequest $request)
-    {
-        $instance = Grafica::create($request->all());
-        return $this->createdResponse($instance);
-    }
 
-    public function update(GraficaRequest $request, $id)
-    {
-        $instance = Grafica::findOrFail($id);
-        $instance->fill($request->all());
-        $instance->save();
-        return $this->showResponse($instance);
-    }
-
-    public function destroy($id)
-    {
-        $instance = Grafica::findOrFail($id);
-        $instance->delete();
-        return $this->deletedResponse();
+        return $this->showResponse([
+            'legend' => $legend,
+            'data'   => $data
+        ]);
     }
 }

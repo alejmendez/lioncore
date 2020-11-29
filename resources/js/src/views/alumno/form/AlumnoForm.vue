@@ -141,7 +141,7 @@ export default {
       not_found: false,
       specialtyOptions: [
         'Sistemas',
-        'Informatica',
+        'Informática',
         'Mantenimiento',
         'Ambiental'
       ],

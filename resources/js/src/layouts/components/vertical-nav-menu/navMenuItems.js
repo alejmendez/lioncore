@@ -35,25 +35,9 @@ export default [
     i18n: 'menu.home'
   },
   {
-    url: '/property/',
-    name: 'Property',
-    icon: 'ListIcon',
-    slug: 'property',
-    i18n: 'menu.property',
-    permission: 'property list'
-  },
-  {
-    url: '/chat/',
-    name: 'Chat',
-    icon: 'MessageSquareIcon',
-    slug: 'chat',
-    i18n: 'menu.chat',
-    permission: 'chat view'
-  },
-  {
     url: '/alumno/',
     name: 'Alumno',
-    icon: 'AlumnoIcon',
+    icon: 'UsersIcon',
     slug: 'alumno',
     i18n: 'menu.alumno',
     permission: 'alumno list'
@@ -61,7 +45,7 @@ export default [
   {
     url: '/registro/',
     name: 'Registro',
-    icon: 'RegistroIcon',
+    icon: 'CheckCircleIcon',
     slug: 'registro',
     i18n: 'menu.registro',
     permission: 'registro list'
@@ -69,9 +53,10 @@ export default [
   {
     url: '/grafica/',
     name: 'Grafica',
-    icon: 'GraficaIcon',
+    icon: 'PieChartIcon',
     slug: 'grafica',
-    i18n: 'menu.grafica'
+    i18n: 'menu.grafica',
+    permission: 'grafica view'
   },
   // section menu
   {

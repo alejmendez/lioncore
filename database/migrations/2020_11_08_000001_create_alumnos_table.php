@@ -21,7 +21,7 @@ class CreateAlumnosTable extends Migration
             $table->string('email', 80)->nullable();
             $table->string('specialty', 50);
             $table->string('semester', 50);
-            
+
             $table->timestamps();
             $table->softDeletes();
         });
