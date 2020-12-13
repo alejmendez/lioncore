@@ -15,9 +15,9 @@ class Create{{ ucwords(Illuminate\Support\Str::plural($nameModel)) }}Table exten
         Schema::create('{{ Illuminate\Support\Str::plural(strtolower($nameModel)) }}', function (Blueprint $table) {
             $table->uuid('{{ $id['name'] }}')->unique()->primary('{{ $id['name'] }}');
 
-            @foreach ($fields as $field)
-{!! $field !!}
-            @endforeach
+@foreach ($fields as $field)
+            {!! $field !!}
+@endforeach
 
             $table->timestamps();
             $table->softDeletes();

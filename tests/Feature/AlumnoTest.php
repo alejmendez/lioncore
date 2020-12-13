@@ -14,9 +14,9 @@ class AlumnoTest extends TestCase
             'lastname' => $faker->lastName,
             'phone' => $faker->phoneNumber,
             'email' => $faker->unique()->safeEmail,
-            'specialty' => $faker->randomElement(['Sistemas', 'Infromatica', 'Mantenimiento', 'Ambiental']),
+            'specialty' => $faker->randomElement(['Sistemas', 'Informática', 'Mantenimiento', 'Ambiental']),
             'semester' => $faker->randomElement(['I-2016', 'II-2016', 'I-2017', 'II-2017', 'I-2018', 'II-2018', 'I-2019', 'II-2019', 'I-2020', 'II-2020']),
-                    ];
+        ];
     }
 
     /**

@@ -106,14 +106,14 @@
         "Name": "Name"
     },
     "alumno": {
-        "_singular": "student",
-        "_plural": "students",
-        "firstName": "firstName",
-        "lastname": "lastname",
-        "phone": "phone",
-        "Email": "Email",
-        "specialty": "specialty",
-        "semester": "semester"
+        "_singular": "Student",
+        "_plural": "Students",
+        "firstName": "FirstName",
+        "lastname": "Lastname",
+        "phone": "Phone",
+        "email": "Email",
+        "specialty": "Specialty",
+        "semester": "Semester"
     },
     "registro": {
         "_singular": "registry",

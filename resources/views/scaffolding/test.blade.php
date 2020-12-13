@@ -9,9 +9,9 @@ class {{ ucwords($nameModel) }}Test extends TestCase
     {
         $faker = \Faker\Factory::create();
         return [
-            @foreach ($fields as $field)
-'{!! $field['name'] !!}' => $faker->{!! $field['faker'] !!},
-            @endforeach
+@foreach ($fields as $field)
+            '{!! $field['name'] !!}' => $faker->{!! $field['faker'] !!},
+@endforeach
         ];
     }
 

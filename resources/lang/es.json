@@ -109,14 +109,14 @@
         "Name": "Nombre"
     },
     "alumno": {
-        "_singular": "alumno",
-        "_plural": "alumnos",
-        "firstName": "nombre de pila",
-        "lastname": "apellido",
-        "phone": "tel\u00e9fono",
-        "Email": "Correo electr\u00f3nico",
-        "specialty": "especialidad",
-        "semester": "semestre"
+        "_singular": "Alumno",
+        "_plural": "Alumnos",
+        "firstName": "Nombre de pila",
+        "lastname": "Apellido",
+        "phone": "Tel\u00e9fono",
+        "email": "Correo electr\u00f3nico",
+        "specialty": "Especialidad",
+        "semester": "Semestre"
     },
     "registro": {
         "_singular": "registro",
