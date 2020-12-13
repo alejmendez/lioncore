@@ -95,44 +95,6 @@ Route::prefix('v1')
                 ->middleware('permission:role destroy');
         });
 
-        Route::prefix('alumnos')->name('alumnos.')->group(function () {
-            Route::get('/', 'AlumnoController@index')->name('index')
-                ->middleware('permission:alumno list');
-            Route::get('/filters', 'AlumnoController@filters')->name('filters')
-                ->middleware('permission:alumno list');
-            Route::get('/module-data', 'AlumnoController@moduleData')->name('module-data')
-                ->middleware('permission:alumno list');
-            Route::get('/{alumno}', 'AlumnoController@show')->name('show')
-                ->middleware('permission:alumno show');
-            Route::post('/', 'AlumnoController@store')->name('store')
-                ->middleware('permission:alumno store');
-            Route::put('/{alumno}', 'AlumnoController@update')->name('update')
-                ->middleware('permission:alumno update');
-            Route::delete('/{alumno}', 'AlumnoController@destroy')->name('destroy')
-                ->middleware('permission:alumno destroy');
-        });
-
-        Route::prefix('registros')->name('registros.')->group(function () {
-            Route::get('/', 'RegistroController@index')->name('index')
-                ->middleware('permission:registro list');
-            Route::get('/filters', 'RegistroController@filters')->name('filters')
-                ->middleware('permission:registro list');
-            Route::get('/module-data', 'RegistroController@moduleData')->name('module-data')
-                ->middleware('permission:registro list');
-            Route::get('/{registro}', 'RegistroController@show')->name('show')
-                ->middleware('permission:registro show');
-            Route::post('/', 'RegistroController@store')->name('store')
-                ->middleware('permission:registro store');
-            Route::put('/{registro}', 'RegistroController@update')->name('update')
-                ->middleware('permission:registro update');
-            Route::delete('/{registro}', 'RegistroController@destroy')->name('destroy')
-                ->middleware('permission:registro destroy');
-        });
-
-        Route::prefix('graficas')->name('graficas.')->group(function () {
-            Route::get('/data', 'GraficaController@data')->name('data')
-                ->middleware('permission:grafica view');
-        });
         // add router
     });
 });

@@ -34,30 +34,6 @@ export default [
     icon: 'HomeIcon',
     i18n: 'menu.home'
   },
-  {
-    url: '/alumno/',
-    name: 'Alumno',
-    icon: 'UsersIcon',
-    slug: 'alumno',
-    i18n: 'menu.alumno',
-    permission: 'alumno list'
-  },
-  {
-    url: '/registro/',
-    name: 'Registro',
-    icon: 'CheckCircleIcon',
-    slug: 'registro',
-    i18n: 'menu.registro',
-    permission: 'registro list'
-  },
-  {
-    url: '/grafica/',
-    name: 'Grafica',
-    icon: 'PieChartIcon',
-    slug: 'grafica',
-    i18n: 'menu.grafica',
-    permission: 'grafica view'
-  },
   // section menu
   {
     header: 'Admin',
