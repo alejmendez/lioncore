@@ -1,6 +1,5 @@
 use App\Models\{{ ucwords($nameModel) }};
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +14,8 @@ use Illuminate\Support\Str;
 
 $factory->define({{ ucwords($nameModel) }}::class, function (Faker $faker) {
     return [
-        @foreach ($fields as $field)
-    "{{ $field['name'] }}" => $faker->{!! $field['faker'] !!},
-        @endforeach
+@foreach ($fields as $field)
+        "{{ $field['name'] }}" => $faker->{!! $field['faker'] !!},
+@endforeach
     ];
 });

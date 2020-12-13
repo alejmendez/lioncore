@@ -10,19 +10,10 @@
       <form @submit.prevent="handleSubmit(save)">
         <vx-card>
           <vs-row>
-            @foreach ($fields as $field)<vs-col class="px-2" vs-w="6">
-              <ValidationProvider class="w-full" name="{{ $nameModel }}.{{ $field['name'] }}" rules="{{ $field['validations'] }}" v-slot="{ errors, invalid, validated }">
-                <vs-{{ $field['htmlType'] }}
-                  class="w-full mt-4"
-                  v-model="data.{{ $field['name'] }}"
-                  :danger="invalid && validated"
-                  :label="$t('{{ $nameModel }}.{{ $field['name'] }}')"
-                />
-                <span class="text-danger text-sm">@{{ errors[0] }}</span>
-              </ValidationProvider>
-            </vs-col>
-            @endforeach
-          </vs-row>
+           @foreach ($fields as $field)
+@if($field['htmlType'] === 'select')<x-select :nameModel="$nameModel" :field="$field"></x-select>@else<x-input :nameModel="$nameModel" :field="$field"></x-input>@endif
+          @endforeach
+</vs-row>
           <!-- Save & Reset Button -->
           <vs-row>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="p-4 sm:p-2">
@@ -62,14 +53,19 @@
 
 <script>
 import module{{ ucfirst($nameModel) }}Management from '@/store/{{ $nameModel }}/module{{ ucfirst($nameModel) }}Management.js'
+import vSelect from 'vue-select'
 
 export default {
+  components: {
+    vSelect
+  },
   data () {
     return {
       data: {
         id: '',
-        @foreach ($fields as $field){{ $field['name'] }}: '',
-        @endforeach
+@foreach ($fields as $field)
+        {{ $field['name'] }}: ''{{ $loop->last ? '' : ',' }}
+@endforeach
       },
       data_original: {},
       not_found: false
@@ -91,7 +87,7 @@ export default {
       this.data.id = id
       this.$store.dispatch('{{ $nameModel }}Management/fetch', id)
         .then(res => {
-            this.loaded()
+          this.loaded()
           this.data = res.data.data
         })
         .catch(err => {
@@ -152,7 +148,7 @@ export default {
     this.getModuleData()
 
     if (this.$route.params.id) {
-      this.fetchData(this.$route.params.id)
+      this.fetch(this.$route.params.id)
     }
   }
 }

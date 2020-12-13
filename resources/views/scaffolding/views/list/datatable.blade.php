@@ -11,9 +11,9 @@
     <template slot-scope="{data}">
       <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-          @foreach ($fields as $field)
+@foreach ($fields as $field)
           <vs-td style="width:{{ floor(100 / count($fields)) }} %">{{ '{{ tr.' }}{{ $field['name'] }} <?php echo ' }}' ?></vs-td>
-          @endforeach
+@endforeach
           <vs-td class="whitespace-no-wrap" style="width:90px">
             <feather-icon
               icon="EditIcon"

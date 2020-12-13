@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use Illuminate\Support\Facades\Blade;
+use App\View\Components\InputComponent;
+use App\View\Components\SelectComponent;
+
 use App\Models\Person;
 use App\Repositories\PersonRepository;
 use App\Repositories\Eloquent\EloquentPersonRepository;
@@ -56,6 +60,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::component('select', SelectComponent::class);
+        Blade::component('input', InputComponent::class);
     }
 }

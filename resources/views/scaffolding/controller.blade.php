@@ -22,7 +22,7 @@ class {{ ucwords($nameModel) }}Controller extends BaseController
 
     public function index()
     {
-        $query = {{ ucwords($nameModel) }}::select({!! $fieldsInList !!});
+        $query = {{ ucwords($nameModel) }}::select('id', {!! $fieldsInList !!});
         return DataTables::of($query)->make(true);
     }
 

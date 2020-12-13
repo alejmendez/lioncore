@@ -8,8 +8,8 @@ class {{ ucwords($nameModel) }} extends ModelBase
     use SoftDeletes;
 
     protected $fillable = [
-        @foreach ($fillable as $field)
-{!! $field !!},
-        @endforeach
+@foreach ($fillable as $field)
+        {!! $field !!},
+@endforeach
     ];
 }

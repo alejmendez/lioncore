@@ -69,7 +69,7 @@ class Translation extends Generator
     protected function addTrans($key, $value)
     {
         $value = $this->traslate($value);
-        $this->jsonTrans[$key] = $value;
+        $this->jsonTrans[$key] = ucfirst($value);
     }
 
     protected function traslate($text)
