@@ -189,7 +189,6 @@ export default {
         return userPermissions.includes(item.permission)
       })
 
-      console.log(cloneMenu)
       return cloneMenu
     },
     isVerticalNavMenuActive: {

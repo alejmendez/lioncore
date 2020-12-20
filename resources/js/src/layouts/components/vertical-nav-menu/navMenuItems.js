@@ -34,6 +34,22 @@ export default [
     icon: 'HomeIcon',
     i18n: 'menu.home'
   },
+  {
+    url: '/property/',
+    name: 'Property',
+    icon: 'ListIcon',
+    slug: 'property',
+    i18n: 'menu.property',
+    permission: 'property list'
+  },
+  {
+    url: '/chat/',
+    name: 'Chat',
+    icon: 'MessageSquareIcon',
+    slug: 'chat',
+    i18n: 'menu.chat',
+    permission: 'chat view'
+  },
   // section menu
   {
     header: 'Admin',

@@ -46,7 +46,7 @@
 export default {
   data () {
     return {
-      email: 'claret.espejo@gmail.com',
+      email: 'alejmendez.87@gmail.com',
       password: 'cq43351la',
       checkbox_remember_me: false
     }
