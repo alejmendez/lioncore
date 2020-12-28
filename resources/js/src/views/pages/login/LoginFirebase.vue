@@ -26,7 +26,7 @@
     <span class="text-danger text-sm">{{ errors.first('password') }}</span>
 
     <div class="flex flex-wrap justify-between my-5">
-        <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
+        <vs-checkbox v-model="remember_me" class="mb-3">Remember Me</vs-checkbox>
         <router-link to="/pages/forgot-password">Forgot Password?</router-link>
     </div>
     <vs-button  type="border" @click="registerUser">Register</vs-button>
@@ -65,7 +65,7 @@ export default {
     return {
       email: 'demo@demo.com',
       password: 'demodemo',
-      checkbox_remember_me: false
+      remember_me: false
     }
   },
   computed: {
@@ -98,7 +98,7 @@ export default {
       this.$vs.loading()
 
       const payload = {
-        checkbox_remember_me: this.checkbox_remember_me,
+        remember_me: this.remember_me,
         userDetails: {
           email: this.email,
           password: this.password

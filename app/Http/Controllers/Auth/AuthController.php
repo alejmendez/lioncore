@@ -33,18 +33,18 @@ class AuthController extends BaseController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register()
     {
         try {
-            $user = $this->userRepository->create([
-                'email'    => $request->email,
-                'password' => $request->password,
-                'name'     => $request->name,
-            ]);
+            $this->userRepository->create(
+                request([
+                    'email',
+                    'password',
+                    'name'
+                ])
+            );
 
-            $token = auth()->login($user);
-
-            return $this->respondWithToken($token, 201);
+            return $this->login();
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json([
                 'error' => __('Error al intentar crear Usuario')
@@ -64,9 +64,9 @@ class AuthController extends BaseController
     public function login()
     {
         $credentials = request(['email', 'password']);
-        $jwt_token = null;
+        $jwt_token = JWTAuth::attempt($credentials);
 
-        if (!$jwt_token = JWTAuth::attempt($credentials)) {
+        if (!$jwt_token) {
             return response()->json([
                 'error' => 'Unauthorized',
                 'message' => __('Correo o contraseña no válidos.')
@@ -74,20 +74,6 @@ class AuthController extends BaseController
         }
 
         return $this->respondWithToken($jwt_token, 201);
-    }
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function user()
-    {
-        $user = User::find(auth()->user()->id);
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $user
-        ]);
     }
 
     public function payload()
@@ -135,7 +121,7 @@ class AuthController extends BaseController
 
     public function currentUser()
     {
-        $user = User::with('Person')->find(auth()->user()->id);
+        $user = auth()->user();
 
         return response()->json([
             'status' => 'success',
@@ -151,7 +137,7 @@ class AuthController extends BaseController
      */
     protected function respondWithToken($token, $code = 200)
     {
-        $user = User::with('Person')->find(auth()->user()->id);
+        $user = auth()->user();
 
         return response([
             'status' => 'success',

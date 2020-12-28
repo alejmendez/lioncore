@@ -15,6 +15,7 @@ class GenerateGrud extends Command
         {--m|model}
         {--o|formrequest}
         {--c|controller}
+        {--s|repository}
         {--p|permissions}
         {--w|view}
         {--r|route}

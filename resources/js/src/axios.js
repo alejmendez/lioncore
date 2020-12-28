@@ -1,7 +1,7 @@
 // axios
 import axios from 'axios'
 
-const baseURL = 'http://127.0.0.1:8000/api/v1/'
+const baseURL = 'http://lioncore.oo/api/v1/'
 
 const axiosReturn = axios.create({
   baseURL

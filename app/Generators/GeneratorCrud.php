@@ -73,6 +73,7 @@ class GeneratorCrud implements Generator
             $this->generateModel($json);
             $this->generateFormRequest($json);
             $this->generateController($json);
+            $this->generateRepository($json);
             $this->generatePermissions($json);
             $this->generateViewVue($json);
             $this->generateRoute($json);
@@ -162,6 +163,14 @@ class GeneratorCrud implements Generator
         if (!$this->getOption('controller')) return;
         $this->info(__('Generating Controller'));
         $generator = new Controller($json);
+        $generator->generate();
+    }
+
+    protected function generateRepository($json)
+    {
+        if (!$this->getOption('repository')) return;
+        $this->info(__('Generating Repository'));
+        $generator = new Repository($json);
         $generator->generate();
     }
 

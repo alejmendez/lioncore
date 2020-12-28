@@ -71,7 +71,7 @@ export default {
     },
     resetColFilters () {
       // Reset Filter Options
-      this.roleFilter = this.statusFilter = { label: 'All', value: '' }
+      this.roleFilter = this.statusFilter = { label: this.$t('common.all'), value: '' }
       this.$refs.filterCard.removeRefreshAnimation()
     }
   },

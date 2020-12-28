@@ -42,6 +42,7 @@
     "Generating Model": "Generando Modelo",
     "Generating FormRequest": "Generando FormRequest",
     "Generating Controller": "Generando Controlador",
+    "Generating Repository": "Generando Repositorio",
     "Generating Permissions": "Generando Permisos",
     "Generating View": "Generando Vistas",
     "Generating Routes": "Generando Rutas",
@@ -107,31 +108,5 @@
         "_singular": "papel",
         "_plural": "roles",
         "Name": "Nombre"
-    },
-    "alumno": {
-        "_singular": "Alumno",
-        "_plural": "Alumnos",
-        "firstName": "Nombre de pila",
-        "lastname": "Apellido",
-        "phone": "Tel\u00e9fono",
-        "email": "Correo electr\u00f3nico",
-        "specialty": "Especialidad",
-        "semester": "Semestre"
-    },
-    "registro": {
-        "_singular": "registro",
-        "_plural": "registros",
-        "title": "t\u00edtulo",
-        "tutor": "tutor",
-        "consultancies": "consultor\u00edas",
-        "documentation": "documentaci\u00f3n",
-        "assignedDate": "fecha asignada",
-        "presentation": "presentaci\u00f3n",
-        "finalTome": "finalTome"
-    },
-    "grafica": {
-        "_singular": "gr\u00e1ficos",
-        "_plural": "graficas",
-        "title": "t\u00edtulo"
     }
 }

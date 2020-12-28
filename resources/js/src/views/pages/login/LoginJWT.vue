@@ -30,7 +30,7 @@
         </ValidationProvider>
 
         <div class="flex flex-wrap justify-between my-5">
-          <vs-checkbox v-model="checkbox_remember_me" class="mb-3">{{ $t('login.remember_me') }}</vs-checkbox>
+          <vs-checkbox v-model="remember_me" class="mb-3">{{ $t('login.remember_me') }}</vs-checkbox>
           <router-link to="/pages/forgot-password">{{ $t('login.forgot_password') }}</router-link>
         </div>
         <div class="flex flex-wrap justify-between mb-3">
@@ -48,7 +48,7 @@ export default {
     return {
       email: 'alejmendez.87@gmail.com',
       password: 'cq43351la',
-      checkbox_remember_me: false
+      remember_me: false
     }
   },
   computed: {
@@ -81,7 +81,7 @@ export default {
       this.$vs.loading()
 
       const payload = {
-        checkbox_remember_me: this.checkbox_remember_me,
+        remember_me: this.remember_me,
         userDetails: {
           email: this.email,
           password: this.password
