@@ -32,8 +32,8 @@ php artisan module:migrate --seed
 Para cambiar la dirección del puerto, ejecute el siguiente comando:
 
 ```text
-php artisan serve --port=8080    // Para el puerto 8080
-sudo php artisan serve --port=80 // Si desea ejecutarlo en el puerto 80, probablemente necesite sudo.
+php artisan serve --host=lioncore.oo --port=8080    // Para el puerto 8080
+sudo php artisan serve --host=lioncore.oo --port=80 // Si desea ejecutarlo en el puerto 80, probablemente necesite sudo.
 ```
 
 Para ejecutar el proyecto, debe ejecutar el siguiente comando en el directorio del proyecto. Compilará los archivos vue y todos los demás archivos del proyecto. Si está realizando cambios en alguno de los archivos .vue, debe ejecutar el comando dado nuevamente.
