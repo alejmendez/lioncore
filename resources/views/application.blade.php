@@ -10,11 +10,6 @@
 
     <title>Lioncore</title>
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ mix('css/main.css') }}" />
-    <link rel="stylesheet" href="{{ mix('css/iconfont.css') }}" />
-    <link rel="stylesheet" href="{{ mix('css/material-icons/material-icons.css') }}" />
-    <link rel="stylesheet" href="{{ mix('css/vuesax.css') }}" />
-    <link rel="stylesheet" href="{{ mix('css/prism-tomorrow.css') }}" />
     <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
 
     <!-- Favicon -->
