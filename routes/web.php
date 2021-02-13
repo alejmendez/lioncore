@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,9 +13,6 @@
 |
 */
 
-Route::group([
-    'middleware' => 'web',
-    //'domain' => '{tenant}.lioncore.oo'
-], function () {
-    Route::get('/{any?}', 'ApplicationController')->where('any', '^(?!api\/)[\/\w\.-]*');
+Route::get('/', function () {
+    return view('welcome');
 });
