@@ -31,4 +31,11 @@ class Person extends ModelBase
         'observation',
         'blood_type',
     ];
+
+    public function setEmailAttribute($email)
+    {
+        if (!empty($email)) {
+            $this->attributes['email'] = strtolower($email);
+        }
+    }
 }

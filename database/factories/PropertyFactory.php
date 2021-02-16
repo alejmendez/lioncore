@@ -1,11 +1,24 @@
 <?php
+
+namespace Database\Factories;
+
 use App\Models\Property;
-use Faker\Generator as Faker;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-$factory->define(Property::class, function (Faker $faker) {
-    return [
-        'name'  => $faker->unique()->word,
-        'value' => $faker->unique()->word,
-    ];
-});
+class PropertyFactory extends Factory
+{
+    protected $model = Property::class;
+
+    public function definition()
+    {
+        $property = $this->faker->unique()->word;
+        $slug = Str::slug($property, '-');
+
+        return [
+            'name'  => $slug,
+            'value' => $property,
+        ];
+    }
+}

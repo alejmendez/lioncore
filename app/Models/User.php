@@ -26,7 +26,7 @@ class User extends Authenticatable implements JWTSubject, Auditable
     {
         parent::boot();
 
-        static::creating(function($model){
+        static::creating(function ($model) {
             $model->{$model->getKeyName()} = (string) Str::uuid();
         });
     }
@@ -75,9 +75,11 @@ class User extends Authenticatable implements JWTSubject, Auditable
         }
     }
 
-    public function person()
+    public function setEmailAttribute($email)
     {
-        return $this->belongsTo('App\Models\Person');
+        if (!empty($email)) {
+            $this->attributes['email'] = strtolower($email);
+        }
     }
 
     public function getFullNameAttribute()
@@ -137,6 +139,9 @@ class User extends Authenticatable implements JWTSubject, Auditable
             'foo' => 'bar',
         ];
     }
+
+    public function person()
+    {
+        return $this->belongsTo('App\Models\Person');
+    }
 }
-
-
