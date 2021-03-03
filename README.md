@@ -3,17 +3,10 @@
 
 ## Sobre Lioncore
 
-Es una aplicación de uso general basada en laravel y vuejs.
+Es una aplicación de uso general basada en laravel.
 
 ## Instalación
-Se debe deber vue cli instalado: 
-```
-npm install -g @vue/cli
-```
-Instalación de dependencias npm.
-```
-npm install
-```
+
 Instalación de dependencias php.
 ```
 composer update
@@ -29,27 +22,14 @@ php artisan jwt:secret
 php artisan module:migrate --seed
 ```
 
+Para la migracion en un ambiente de prueba se ejecuta lo siguiente (se debe tener un archivo .env.testing en la raiz del proyecto)
+```
+php artisan migrate:migrate --seed --env=testing
+```
+
 Para cambiar la dirección del puerto, ejecute el siguiente comando:
 
 ```text
 php artisan serve --host=lioncore.oo --port=8080    // Para el puerto 8080
 sudo php artisan serve --host=lioncore.oo --port=80 // Si desea ejecutarlo en el puerto 80, probablemente necesite sudo.
-```
-
-Para ejecutar el proyecto, debe ejecutar el siguiente comando en el directorio del proyecto. Compilará los archivos vue y todos los demás archivos del proyecto. Si está realizando cambios en alguno de los archivos .vue, debe ejecutar el comando dado nuevamente.
-
-```text
-npm run dev
-```
-**Esperando cambios:**  Ejecutar `npm run dev` cada vez que realiza cambios en el archivo es ineficiente. Esperemos que haya un comando para que sus cambios se puedan ver y reflejarse en consecuencia.
-
-```text
-npm run watch
-```
-
-
-**La construcción para Producción:**  Si desea ejecutar el proyecto y realizar la compilación en el modo de producción, ejecute el siguiente comando en el directorio raíz; de lo contrario, el proyecto continuará ejecutándose en el modo de desarrollo.
-
-```text
-npm run prod
 ```

@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,7 +22,7 @@ class UserSeeder extends Seeder
 
         User::truncate();
 
-        $person = factory(Person::class)->create();
+        $person = Person::factory()->create();
         $person->fill([
             'dni' => '19',
             'first_name' => 'Administrador',
@@ -42,7 +44,7 @@ class UserSeeder extends Seeder
         $roleAdmin = Role::findByName('admin');
         $user->assignRole($roleAdmin);
 
-        $person = factory(Person::class)->create();
+        $person = Person::factory()->create();
         $person->fill([
             'dni' => '266046677',
             'first_name' => 'Alejandro',
@@ -60,7 +62,6 @@ class UserSeeder extends Seeder
             'status' => 'active',
         ]);
         $user->assignRole($roleAdmin);
-
-        factory(User::class, 3)->create();
+        User::factory(3)->create();
     }
 }

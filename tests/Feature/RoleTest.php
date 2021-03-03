@@ -11,7 +11,7 @@ class RoleTest extends TestCase
         $faker = \Faker\Factory::create();
         return [
             'Name' => $faker->unique()->safeEmail,
-                    ];
+        ];
     }
 
     /**
@@ -37,7 +37,7 @@ class RoleTest extends TestCase
      */
     public function test_can_update_role()
     {
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
 
         $data = $this->generateData();
 
@@ -56,7 +56,7 @@ class RoleTest extends TestCase
      */
     public function test_can_show_role()
     {
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
 
         $this->json('GET', route('roles.show', $role->id))
             ->assertStatus(200);
@@ -68,7 +68,7 @@ class RoleTest extends TestCase
      */
     public function test_can_delete_role()
     {
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
 
         $this->json('DELETE', route('roles.destroy', $role->id))
             ->assertStatus(200);
@@ -80,7 +80,7 @@ class RoleTest extends TestCase
      */
     public function test_can_list_roles()
     {
-        $roles = factory(Role::class, 2)->create()->map(function ($role) {
+        $roles = Role::factory(2)->create()->map(function ($role) {
             return $role->only(['Name']);
         });
 

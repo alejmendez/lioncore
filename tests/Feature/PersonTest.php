@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Tests\Feature;
 
 use App\Models\Person;
+use App\Models\User;
 use Tests\TestCase;
 
 class PersonTest extends TestCase
@@ -15,10 +17,10 @@ class PersonTest extends TestCase
             'last_name' => $faker->lastName,
             'company' => $faker->company,
             'avatar' => $faker->imageUrl(500, 500, 'people', true, 'Faker'),
-            'birthdate' => $faker->date('Y-m-d', '-18 years') ,
+            'birthdate' => $faker->date('Y-m-d', '-18 years'),
             'room_telephone' => $faker->phoneNumber,
             'mobile_phone' => $faker->phoneNumber,
-            'website' => $faker->internet->url,
+            'website' => '',
             'languages' => $faker->randomElement(['english', 'spanish', 'french', 'russian', 'german', 'arabic', 'sanskrit']),
             'email' => $faker->unique()->safeEmail,
             'nationality' => $faker->randomElement(['C', 'E']),
@@ -44,8 +46,9 @@ class PersonTest extends TestCase
     public function test_can_create_person()
     {
         $data = $this->generateData();
+        $response = $this->json('POST', route('person.store'), $data);
 
-        $this->json('POST', route('persons.store'), $data)
+        $response
             ->assertStatus(201)
             ->assertJson([
                 'code' => 201,
@@ -60,11 +63,11 @@ class PersonTest extends TestCase
      */
     public function test_can_update_person()
     {
-        $person = factory(Person::class)->create();
+        $person = Person::factory()->create();
 
         $data = $this->generateData();
 
-        $this->json('PUT', route('persons.update', $person->id), $data)
+        $this->json('PUT', route('person.update', $person->id), $data)
             ->assertStatus(200)
             ->assertJson([
                 'code' => 200,
@@ -79,9 +82,9 @@ class PersonTest extends TestCase
      */
     public function test_can_show_person()
     {
-        $person = factory(Person::class)->create();
+        $person = Person::factory()->create();
 
-        $this->json('GET', route('persons.show', $person->id))
+        $this->json('GET', route('person.show', $person->id))
             ->assertStatus(200);
     }
 
@@ -91,9 +94,9 @@ class PersonTest extends TestCase
      */
     public function test_can_delete_person()
     {
-        $person = factory(Person::class)->create();
+        $person = Person::factory()->create();
 
-        $this->json('DELETE', route('persons.destroy', $person->id))
+        $this->json('DELETE', route('person.destroy', $person->id))
             ->assertStatus(200);
     }
 
@@ -101,13 +104,13 @@ class PersonTest extends TestCase
      * @group  person
      * @test
      */
-    public function test_can_list_persons()
+    public function test_can_list_person()
     {
-        $persons = factory(Person::class, 2)->create()->map(function ($person) {
+        $person = Person::factory(2)->create()->map(function ($person) {
             return $person->only(['dni', 'first_name', 'last_name']);
         });
 
-        $this->json('GET', route('persons.index') . '?page=1&rowsPerPage=5')
+        $this->json('GET', route('person.index') . '?page=1&rowsPerPage=5')
             ->assertStatus(200)
             ->assertJsonStructure([
                 'draw',

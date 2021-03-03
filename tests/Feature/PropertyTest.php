@@ -23,7 +23,7 @@ class PropertyTest extends TestCase
     {
         $data = $this->generateData();
 
-        $this->json('POST', route('propertys.store'), $data)
+        $this->json('POST', route('properties.store'), $data)
             ->assertStatus(201)
             ->assertJson([
                 'code' => 201,
@@ -38,11 +38,11 @@ class PropertyTest extends TestCase
      */
     public function test_can_update_property()
     {
-        $property = factory(Property::class)->create();
+        $property = Property::factory()->create();
 
         $data = $this->generateData();
 
-        $this->json('PUT', route('propertys.update', $property->id), $data)
+        $this->json('PUT', route('properties.update', $property->id), $data)
             ->assertStatus(200)
             ->assertJson([
                 'code' => 200,
@@ -57,9 +57,9 @@ class PropertyTest extends TestCase
      */
     public function test_can_show_property()
     {
-        $property = factory(Property::class)->create();
+        $property = Property::factory()->create();
 
-        $this->json('GET', route('propertys.show', $property->id))
+        $this->json('GET', route('properties.show', $property->id))
             ->assertStatus(200);
     }
 
@@ -69,9 +69,9 @@ class PropertyTest extends TestCase
      */
     public function test_can_delete_property()
     {
-        $property = factory(Property::class)->create();
+        $property = Property::factory()->create();
 
-        $this->json('DELETE', route('propertys.destroy', $property->id))
+        $this->json('DELETE', route('properties.destroy', $property->id))
             ->assertStatus(200);
     }
 
@@ -79,13 +79,13 @@ class PropertyTest extends TestCase
      * @group  property
      * @test
      */
-    public function test_can_list_propertys()
+    public function test_can_list_properties()
     {
-        $propertys = factory(Property::class, 2)->create()->map(function ($property) {
+        $properties = Property::factory(2)->create()->map(function ($property) {
             return $property->only(['name', 'value']);
         });
 
-        $this->json('GET', route('propertys.index') . '?page=1&rowsPerPage=5')
+        $this->json('GET', route('properties.index') . '?page=1&rowsPerPage=5')
             ->assertStatus(200)
             ->assertJsonStructure([
                 'draw',

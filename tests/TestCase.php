@@ -3,10 +3,24 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Foundation\Testing\WithFaker;
+
+use App\Models\User;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use WithFaker, CreatesApplication;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $userAdmin = User::whereEmail('admin@test.cl')->first();
+        // $this->actingAs($userAdmin);
+        $token = JWTAuth::fromUser($userAdmin);
+        $this->withHeader('Authorization', 'Bearer ' . $token);
+    }
+
 
     /**
      * Call protected/private method of a class.
@@ -24,5 +38,21 @@ abstract class TestCase extends BaseTestCase
         $method->setAccessible(true);
 
         return $method->invokeArgs($object, $parameters);
+    }
+
+    /**
+     * Set the currently logged in user for the application.
+     *
+     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param  string|null                                $driver
+     * @return $this
+     */
+    public function actingAs($user, $driver = null)
+    {
+        $token = JWTAuth::fromUser($user);
+        $this->withHeader('Authorization', "Bearer {$token}");
+        parent::actingAs($user);
+
+        return $this;
     }
 }

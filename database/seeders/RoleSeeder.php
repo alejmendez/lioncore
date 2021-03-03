@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Permission;
@@ -18,7 +20,9 @@ class RoleSeeder extends Seeder
 
         app()['cache']->forget('spatie.permission.cache');
         $permissions = [];
+
         $modules = [
+            'person',
             'user',
             'role',
             'property',

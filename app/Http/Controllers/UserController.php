@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 // Control Base
@@ -39,7 +40,7 @@ class UserController extends BaseController
 
     public function filters()
     {
-        $rolesOptions = Role::all()->map(function($role) {
+        $rolesOptions = Role::all()->map(function ($role) {
             return [
                 'value' => $role->name,
                 'label' => $role->name
@@ -64,7 +65,7 @@ class UserController extends BaseController
 
     public function moduleData()
     {
-        $rolesOptions = Role::all()->map(function($role) {
+        $rolesOptions = Role::all()->map(function ($role) {
             return [
                 'value' => $role->name,
                 'label' => $role->name
@@ -85,27 +86,41 @@ class UserController extends BaseController
 
     public function store(UserRequest $request)
     {
-        $data = $request->all();
-        $data['languages'] = implode(',', $data['languages']);
-        $data['gender'] = implode(',', $data['gender']);
-        $data['contact_options'] = implode(',', $data['contact_options']);
+        $data = $this->getDataFromRequest($request);
 
         $person = Person::create($data);
         $data['person_id'] = $person->id;
+
         $user = User::create($data);
 
         $role = Role::findByName($data['role']);
         $user->assignRole($role);
+        return $this->createdResponse($user);
+    }
 
-        $instance = User::create($request->all());
-        return $this->createdResponse($instance);
+    public function getDataFromRequest(UserRequest $request)
+    {
+        $data = $request->all();
+
+        $languages = $data['languages'] ?? [];
+        if (!is_array($languages)) {
+            $languages = [$languages];
+        }
+
+        $contact_options = $data['contact_options'] ?? [];
+        if (!is_array($contact_options)) {
+            $contact_options = [$contact_options];
+        }
+
+        $data['languages'] = implode(',', $languages);
+        // $data['gender'] = implode(',', $data['gender'] ?? []);
+        $data['contact_options'] = implode(',', $contact_options);
+        return $data;
     }
 
     public function update(UserRequest $request, $id)
     {
-        $data = $request->all();
-        $data['languages'] = implode(',', $data['languages']);
-        $data['contact_options'] = implode(',', $data['contact_options']);
+        $data = $this->getDataFromRequest($request);
 
         $user = User::findOrFail($id);
         $user->fill($data);

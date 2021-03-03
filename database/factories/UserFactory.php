@@ -24,7 +24,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $person = Person::factory(1)->create();
+        $person = Person::factory()->create();
 
         $email = $person->email;
         $username = explode('@', $email);

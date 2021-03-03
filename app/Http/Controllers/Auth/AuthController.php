@@ -2,20 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-use App\Models\User;
 use App\Http\Controllers\BaseController;
 use App\Repositories\UserRepository;
 
-/**
- * Controlador el flujo de autenticacion del sistema en base a JWT
- *
- * @author Alejandro Méndez <almendez@gmail.cl>
- * @category Controller
- */
 class AuthController extends BaseController
 {
     protected $userRepository;
