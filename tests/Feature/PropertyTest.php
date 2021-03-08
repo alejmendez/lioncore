@@ -81,7 +81,7 @@ class PropertyTest extends TestCase
      */
     public function test_can_list_properties()
     {
-        $properties = Property::factory(2)->create()->map(function ($property) {
+        Property::factory(2)->create()->map(function ($property) {
             return $property->only(['name', 'value']);
         });
 

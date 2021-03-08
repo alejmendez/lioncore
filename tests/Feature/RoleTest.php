@@ -80,7 +80,7 @@ class RoleTest extends TestCase
      */
     public function test_can_list_roles()
     {
-        $roles = Role::factory(2)->create()->map(function ($role) {
+        Role::factory(2)->create()->map(function ($role) {
             return $role->only(['Name']);
         });
 

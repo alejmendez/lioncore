@@ -54,6 +54,91 @@ class UserTest extends TestCase
         ];
     }
 
+    protected function processData($data)
+    {
+        /*
+        'id',
+        'displayName',
+        'about',
+        'photoURL',
+        'userRole',
+        'userPermissions',
+        'username',
+        'status',
+        'person_id',
+        'dni',
+        'first_name',
+        'last_name',
+        'full_name',
+        'company',
+        'avatar',
+        'birthdate',
+        'room_telephone',
+        'mobile_phone',
+        'website',
+        'languages',
+        'email',
+        'nationality',
+        'gender',
+        'civil_status',
+        'contact_options',
+        'address',
+        'address2',
+        'postcode',
+        'city',
+        'state',
+        'country',
+        'number_children',
+        'observation',
+        'blood_type'
+        */
+        $data['email'] = strtolower($data['email']);
+        $data['dni'] = (string) $data['dni'];
+        $data['languages'] = [$data['languages']];
+        $data['contact_options'] = [$data['contact_options']];
+        unset($data['password']);
+        unset($data['verification_token']);
+        return $data;
+    }
+
+    protected function getListElementData()
+    {
+        return [
+            [
+                'email',
+                'dni',
+                'username',
+                'password',
+                'role',
+                'status',
+                'first_name',
+                'last_name',
+                'company',
+                'avatar',
+                'birthdate',
+                'room_telephone',
+                'mobile_phone',
+                'website',
+                'languages',
+                'nationality',
+                'gender',
+                'civil_status',
+                'contact_options',
+                'address',
+                'address2',
+                'postcode',
+                'city',
+                'state',
+                'country',
+                'number_children',
+                'observation',
+                'blood_type',
+                'updated_at',
+                'created_at'
+            ]
+        ];
+    }
+
     /**
      * @group  user
      * @test
@@ -68,9 +153,7 @@ class UserTest extends TestCase
             ->assertJson([
                 'code' => 201,
                 'status' => 'success',
-                'data' => [
-                    'email' => strtolower($data['email'])
-                ]
+                'data' => $this->processData($data)
             ]);
     }
 
@@ -90,9 +173,7 @@ class UserTest extends TestCase
             ->assertJson([
                 'code' => 200,
                 'status' => 'success',
-                'data' => [
-                    'email' => strtolower($data['email'])
-                ]
+                'data' => $this->processData($data)
             ]);
     }
 
@@ -128,22 +209,17 @@ class UserTest extends TestCase
      */
     public function test_can_list_users()
     {
-        User::factory(2)->create()->map(function ($user) {
-            return $user->only(['email']);
-        });
+        User::factory(2)->create();
 
         $response = $this->json('GET', route('users.index') . '?page=1&rowsPerPage=5');
+        dd($response);
         $response
             ->assertStatus(200)
             ->assertJsonStructure([
                 'draw',
                 'recordsTotal',
                 'recordsFiltered',
-                'data' => [
-                    [
-                        'email'
-                    ]
-                ],
+                'data' => $this->getListElementData(),
             ]);
     }
 }

@@ -82,6 +82,13 @@ class User extends Authenticatable implements JWTSubject, Auditable
         }
     }
 
+    public function setUsernameAttribute($username)
+    {
+        if (!empty($username)) {
+            $this->attributes['username'] = strtolower($username);
+        }
+    }
+
     public function getFullNameAttribute()
     {
         return "{$this->person->first_name} {$this->person->last_name}";
@@ -95,12 +102,11 @@ class User extends Authenticatable implements JWTSubject, Auditable
         });
         return [
             'id'              => $this->id,
-            'uid'             => $this->id,
             'displayName'     => $this->getFullNameAttribute(),
             'about'           => $this->person->about,
             'photoURL'        => $this->person->avatar,
-            'userRole'        => $role->name,
-            'userPermissions' => $permissions,
+            'role'            => $role->name,
+            'permissions'     => $permissions,
             'username'        => $this->username,
             'status'          => $this->status,
             'person_id'       => $this->person->id,

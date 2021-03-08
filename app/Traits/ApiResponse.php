@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 trait ApiResponse
 {
@@ -42,7 +43,7 @@ trait ApiResponse
      * @param type $data
      * @return type
      */
-    protected function listResponse($data)
+    protected function listResponse(Collection $data)
     {
         $response = [
             'code'      => 200,

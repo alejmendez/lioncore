@@ -95,7 +95,7 @@ class UserController extends BaseController
 
         $role = Role::findByName($data['role']);
         $user->assignRole($role);
-        return $this->createdResponse($user);
+        return $this->createdResponse($user->getAllInformation());
     }
 
     public function getDataFromRequest(UserRequest $request)
@@ -133,7 +133,7 @@ class UserController extends BaseController
         $person->fill($data);
         $person->save();
 
-        return $this->showResponse($user);
+        return $this->showResponse($user->getAllInformation());
     }
 
     public function destroy($id)
