@@ -24,27 +24,6 @@ class ModelCrud
         $this->setName($nameModel);
     }
 
-    public static function getAllModelsFiles()
-    {
-        $filesList = [];
-        $pathCrudDef = config('workshop.pathCrudDef');
-        $pathCrud = app_path($pathCrudDef);
-        if (!File::exists($pathCrud)) {
-            return $filesList;
-        }
-
-        $files = File::allFiles($pathCrud);
-        foreach ($files as $file) {
-            if (!preg_match('/.json$/i', $file->getBasename())) {
-                continue;
-            }
-            $model = new ModelCrud($file);
-            $filesList[$model->getName()] = $model;
-        }
-
-        return $filesList;
-    }
-
     public function getFile()
     {
         return $this->file;

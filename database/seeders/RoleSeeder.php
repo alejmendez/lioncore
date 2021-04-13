@@ -20,30 +20,21 @@ class RoleSeeder extends Seeder
 
         app()['cache']->forget('spatie.permission.cache');
         $permissions = [];
+        $permissionInstance = new Permission();
 
-        $modules = [
-            'person',
-            'user',
-            'role',
-            'property',
-        ];
+        $modules = $permissionInstance->modules;
+        $modulesPermission = $permissionInstance->modulesPermission;
+        $permissionsExtra = $permissionInstance->permissionsExtra;
 
         foreach ($modules as $module) {
-            $permissions[] = $module . ' list';
-            $permissions[] = $module . ' show';
-            $permissions[] = $module . ' store';
-            $permissions[] = $module . ' update';
-            $permissions[] = $module . ' destroy';
-            $permissions[] = $module . ' module-data';
-            $permissions[] = $module . ' filters';
+            foreach ($modulesPermission as $permission) {
+                $permissions[] = $module . ' ' . $permission;
+            }
         }
 
-        $permissionsExtra = [];
         foreach ($permissionsExtra as $permission) {
             $permissions[] = $permission;
         }
-
-        $permissions[] = 'chat view';
 
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);

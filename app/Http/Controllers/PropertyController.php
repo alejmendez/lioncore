@@ -14,8 +14,6 @@ use App\Http\Requests\PropertyRequest;
 // Modelos
 use App\Models\Property;
 
-use DataTables;
-
 class PropertyController extends BaseController
 {
     use ApiResponse;
@@ -23,7 +21,7 @@ class PropertyController extends BaseController
     public function index()
     {
         $query = Property::select('id', 'name', 'value');
-        return DataTables::of($query)
+        return datatables()->of($query)
             ->rawColumns(['value'])
             ->make(true);
     }

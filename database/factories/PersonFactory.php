@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Person;
-
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+
+use App\Models\Person;
 
 class PersonFactory extends Factory
 {
@@ -14,7 +15,7 @@ class PersonFactory extends Factory
     {
         $firstName = $this->faker->firstName;
         $lastName = $this->faker->lastName;
-        $username = $firstName . '.' . $lastName . $this->faker->numberBetween(1, 99999);
+        $username = Str::slug($firstName) . '.' . Str::slug($lastName) . $this->faker->numberBetween(1, 99999);
         $email    = $username . '@gmail.com';
 
         return [

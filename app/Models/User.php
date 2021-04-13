@@ -96,17 +96,20 @@ class User extends Authenticatable implements JWTSubject, Auditable
 
     public function getAllInformation()
     {
-        $role = $this->roles->first();
-        $permissions = $role->getAllPermissions()->map(function ($permission) {
-            return $permission->name;
+        $roles = $this->roles->map(function($role) {
+            return $role->name;
         });
+        $roleList = '';
+        if ($roles) {
+            $roleList = $roles->implode(', ',);
+        }
         return [
             'id'              => $this->id,
             'displayName'     => $this->getFullNameAttribute(),
             'about'           => $this->person->about,
             'photoURL'        => $this->person->avatar,
-            'role'            => $role->name,
-            'permissions'     => $permissions,
+            'role'            => $roleList,
+            'permissions'     => $this->getAllPermissions(),
             'username'        => $this->username,
             'status'          => $this->status,
             'person_id'       => $this->person->id,

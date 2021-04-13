@@ -85,7 +85,25 @@ class GeneratorCrud implements Generator
 
     protected function getAllModelsFiles()
     {
-        return ModelCrud::getAllModelsFiles();
+        $filesList = [];
+        $pathCrudDef = config('workshop.pathCrudDef');
+        $pathCrud = base_path($pathCrudDef);
+        if (!File::exists($pathCrud)) {
+            return $filesList;
+        }
+
+        $files = File::allFiles($pathCrud);
+        $extModelsFile = config('workshop.extCrudDef');
+        $regexFile = '/.' . $extModelsFile . '$/i';
+        foreach ($files as $file) {
+            if (!preg_match($regexFile, $file->getBasename())) {
+                continue;
+            }
+            $model = new ModelCrud($file);
+            $filesList[$model->getName()] = $model;
+        }
+
+        return $filesList;
     }
 
     protected function getJsonContent($nameModel)

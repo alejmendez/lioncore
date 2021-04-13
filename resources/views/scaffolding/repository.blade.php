@@ -14,8 +14,6 @@ use App\Http\Requests\{{ ucwords($nameModel) }}Request;
 // Modelos
 use App\Models\{{ ucwords($nameModel) }};
 
-use DataTables;
-
 class {{ ucwords($nameModel) }}Controller extends BaseController
 {
     use ApiResponse;
@@ -23,7 +21,7 @@ class {{ ucwords($nameModel) }}Controller extends BaseController
     public function index()
     {
         $query = {{ ucwords($nameModel) }}::select('id', {!! $fieldsInList !!});
-        return DataTables::of($query)->make(true);
+        return datatables()->of($query)->make(true);
     }
 
     public function filters()

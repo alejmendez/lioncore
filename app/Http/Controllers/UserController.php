@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller as BaseController;
 use App\Traits\ApiResponse;
 
 // Request
-use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 
 // Modelos
@@ -19,23 +18,24 @@ use App\Models\Role;
 use App\Models\Property;
 use App\Http\Resources\User as UserResource;
 
-use DataTables;
-
 class UserController extends BaseController
 {
     use ApiResponse;
 
     public function index()
     {
-        $query = User::with('person');
-        return DataTables::of($query)->make(true);
+        $query = User::with('person', 'roles');
+        return datatables()->eloquent($query)
+            ->setTransformer(function($user){
+                return $user->getAllInformation();
+            })
+            ->make(true);
     }
 
     public function show($id)
     {
-        $instance = User::with('person', 'roles')->findOrFail($id);
-        $userResource = new UserResource($instance);
-        return $this->showResponse($userResource);
+        $user = User::with('person', 'roles')->findOrFail($id);
+        return $this->showResponse($user->getAllInformation());
     }
 
     public function filters()

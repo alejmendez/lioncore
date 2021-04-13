@@ -14,16 +14,14 @@ use App\Http\Requests\PersonRequest;
 // Modelos
 use App\Models\Person;
 
-use DataTables;
-
 class PersonController extends BaseController
 {
     use ApiResponse;
 
     public function index()
     {
-        $query = Person::select('dni', 'first_name', 'last_name');
-        return DataTables::of($query)->make(true);
+        $query = Person::query();
+        return datatables()->of($query)->make(true);
     }
 
     public function show($id)

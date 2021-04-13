@@ -8,14 +8,11 @@ use App\Http\Controllers\Controller as BaseController;
 use App\Traits\ApiResponse;
 
 // Request
-use Illuminate\Http\Request;
 use App\Http\Requests\RoleRequest;
 
 // Modelos
 use App\Models\Role;
 use App\Models\Permission;
-
-use DataTables;
 
 class RoleController extends BaseController
 {
@@ -24,7 +21,7 @@ class RoleController extends BaseController
     public function index()
     {
         $query = Role::select('id', 'name');
-        return DataTables::of($query)->make(true);
+        return datatables()->of($query)->make(true);
     }
 
     public function filters()

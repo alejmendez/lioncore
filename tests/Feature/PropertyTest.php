@@ -1,17 +1,30 @@
 <?php
 namespace App\Tests\Feature;
 
-use App\Models\Property;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+
 use Tests\TestCase;
+
+use App\Models\Property;
 
 class PropertyTest extends TestCase
 {
     protected function generateData()
     {
-        $faker = \Faker\Factory::create();
+        $property = $this->faker->unique()->word . $this->faker->numberBetween(1, 999999);
         return [
-            'name' => $faker->unique()->word,
-            'value' => $faker->unique()->word,
+            'name' => $property,
+            'value' => $property,
+        ];
+    }
+
+    protected function getListElementData()
+    {
+        return [
+            'id',
+            'name',
+            'value'
         ];
     }
 
@@ -22,13 +35,18 @@ class PropertyTest extends TestCase
     public function test_can_create_property()
     {
         $data = $this->generateData();
+        Log::debug('Data used for property creation: ');
+        Log::debug(json_encode($data));
 
-        $this->json('POST', route('properties.store'), $data)
+        $response = $this->json('POST', route('properties.store'), $data);
+        $response
             ->assertStatus(201)
             ->assertJson([
                 'code' => 201,
-                'status' => 'success',
-                'data' => $data
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
             ]);
     }
 
@@ -41,14 +59,26 @@ class PropertyTest extends TestCase
         $property = Property::factory()->create();
 
         $data = $this->generateData();
+        Log::debug('Property created');
+        Log::debug(json_encode($data));
 
-        $this->json('PUT', route('properties.update', $property->id), $data)
+        Log::debug('Data used for property update: ');
+        Log::debug(json_encode($data));
+
+        $response = $this->json('PUT', route('properties.update', $property->id), $data);
+        $response
             ->assertStatus(200)
             ->assertJson([
                 'code' => 200,
-                'status' => 'success',
-                'data' => $data
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
             ]);
+
+        $this->assertDatabaseHas('properties', [
+            'name' => $data['name'],
+        ]);
     }
 
     /**
@@ -59,8 +89,20 @@ class PropertyTest extends TestCase
     {
         $property = Property::factory()->create();
 
-        $this->json('GET', route('properties.show', $property->id))
-            ->assertStatus(200);
+        $response = $this->json('GET', route('properties.show', $property->id));
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'code' => 200,
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
+            ]);
+
+        $this->assertDatabaseHas('properties', [
+            'name' => $property->name,
+        ]);
     }
 
     /**
@@ -71,8 +113,17 @@ class PropertyTest extends TestCase
     {
         $property = Property::factory()->create();
 
-        $this->json('DELETE', route('properties.destroy', $property->id))
-            ->assertStatus(200);
+        $response = $this->json('DELETE', route('properties.destroy', $property->id));
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'code'    => 200,
+                'status'  => 'success',
+                'data'    => 'Resource deleted',
+                'message' => 'Deleted'
+            ]);
+
+        $this->assertSoftDeleted($property);
     }
 
     /**
@@ -81,21 +132,17 @@ class PropertyTest extends TestCase
      */
     public function test_can_list_properties()
     {
-        Property::factory(2)->create()->map(function ($property) {
-            return $property->only(['name', 'value']);
-        });
+        Property::factory(2)->create();
 
-        $this->json('GET', route('properties.index') . '?page=1&rowsPerPage=5')
+        $response = $this->json('GET', route('properties.index') . '?page=1&rowsPerPage=5');
+        // dd($response);
+        $response
             ->assertStatus(200)
             ->assertJsonStructure([
                 'draw',
                 'recordsTotal',
                 'recordsFiltered',
-                'data' => [
-                    [
-                        'name', 'value'
-                    ]
-                ],
+                'data' => [$this->getListElementData()],
             ]);
     }
 }

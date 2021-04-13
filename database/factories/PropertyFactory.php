@@ -13,7 +13,7 @@ class PropertyFactory extends Factory
 
     public function definition()
     {
-        $property = $this->faker->unique()->word;
+        $property = $this->faker->unique()->word . $this->faker->numberBetween(1, 999999);
         $slug = Str::slug($property, '-');
 
         return [

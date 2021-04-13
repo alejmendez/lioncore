@@ -1,16 +1,42 @@
 <?php
+
 namespace App\Tests\Feature;
 
-use App\Models\Role;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+
 use Tests\TestCase;
+use App\Models\Role;
+use App\Models\Permission;
 
 class RoleTest extends TestCase
 {
     protected function generateData()
     {
-        $faker = \Faker\Factory::create();
+
+        $permissions = Permission::all()->map(function ($permission) {
+            return $permission->id;
+        });
+
+        $len = $this->faker->numberBetween(1, 5);
+        $permissionsArr = [];
+        for ($i = 0; $i < $len; $i++) {
+            $permissionsArr[] = $this->faker->randomElement($permissions);
+        }
+
         return [
-            'Name' => $faker->unique()->safeEmail,
+            'name' => Str::random(8),
+            'permissions' => $permissionsArr,
+        ];
+    }
+
+    protected function getListElementData()
+    {
+        return [
+            'id',
+            'name',
+            'guard_name',
+            'permissions' => [],
         ];
     }
 
@@ -21,13 +47,18 @@ class RoleTest extends TestCase
     public function test_can_create_role()
     {
         $data = $this->generateData();
+        Log::debug('Data used for role creation: ');
+        Log::debug(json_encode($data));
 
-        $this->json('POST', route('roles.store'), $data)
+        $response = $this->json('POST', route('roles.store'), $data);
+        $response
             ->assertStatus(201)
             ->assertJson([
                 'code' => 201,
-                'status' => 'success',
-                'data' => $data
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
             ]);
     }
 
@@ -40,14 +71,26 @@ class RoleTest extends TestCase
         $role = Role::factory()->create();
 
         $data = $this->generateData();
+        Log::debug('Role created');
+        Log::debug(json_encode($data));
 
-        $this->json('PUT', route('roles.update', $role->id), $data)
+        Log::debug('Data used for role update: ');
+        Log::debug(json_encode($data));
+
+        $response = $this->json('PUT', route('roles.update', $role->id), $data);
+        $response
             ->assertStatus(200)
             ->assertJson([
                 'code' => 200,
-                'status' => 'success',
-                'data' => $data
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
             ]);
+
+        $this->assertDatabaseHas('roles', [
+            'name' => $data['name'],
+        ]);
     }
 
     /**
@@ -58,8 +101,20 @@ class RoleTest extends TestCase
     {
         $role = Role::factory()->create();
 
-        $this->json('GET', route('roles.show', $role->id))
-            ->assertStatus(200);
+        $response = $this->json('GET', route('roles.show', $role->id));
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'code' => 200,
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
+            ]);
+
+        $this->assertDatabaseHas('roles', [
+            'name' => $role->name,
+        ]);
     }
 
     /**
@@ -70,8 +125,17 @@ class RoleTest extends TestCase
     {
         $role = Role::factory()->create();
 
-        $this->json('DELETE', route('roles.destroy', $role->id))
-            ->assertStatus(200);
+        $response = $this->json('DELETE', route('roles.destroy', $role->id));
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'code'    => 200,
+                'status'  => 'success',
+                'data'    => 'Resource deleted',
+                'message' => 'Deleted'
+            ]);
+
+        $this->assertSoftDeleted($role);
     }
 
     /**
@@ -80,11 +144,11 @@ class RoleTest extends TestCase
      */
     public function test_can_list_roles()
     {
-        Role::factory(2)->create()->map(function ($role) {
-            return $role->only(['Name']);
-        });
+        Role::factory(2)->create();
 
-        $this->json('GET', route('roles.index') . '?page=1&rowsPerPage=5')
+        $response = $this->json('GET', route('roles.index') . '?page=1&rowsPerPage=5');
+        //dd($response);
+        $response
             ->assertStatus(200)
             ->assertJsonStructure([
                 'draw',
@@ -92,7 +156,8 @@ class RoleTest extends TestCase
                 'recordsFiltered',
                 'data' => [
                     [
-                        'Name'
+                        'id',
+                        'name'
                     ]
                 ],
             ]);

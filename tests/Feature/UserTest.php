@@ -2,11 +2,12 @@
 
 namespace App\Tests\Feature;
 
-use App\Models\User;
-use App\Models\Person;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 use Tests\TestCase;
-use Illuminate\Support\Str;
+
+use App\Models\User;
 
 class UserTest extends TestCase
 {
@@ -14,7 +15,7 @@ class UserTest extends TestCase
     {
         $firstName = $this->faker->firstName;
         $lastName = $this->faker->lastName;
-        $username = $firstName . '.' . $lastName . $this->faker->numberBetween(1, 99999);
+        $username = Str::slug($firstName) . '.' . Str::slug($lastName) . $this->faker->numberBetween(1, 99999);
         $email    = $username . '@gmail.com';
 
         $languages = [$this->faker->randomElement(['english', 'spanish', 'french', 'russian', 'german', 'arabic', 'sanskrit'])];
@@ -56,42 +57,6 @@ class UserTest extends TestCase
 
     protected function processData($data)
     {
-        /*
-        'id',
-        'displayName',
-        'about',
-        'photoURL',
-        'userRole',
-        'userPermissions',
-        'username',
-        'status',
-        'person_id',
-        'dni',
-        'first_name',
-        'last_name',
-        'full_name',
-        'company',
-        'avatar',
-        'birthdate',
-        'room_telephone',
-        'mobile_phone',
-        'website',
-        'languages',
-        'email',
-        'nationality',
-        'gender',
-        'civil_status',
-        'contact_options',
-        'address',
-        'address2',
-        'postcode',
-        'city',
-        'state',
-        'country',
-        'number_children',
-        'observation',
-        'blood_type'
-        */
         $data['email'] = strtolower($data['email']);
         $data['dni'] = (string) $data['dni'];
         $data['languages'] = [$data['languages']];
@@ -104,38 +69,40 @@ class UserTest extends TestCase
     protected function getListElementData()
     {
         return [
-            [
-                'email',
-                'dni',
-                'username',
-                'password',
-                'role',
-                'status',
-                'first_name',
-                'last_name',
-                'company',
-                'avatar',
-                'birthdate',
-                'room_telephone',
-                'mobile_phone',
-                'website',
-                'languages',
-                'nationality',
-                'gender',
-                'civil_status',
-                'contact_options',
-                'address',
-                'address2',
-                'postcode',
-                'city',
-                'state',
-                'country',
-                'number_children',
-                'observation',
-                'blood_type',
-                'updated_at',
-                'created_at'
-            ]
+            'id',
+            'displayName',
+            'about',
+            'photoURL',
+            'role',
+            'permissions',
+            'username',
+            'status',
+            'person_id',
+            'dni',
+            'first_name',
+            'last_name',
+            'full_name',
+            'company',
+            'avatar',
+            'birthdate',
+            'room_telephone',
+            'mobile_phone',
+            'website',
+            'languages',
+            'email',
+            'nationality',
+            'gender',
+            'civil_status',
+            'contact_options',
+            'address',
+            'address2',
+            'postcode',
+            'city',
+            'state',
+            'country',
+            'number_children',
+            'observation',
+            'blood_type'
         ];
     }
 
@@ -146,14 +113,18 @@ class UserTest extends TestCase
     public function test_can_create_user()
     {
         $data = $this->generateData();
+        Log::debug('Data used for user creation: ');
+        Log::debug(json_encode($data));
 
         $response = $this->json('POST', route('users.store'), $data);
         $response
             ->assertStatus(201)
             ->assertJson([
                 'code' => 201,
-                'status' => 'success',
-                'data' => $this->processData($data)
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
             ]);
     }
 
@@ -166,15 +137,26 @@ class UserTest extends TestCase
         $user = User::factory()->create();
 
         $data = $this->generateData();
+        Log::debug('User created');
+        Log::debug(json_encode($data));
+
+        Log::debug('Data used for user update: ');
+        Log::debug(json_encode($data));
 
         $response = $this->json('PUT', route('users.update', $user->id), $data);
         $response
             ->assertStatus(200)
             ->assertJson([
                 'code' => 200,
-                'status' => 'success',
-                'data' => $this->processData($data)
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
             ]);
+
+        $this->assertDatabaseHas('users', [
+            'email' => $data['email'],
+        ]);
     }
 
     /**
@@ -187,7 +169,18 @@ class UserTest extends TestCase
 
         $response = $this->json('GET', route('users.show', $user->id));
         $response
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertJson([
+                'code' => 200,
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
+            ]);
+
+        $this->assertDatabaseHas('users', [
+            'email' => $user->email,
+        ]);
     }
 
     /**
@@ -200,7 +193,15 @@ class UserTest extends TestCase
 
         $response = $this->json('DELETE', route('users.destroy', $user->id));
         $response
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertJson([
+                'code'    => 200,
+                'status'  => 'success',
+                'data'    => 'Resource deleted',
+                'message' => 'Deleted'
+            ]);
+
+        $this->assertSoftDeleted($user);
     }
 
     /**
@@ -212,14 +213,14 @@ class UserTest extends TestCase
         User::factory(2)->create();
 
         $response = $this->json('GET', route('users.index') . '?page=1&rowsPerPage=5');
-        dd($response);
+        // dd($response);
         $response
             ->assertStatus(200)
             ->assertJsonStructure([
                 'draw',
                 'recordsTotal',
                 'recordsFiltered',
-                'data' => $this->getListElementData(),
+                'data' => [$this->getListElementData()],
             ]);
     }
 }
