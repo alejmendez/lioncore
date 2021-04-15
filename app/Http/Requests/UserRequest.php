@@ -8,8 +8,8 @@ class UserRequest extends FormRequest
     protected $fieldId = 'id';
     protected $rules = [
         'person_id'          => 'uuid|exists:people,id',
-        'username'           => 'required|regex:/^[\w\.]+$/u',
-        'email'              => 'required|email|min:10|max:80',
+        'username'           => 'required|regex:/^[\w\.\-]+$/u',
+        'email'              => 'required|email|min:10|max:80|unique:users',
         'password'           => 'required|min:6|max:30',
         'status'             => 'required|alpha',
         'dni'                => 'required|max:15',

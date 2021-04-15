@@ -1,23 +1,23 @@
 <?php
-
-
 namespace App\Exceptions;
 
 use Throwable;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Spatie\Permission\Exceptions\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 use App\Traits\ApiResponse;
 
@@ -68,7 +68,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if (method_exists($exception, 'render') && $response = $exception->render($request)) {
+        if ($exception instanceof Responsable) {
+            $response = $exception->render($request);
             return Router::toResponse($request, $response);
         } elseif ($exception instanceof Responsable) {
             return $exception->toResponse($request);
@@ -82,29 +83,29 @@ class Handler extends ExceptionHandler
             return $this->convertValidationExceptionToResponse($exception, $request);
         } elseif ($exception instanceof ModelNotFoundException) {
             $modelo = strtolower(class_basename($exception->getModel()));
-            return $this->errorResponse('No existe ninguna instancia de ' . $modelo . ' con el id especificado', 404);
+            return $this->errorResponse(__('There is no instance of with the specified id', ['name' => $modelo]), 404);
         } elseif ($exception instanceof AuthenticationException) {
             return $this->unauthenticated($request, $exception);
         } elseif ($exception instanceof AuthorizationException || $exception instanceof UnauthorizedException || $exception instanceof PermissionDoesNotExist) {
-            return $this->errorResponse('No posee permisos para ejecutar esta acción', 403);
+            return $this->errorResponse(__('You do not have permissions to execute this action'), 403);
         } elseif ($exception instanceof NotFoundHttpException) {
-            return $this->errorResponse('No se encontró la URL especificada', 404);
+            return $this->errorResponse(__('The specified URL was not found'), 404);
         } elseif ($exception instanceof MethodNotAllowedHttpException) {
-            return $this->errorResponse('El método especificado en la petición no es válido', 405);
+            return $this->errorResponse(__('The method specified in the request is invalid'), 405);
         } elseif ($exception instanceof HttpException) {
             return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
         } elseif ($exception instanceof QueryException) {
             $codigo = $exception->errorInfo[1];
 
             if ($codigo == 1451) {
-                return $this->errorResponse('No se puede eliminar de forma permanente el recurso porque está relacionado con algún otro', 409);
+                return $this->errorResponse(__('The resource cannot be permanently deleted because it is related to some other'), 409);
             }
 
             return $this->errorResponse($exception->getMessage(), 409);
         }
 
         if (!config('app.debug')) {
-            return $this->errorResponse('Falla inesperada, Intente luego', 500);
+            return $this->errorResponse(__('Unexpected failure, try later'), 500);
         }
 
         return $this->prepareJsonResponse($request, $exception);
@@ -112,7 +113,7 @@ class Handler extends ExceptionHandler
 
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        return response()->json(['message' => $exception->getMessage()], 401);
+        return $this->responseJson(['message' => $exception->getMessage()], 401);
     }
 
     protected function convertValidationExceptionToResponse(ValidationException $e, $request)
@@ -126,9 +127,15 @@ class Handler extends ExceptionHandler
 
     protected function invalidJson($request, ValidationException $exception)
     {
-        return response()->json([
-            'message' => $exception->getMessage(),
+        return $this->responseJson([
+            'message' => __('The given data was invalid'),
             'errors' => $exception->errors(),
         ], $exception->status);
+    }
+
+    protected function responseJson($data, $status = 200)
+    {
+        Log::debug('[responseJson] Status: ' . $status . ' data: ' . json_encode($data));
+        return response()->json($data, $status);
     }
 }

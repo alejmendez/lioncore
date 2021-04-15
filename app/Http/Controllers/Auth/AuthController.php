@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-
 use App\Http\Controllers\BaseController;
 use App\Repositories\UserRepository;
+use Illuminate\Database\QueryException;
+use Exception;
 
 class AuthController extends BaseController
 {
@@ -37,11 +36,11 @@ class AuthController extends BaseController
             );
 
             return $this->login();
-        } catch (\Illuminate\Database\QueryException $e) {
+        } catch (QueryException $e) {
             return response()->json([
-                'error' => __('Error al intentar crear Usuario')
+                'error' => __('Error trying to create User')
             ], 401);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
             ], 401);
@@ -56,12 +55,12 @@ class AuthController extends BaseController
     public function login()
     {
         $credentials = request(['email', 'password']);
-        $jwt_token = JWTAuth::attempt($credentials);
+        $jwt_token = auth()->attempt($credentials);
 
         if (!$jwt_token) {
             return response()->json([
                 'error' => 'Unauthorized',
-                'message' => __('Correo o contraseña no válidos.')
+                'message' => __('Invalid email or password')
             ], 401);
         }
 
@@ -80,26 +79,18 @@ class AuthController extends BaseController
      */
     public function logout()
     {
-        $this->validate(request()->all(), [
-            'token' => 'required'
-        ]);
-
         try {
-            JWTAuth::invalidate(request('token'));
-            return  response()->json([
+            auth()->logout();
+            return response()->json([
                 'status' => 'ok',
-                'message' => __('Cierre de sesión exitoso.')
+                'message' => __('Successful logout')
             ]);
-        } catch (JWTException  $exception) {
-            return  response()->json([
+        } catch (\Exception $exception) {
+            return response()->json([
                 'status' => 'unknown_error',
-                'message' => __('Al usuario no se le pudo cerrar la sesión.')
+                'message' => __('User could not be logged out')
             ], 500);
         }
-        auth()->logout();
-        return response()->json([
-            'message' => __('Successfully logged out')
-        ]);
     }
     /**
      * Refresh a token.

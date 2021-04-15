@@ -20,7 +20,7 @@ trait ApiResponse
             'status' => 'success',
             'data'   => $data
         ];
-        return response()->json($response, $response['code']);
+        return $this->responseJson($response, $response['code']);
     }
 
     /**
@@ -35,7 +35,7 @@ trait ApiResponse
             'status' => 'success',
             'data'   => $data,
         ];
-        return response()->json($response, $response['code']);
+        return $this->responseJson($response, $response['code']);
     }
 
     /**
@@ -56,7 +56,7 @@ trait ApiResponse
                 'total'        => (int) $data->total(),
             ],
         ];
-        return response()->json($response, $response['code']);
+        return $this->responseJson($response, $response['code']);
     }
 
     /**
@@ -71,7 +71,7 @@ trait ApiResponse
             'data'    => 'Resource Not Found',
             'message' => 'Not Found'
         ];
-        return response()->json($response, $response['code']);
+        return $this->responseJson($response, $response['code']);
     }
 
     /**
@@ -86,7 +86,7 @@ trait ApiResponse
             'data'    => 'Resource deleted',
             'message' => 'Deleted'
         ];
-        return response()->json($response, $response['code']);
+        return $this->responseJson($response, $response['code']);
     }
 
     /**
@@ -102,7 +102,7 @@ trait ApiResponse
             'data'    => $data,
             'message' => 'Unprocessable entity'
         ];
-        return response()->json($response, $response['code']);
+        return $this->responseJson($response, $response['code']);
     }
 
     /**
@@ -118,7 +118,7 @@ trait ApiResponse
             'data'    => $data,
             'message' => 'unauthorized action'
         ];
-        return response()->json($response, $response['code']);
+        return $this->responseJson($response, $response['code']);
     }
 
     /**
@@ -136,26 +136,31 @@ trait ApiResponse
 
     protected function successResponse($data, $code)
     {
-        return response()->json($data, $code);
+        return $this->responseJson($data, $code);
     }
 
     protected function errorResponse($message, $code)
     {
-        return response()->json(['errors' => $message, 'code' => $code], $code);
+        return $this->responseJson(['errors' => $message, 'code' => $code], $code);
     }
 
     protected function messageResponse($message, $code = 200)
     {
-        return response()->json(['message' => $message], $code);
+        return $this->responseJson(['message' => $message], $code);
     }
 
     protected function showAll(Collection $collection, $code = 200)
     {
-        return response()->json(['data' => $collection], $code);
+        return $this->responseJson(['data' => $collection], $code);
     }
 
     protected function showOne(Model $instance, $code = 200)
     {
-        return response()->json(['data' => $instance], $code);
+        return $this->responseJson(['data' => $instance], $code);
+    }
+
+    protected function responseJson($data, $status = 200)
+    {
+        return response()->json($data, $status);
     }
 }

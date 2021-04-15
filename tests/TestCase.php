@@ -16,9 +16,7 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         $userAdmin = User::whereEmail('admin@test.cl')->first();
-        // $this->actingAs($userAdmin);
-        $token = JWTAuth::fromUser($userAdmin);
-        $this->withHeader('Authorization', 'Bearer ' . $token);
+        $this->actingAs($userAdmin);
     }
 
 
@@ -50,7 +48,7 @@ abstract class TestCase extends BaseTestCase
     public function actingAs($user, $driver = null)
     {
         $token = JWTAuth::fromUser($user);
-        $this->withHeader('Authorization', "Bearer {$token}");
+        $this->withToken($token);
         parent::actingAs($user);
 
         return $this;

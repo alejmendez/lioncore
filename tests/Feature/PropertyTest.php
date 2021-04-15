@@ -35,10 +35,10 @@ class PropertyTest extends TestCase
     public function test_can_create_property()
     {
         $data = $this->generateData();
-        Log::debug('Data used for property creation: ');
+        Log::debug('[test_can_create_property] Data used for property creation: ');
         Log::debug(json_encode($data));
 
-        $response = $this->json('POST', route('properties.store'), $data);
+        $response = $this->postJson(route('properties.store'), $data);
         $response
             ->assertStatus(201)
             ->assertJson([
@@ -59,13 +59,13 @@ class PropertyTest extends TestCase
         $property = Property::factory()->create();
 
         $data = $this->generateData();
-        Log::debug('Property created');
+        Log::debug('[test_can_update_property] Property created');
         Log::debug(json_encode($data));
 
-        Log::debug('Data used for property update: ');
+        Log::debug('[test_can_update_property] Data used for property update: ');
         Log::debug(json_encode($data));
 
-        $response = $this->json('PUT', route('properties.update', $property->id), $data);
+        $response = $this->putJson(route('properties.update', $property->id), $data);
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -89,7 +89,7 @@ class PropertyTest extends TestCase
     {
         $property = Property::factory()->create();
 
-        $response = $this->json('GET', route('properties.show', $property->id));
+        $response = $this->getJson(route('properties.show', $property->id));
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -113,7 +113,7 @@ class PropertyTest extends TestCase
     {
         $property = Property::factory()->create();
 
-        $response = $this->json('DELETE', route('properties.destroy', $property->id));
+        $response = $this->deleteJson(route('properties.destroy', $property->id));
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -134,7 +134,7 @@ class PropertyTest extends TestCase
     {
         Property::factory(2)->create();
 
-        $response = $this->json('GET', route('properties.index') . '?page=1&rowsPerPage=5');
+        $response = $this->getJson(route('properties.index') . '?page=1&rowsPerPage=5');
         // dd($response);
         $response
             ->assertStatus(200)

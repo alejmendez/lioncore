@@ -47,10 +47,10 @@ class RoleTest extends TestCase
     public function test_can_create_role()
     {
         $data = $this->generateData();
-        Log::debug('Data used for role creation: ');
+        Log::debug('[test_can_create_role] Data used for role creation: ');
         Log::debug(json_encode($data));
 
-        $response = $this->json('POST', route('roles.store'), $data);
+        $response = $this->postJson(route('roles.store'), $data);
         $response
             ->assertStatus(201)
             ->assertJson([
@@ -71,13 +71,13 @@ class RoleTest extends TestCase
         $role = Role::factory()->create();
 
         $data = $this->generateData();
-        Log::debug('Role created');
+        Log::debug('[test_can_update_role] Role created');
         Log::debug(json_encode($data));
 
-        Log::debug('Data used for role update: ');
+        Log::debug('[test_can_update_role] Data used for role update: ');
         Log::debug(json_encode($data));
 
-        $response = $this->json('PUT', route('roles.update', $role->id), $data);
+        $response = $this->putJson(route('roles.update', $role->id), $data);
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -101,7 +101,7 @@ class RoleTest extends TestCase
     {
         $role = Role::factory()->create();
 
-        $response = $this->json('GET', route('roles.show', $role->id));
+        $response = $this->getJson(route('roles.show', $role->id));
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -125,7 +125,7 @@ class RoleTest extends TestCase
     {
         $role = Role::factory()->create();
 
-        $response = $this->json('DELETE', route('roles.destroy', $role->id));
+        $response = $this->deleteJson(route('roles.destroy', $role->id));
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -146,7 +146,7 @@ class RoleTest extends TestCase
     {
         Role::factory(2)->create();
 
-        $response = $this->json('GET', route('roles.index') . '?page=1&rowsPerPage=5');
+        $response = $this->getJson(route('roles.index') . '?page=1&rowsPerPage=5');
         //dd($response);
         $response
             ->assertStatus(200)

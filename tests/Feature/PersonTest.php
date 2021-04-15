@@ -77,10 +77,10 @@ class PersonTest extends TestCase
     public function test_can_create_person()
     {
         $data = $this->generateData();
-        Log::debug('Data used for person creation: ');
+        Log::debug('[test_can_create_person] Data used for person creation: ');
         Log::debug(json_encode($data));
 
-        $response = $this->json('POST', route('person.store'), $data);
+        $response = $this->postJson(route('person.store'), $data);
         $response
             ->assertStatus(201)
             ->assertJson([
@@ -101,13 +101,13 @@ class PersonTest extends TestCase
         $person = Person::factory()->create();
 
         $data = $this->generateData();
-        Log::debug('Person created');
+        Log::debug('[test_can_update_person] Person created');
         Log::debug(json_encode($data));
 
-        Log::debug('Data used for person update: ');
+        Log::debug('[test_can_update_person] Data used for person update: ');
         Log::debug(json_encode($data));
 
-        $response = $this->json('PUT', route('person.update', $person->id), $data);
+        $response = $this->putJson(route('person.update', $person->id), $data);
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -131,7 +131,7 @@ class PersonTest extends TestCase
     {
         $person = Person::factory()->create();
 
-        $response =$this->json('GET', route('person.show', $person->id));
+        $response = $this->getJson(route('person.show', $person->id));
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -155,7 +155,7 @@ class PersonTest extends TestCase
     {
         $person = Person::factory()->create();
 
-        $response = $this->json('DELETE', route('person.destroy', $person->id));
+        $response = $this->deleteJson(route('person.destroy', $person->id));
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -179,7 +179,7 @@ class PersonTest extends TestCase
     {
         Person::factory(2)->create();
 
-        $response = $this->json('GET', route('person.index') . '?page=1&rowsPerPage=5');
+        $response = $this->getJson(route('person.index') . '?page=1&rowsPerPage=5');
         // dd($response);
         $response
             ->assertStatus(200)
