@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        $roleAdmin = Role::findByName('admin');
+        $roleAdmin = Role::findByName('Super Admin');
         $user->assignRole($roleAdmin);
 
         $person = Person::factory()->create();
@@ -62,6 +62,7 @@ class UserSeeder extends Seeder
             'status' => 'active',
         ]);
         $user->assignRole($roleAdmin);
-        User::factory(3)->create();
+
+        // User::factory(3)->create();
     }
 }

@@ -23,7 +23,7 @@ class UserTest extends TestCase
 
         return [
             'email'              => $email,
-            'role'               => $this->faker->randomElement(['admin', 'writer']),
+            'role'               => $this->faker->randomElement(['Super Admin', 'writer']),
             'password'           => "12345678",
             'verification_token' => Str::random(64),
             'username'           => $username,
@@ -118,7 +118,7 @@ class UserTest extends TestCase
 
         $response = $this->postJson(route('users.store'), $data);
         $response
-            ->assertStatus(201)
+            ->assertCreated()
             ->assertJson([
                 'code' => 201,
                 'status' => 'success'
@@ -145,7 +145,7 @@ class UserTest extends TestCase
 
         $response = $this->putJson(route('users.update', $user->id), $data);
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJson([
                 'code' => 200,
                 'status' => 'success'
@@ -169,7 +169,7 @@ class UserTest extends TestCase
 
         $response = $this->getJson(route('users.show', $user->id));
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJson([
                 'code' => 200,
                 'status' => 'success'
@@ -193,7 +193,7 @@ class UserTest extends TestCase
 
         $response = $this->deleteJson(route('users.destroy', $user->id));
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJson([
                 'code'    => 200,
                 'status'  => 'success',
@@ -215,7 +215,7 @@ class UserTest extends TestCase
         $response = $this->getJson(route('users.index') . '?page=1&rowsPerPage=5');
         // dd($response);
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJsonStructure([
                 'draw',
                 'recordsTotal',

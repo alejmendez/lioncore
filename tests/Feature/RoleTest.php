@@ -52,7 +52,7 @@ class RoleTest extends TestCase
 
         $response = $this->postJson(route('roles.store'), $data);
         $response
-            ->assertStatus(201)
+            ->assertCreated()
             ->assertJson([
                 'code' => 201,
                 'status' => 'success'
@@ -79,7 +79,7 @@ class RoleTest extends TestCase
 
         $response = $this->putJson(route('roles.update', $role->id), $data);
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJson([
                 'code' => 200,
                 'status' => 'success'
@@ -103,7 +103,7 @@ class RoleTest extends TestCase
 
         $response = $this->getJson(route('roles.show', $role->id));
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJson([
                 'code' => 200,
                 'status' => 'success'
@@ -127,7 +127,7 @@ class RoleTest extends TestCase
 
         $response = $this->deleteJson(route('roles.destroy', $role->id));
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJson([
                 'code'    => 200,
                 'status'  => 'success',
@@ -149,7 +149,7 @@ class RoleTest extends TestCase
         $response = $this->getJson(route('roles.index') . '?page=1&rowsPerPage=5');
         //dd($response);
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJsonStructure([
                 'draw',
                 'recordsTotal',

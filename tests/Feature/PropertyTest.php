@@ -40,7 +40,7 @@ class PropertyTest extends TestCase
 
         $response = $this->postJson(route('properties.store'), $data);
         $response
-            ->assertStatus(201)
+            ->assertCreated()
             ->assertJson([
                 'code' => 201,
                 'status' => 'success'
@@ -67,7 +67,7 @@ class PropertyTest extends TestCase
 
         $response = $this->putJson(route('properties.update', $property->id), $data);
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJson([
                 'code' => 200,
                 'status' => 'success'
@@ -91,7 +91,7 @@ class PropertyTest extends TestCase
 
         $response = $this->getJson(route('properties.show', $property->id));
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJson([
                 'code' => 200,
                 'status' => 'success'
@@ -115,7 +115,7 @@ class PropertyTest extends TestCase
 
         $response = $this->deleteJson(route('properties.destroy', $property->id));
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJson([
                 'code'    => 200,
                 'status'  => 'success',
@@ -137,7 +137,7 @@ class PropertyTest extends TestCase
         $response = $this->getJson(route('properties.index') . '?page=1&rowsPerPage=5');
         // dd($response);
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJsonStructure([
                 'draw',
                 'recordsTotal',
