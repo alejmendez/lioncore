@@ -1,0 +1,43 @@
+{
+    "model": "Property",
+    "module": "Property",
+    "title": "Property",
+    "dateMigration": "2020_06_10_000000",
+    "inDB": false,
+    "fields": [
+        {
+            "name": "id",
+            "type": "increments",
+            "htmlType": "",
+            "validations": "",
+            "searchable": false,
+            "fillable": false,
+            "primary": true,
+            "inForm": false,
+            "inList": false
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 50,
+            "label" : "name",
+            "htmlType": "input",
+            "validations": "required|min:3|max:50",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "unique()->word"
+        },
+        {
+            "name": "value",
+            "type": "longText",
+            "label" : "value",
+            "htmlType": "textarea",
+            "validations": "required|min:3",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "unique()->word"
+        }
+    ]
+}

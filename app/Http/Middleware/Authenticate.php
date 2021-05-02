@@ -4,13 +4,16 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use App\Traits\ApiResponse;
 
 class Authenticate extends Middleware
 {
+    use ApiResponse;
+
     public function handle($request, Closure $next, ...$guards)
     {
         if ($this->authenticate($request, $guards) === 'authentication_error') {
-            return response()->json(['error' => 'Unauthorized']);
+            return $this->errorResponse('Usuario no autenticado', 401);
         }
 
         return $next($request);
@@ -35,7 +38,7 @@ class Authenticate extends Middleware
      * Get the path the user should be redirected to when they are not authenticated.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return string
+     * @return string|null
      */
     protected function redirectTo($request)
     {

@@ -1,0 +1,31 @@
+{
+    "model": "Form",
+    "module": "core",
+    "title": "Form",
+    "dateMigration": "2019_01_30_000000",
+    "inDB": false,
+    "fields": [
+        {
+            "name": "id",
+            "type": "increments",
+            "htmlType": "",
+            "validations": "",
+            "searchable": false,
+            "fillable": false,
+            "primary": true,
+            "inForm": false,
+            "inList": false
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 80,
+            "label": "name",
+            "htmlType": "text",
+            "validations": "required,min:3,max:80",
+            "searchable": true,
+            "inForm": true,
+            "inList": true
+        }
+    ]
+}

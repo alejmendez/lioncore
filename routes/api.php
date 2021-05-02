@@ -1,136 +1,108 @@
 <?php
 
-use Illuminate\Http\Request;
-use \App\Laravue\Faker;
-use \App\Laravue\JsonResponse;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\PersonController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\RoleController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::prefix('v1')
+    //->domain('{tenant}.lioncore.oo')
+    ->group(function () {
+        Route::prefix('auth')->name('auth.')->group(function () {
+            Route::post('login', [AuthController::class, 'login'])->name('login');
+            Route::post('register', [AuthController::class, 'register'])->name('register');
+            Route::post('refresh', [AuthController::class, 'refresh'])->name('refresh');
+            Route::get('current/user', [AuthController::class, 'currentUser'])->name('current.user');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+            Route::group(['middleware' => 'auth:api'], function () {
+                Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+                Route::post('user', [AuthController::class, 'user'])->name('user');
+            });
+        });
 
-Route::group(['middleware' => 'api'], function () {
-    Route::post('auth/login', 'AuthController@login');
-    Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('auth/user', 'AuthController@user');
-        Route::post('auth/logout', 'AuthController@logout');
+        Route::middleware('auth:api')->group(function () {
+            Route::prefix('person')->name('person.')->group(function () {
+                Route::get('/', [PersonController::class, 'index'])->name('index')
+                    ->middleware('permission:person read');
+                Route::get('/{person}', [PersonController::class, 'show'])->name('show')
+                    ->middleware('permission:person read');
+                Route::post('/', [PersonController::class, 'store'])->name('store')
+                    ->middleware('permission:person create');
+                Route::put('/{person}', [PersonController::class, 'update'])->name('update')
+                    ->middleware('permission:person update');
+                Route::delete('/{person}', [PersonController::class, 'destroy'])->name('destroy')
+                    ->middleware('permission:person delete');
+            });
+
+            Route::prefix('users')->name('users.')->group(function () {
+                Route::get('/', [UserController::class, 'index'])->name('index')
+                    ->middleware('permission:user read');
+                Route::get('/filters', [UserController::class, 'filters'])->name('filters')
+                    ->middleware('permission:user read');
+                Route::get('/module-data', [UserController::class, 'moduleData'])->name('module-data')
+                    ->middleware('permission:user read');
+                Route::get('/{user}', [UserController::class, 'show'])->name('show')
+                    ->middleware('permission:user read');
+                Route::post('/', [UserController::class, 'store'])->name('store')
+                    ->middleware('permission:user create');
+                Route::put('/{user}', [UserController::class, 'update'])->name('update')
+                    ->middleware('permission:user update');
+                Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy')
+                    ->middleware('permission:user delete');
+            });
+
+            Route::prefix('properties')->name('properties.')->group(function () {
+                Route::get('/', [PropertyController::class, 'index'])->name('index')
+                    ->middleware('permission:property read');
+                Route::get('/filters', [PropertyController::class, 'filters'])->name('filters')
+                    ->middleware('permission:property read');
+                Route::get('/module-data', [PropertyController::class, 'moduleData'])->name('module-data')
+                    ->middleware('permission:property read');
+                Route::get('/{property}', [PropertyController::class, 'show'])->name('show')
+                    ->middleware('permission:property read');
+                Route::post('/', [PropertyController::class, 'store'])->name('store')
+                    ->middleware('permission:property create');
+                Route::put('/{property}', [PropertyController::class, 'update'])->name('update')
+                    ->middleware('permission:property update');
+                Route::delete('/{property}', [PropertyController::class, 'destroy'])->name('destroy')
+                    ->middleware('permission:property delete');
+            });
+
+            Route::prefix('chat')->name('chat.')->group(function () {
+                Route::post('msg', [ChatController::class, 'msg'])->name('msg')
+                    ->middleware('permission:chat read');
+                Route::get('contacts', [ChatController::class, 'contacts'])->name('contacts')
+                    ->middleware('permission:chat read');
+                Route::get('chat-contacts', [ChatController::class, 'chatContacts'])->name('chat-contacts')
+                    ->middleware('permission:chat read');
+                Route::get('chats', [ChatController::class, 'chats'])->name('chats')
+                    ->middleware('permission:chat read');
+                Route::post('mark-all-seen', [ChatController::class, 'markAllSeen'])->name('mark-all-seen')
+                    ->middleware('permission:chat read');
+                Route::post('set-pinned', [ChatController::class, 'setPinned'])->name('set-pinned')
+                    ->middleware('permission:chat read');
+            });
+
+            Route::prefix('roles')->name('roles.')->group(function () {
+                Route::get('/', [RoleController::class, 'index'])->name('index')
+                    ->middleware('permission:role read');
+                Route::get('/filters', [RoleController::class, 'filters'])->name('filters')
+                    ->middleware('permission:role read');
+                Route::get('/module-data', [RoleController::class, 'moduleData'])->name('module-data')
+                    ->middleware('permission:role read');
+                Route::get('/{role}', [RoleController::class, 'show'])->name('show')
+                    ->middleware('permission:role read');
+                Route::post('/', [RoleController::class, 'store'])->name('store')
+                    ->middleware('permission:role create');
+                Route::put('/{role}', [RoleController::class, 'update'])->name('update')
+                    ->middleware('permission:role update');
+                Route::delete('/{role}', [RoleController::class, 'destroy'])->name('destroy')
+                    ->middleware('permission:role delete');
+            });
+
+            // add router
+        });
     });
-
-    Route::apiResource('users', 'UserController');
-    // Fake APIs
-    Route::get('/table/list', function () {
-        $rowsNumber = mt_rand(20, 30);
-        $data = [];
-        for ($rowIndex = 0; $rowIndex < $rowsNumber; $rowIndex++) {
-            $row = [
-                'author' => Faker::randomString(mt_rand(5, 10)),
-                'display_time' => Faker::randomDateTime()->format('Y-m-d H:i:s'),
-                'id' => mt_rand(100000, 100000000),
-                'pageviews' => mt_rand(100, 10000),
-                'status' => Faker::randomInArray(['deleted', 'published', 'draft']),
-                'title' => Faker::randomString(mt_rand(20, 50)),
-            ];
-
-            $data[] = $row;
-        }
-
-        return response()->json(new JsonResponse(['items' => $data]));
-    });
-
-    Route::get('/orders', function () {
-        $rowsNumber = 8;
-        $data = [];
-        for ($rowIndex = 0; $rowIndex < $rowsNumber; $rowIndex++) {
-            $row = [
-                'order_no' => 'LARAVUE' . mt_rand(1000000, 9999999),
-                'price' => mt_rand(10000, 999999),
-                'status' => Faker::randomInArray(['success', 'pending']),
-            ];
-
-            $data[] = $row;
-        }
-
-        return response()->json(new JsonResponse(['items' => $data]));
-    });
-
-    Route::get('/articles', function () {
-        $rowsNumber = 10;
-        $data = [];
-        for ($rowIndex = 0; $rowIndex < $rowsNumber; $rowIndex++) {
-            $row = [
-                'id' => mt_rand(100, 10000),
-                'display_time' => Faker::randomDateTime()->format('Y-m-d H:i:s'),
-                'title' => Faker::randomString(mt_rand(20, 50)),
-                'author' => Faker::randomString(mt_rand(5, 10)),
-                'comment_disabled' => Faker::randomBoolean(),
-                'content' => Faker::randomString(mt_rand(100, 300)),
-                'content_short' => Faker::randomString(mt_rand(30, 50)),
-                'status' => Faker::randomInArray(['deleted', 'published', 'draft']),
-                'forecast' => mt_rand(100, 9999) / 100,
-                'image_uri' => 'https://via.placeholder.com/400x300',
-                'importance' => mt_rand(1, 3),
-                'pageviews' => mt_rand(10000, 999999),
-                'reviewer' => Faker::randomString(mt_rand(5, 10)),
-                'timestamp' => Faker::randomDateTime()->getTimestamp(),
-                'type' => Faker::randomInArray(['US', 'VI', 'JA']),
-
-            ];
-
-            $data[] = $row;
-        }
-
-        return response()->json(new JsonResponse(['items' => $data, 'total' => mt_rand(1000, 10000)]));
-    });
-
-    Route::get('articles/{id}', function ($id) {
-        $article = [
-            'id' => $id,
-            'display_time' => Faker::randomDateTime()->format('Y-m-d H:i:s'),
-            'title' => Faker::randomString(mt_rand(20, 50)),
-            'author' => Faker::randomString(mt_rand(5, 10)),
-            'comment_disabled' => Faker::randomBoolean(),
-            'content' => Faker::randomString(mt_rand(100, 300)),
-            'content_short' => Faker::randomString(mt_rand(30, 50)),
-            'status' => Faker::randomInArray(['deleted', 'published', 'draft']),
-            'forecast' => mt_rand(100, 9999) / 100,
-            'image_uri' => 'https://via.placeholder.com/400x300',
-            'importance' => mt_rand(1, 3),
-            'pageviews' => mt_rand(10000, 999999),
-            'reviewer' => Faker::randomString(mt_rand(5, 10)),
-            'timestamp' => Faker::randomDateTime()->getTimestamp(),
-            'type' => Faker::randomInArray(['US', 'VI', 'JA']),
-
-        ];
-
-        return response()->json(new JsonResponse($article));
-    });
-
-    Route::get('articles/{id}/pageviews', function ($id) {
-        $pageviews = [
-            'PC' => mt_rand(10000, 999999),
-            'Mobile' => mt_rand(10000, 999999),
-            'iOS' => mt_rand(10000, 999999),
-            'android' => mt_rand(10000, 999999),
-        ];
-        $data = [];
-        foreach ($pageviews as $device => $pageview) {
-            $data[] = [
-                'key' => $device,
-                'pv' => $pageview,
-            ];
-        }
-
-        return response()->json(new JsonResponse(['pvData' => $data]));
-    });
-
-});
