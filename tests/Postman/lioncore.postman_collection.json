@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "b7cd4b61-d5ce-4808-8b3f-f7311576e2a7",
+		"name": "lioncore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"gloria.arreola5150@gmail.com\",\r\n    \"role\": \"admin\",\r\n    \"password\": \"12345678\",\r\n    \"verification_token\": \"eq8bCbwKhoMc4w7wxupPW6xOpbehulBPbr10YwBq3BwBEWM4qQ1OYYREr9uH3hYH\",\r\n    \"username\": \"gloria.arreola5150\",\r\n    \"status\": \"blocked\",\r\n    \"dni\": 7337734,\r\n    \"first_name\": \"Gloria\",\r\n    \"last_name\": \"Arreola\",\r\n    \"company\": \"Pulido de Uribe\",\r\n    \"avatar\": \"https:\\/\\/via.placeholder.com\\/500x500.png\\/0055ee?text=people+Faker+nemo\",\r\n    \"birthdate\": \"2001-11-16\",\r\n    \"room_telephone\": \"953 526577\",\r\n    \"mobile_phone\": \"+34 966-448454\",\r\n    \"website\": \"https:\\/\\/www.osorio.es\\/enim-blanditiis-voluptatem-quos-ut-quas-cupiditate\",\r\n    \"languages\": [\r\n        \"sanskrit\"\r\n    ],\r\n    \"nationality\": \"C\",\r\n    \"gender\": \"other\",\r\n    \"civil_status\": \"C\",\r\n    \"contact_options\": [\r\n        \"email\"\r\n    ],\r\n    \"address\": \"Pla\\u00e7a Alfonso, 3, Bajo 4\\u00ba, 99663, L' Gal\\u00e1n Baja\",\r\n    \"address2\": \"0\\u00ba 9\\u00ba\",\r\n    \"postcode\": \"55354\",\r\n    \"city\": \"Vall Cornejo Baja\",\r\n    \"state\": \"Lugo\",\r\n    \"country\": \"Cabo Verde\",\r\n    \"number_children\": 2,\r\n    \"observation\": \"Pariatur harum magnam aliquam dolorum id id soluta est. Assumenda suscipit qui eos quae velit distinctio. Qui ab tempora aut laudantium praesentium.\",\r\n    \"blood_type\": \"BRH-\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/users",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"console.log(jsonData);\r",
+									"if (jsonData.token) {\r",
+									"    postman.setEnvironmentVariable(\"token\", jsonData.token);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"admin@test.cl\",\r\n    \"password\" : \"cq43351la\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/auth/login",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

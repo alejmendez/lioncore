@@ -19,22 +19,27 @@ class RoleSeeder extends Seeder
         Model::unguard();
 
         app()['cache']->forget('spatie.permission.cache');
-        $permissions = [];
-        $permissionInstance = new Permission();
 
-        $modules = $permissionInstance->modules;
-        $modulesPermission = $permissionInstance->modulesPermission;
-        $permissionsExtra = $permissionInstance->permissionsExtra;
-
-        foreach ($modules as $module) {
-            foreach ($modulesPermission as $permission) {
-                $permissions[] = $module . ' ' . $permission;
-            }
-        }
-
-        foreach ($permissionsExtra as $permission) {
-            $permissions[] = $permission;
-        }
+        $permissions = [
+            'person create',
+            'person read',
+            'person update',
+            'person delete',
+            'user create',
+            'user read',
+            'user update',
+            'user delete',
+            'role create',
+            'role read',
+            'role update',
+            'role delete',
+            'property create',
+            'property read',
+            'property update',
+            'property delete',
+            'dashboard read',
+            'chat read',
+        ];
 
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);

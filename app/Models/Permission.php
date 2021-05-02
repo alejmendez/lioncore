@@ -14,22 +14,4 @@ class Permission extends PermissionBase implements Auditable
     public $incrementing = false;
 
     protected $keyType = 'string';
-    public $modules = [
-        'person',
-        'user',
-        'role',
-        'property',
-    ];
-    public $modulesPermission = [
-        'list',
-        'show',
-        'store',
-        'update',
-        'destroy',
-        'module-data',
-        'filters',
-    ];
-    public $permissionsExtra = [
-        'chat view',
-    ];
 }
