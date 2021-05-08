@@ -38,14 +38,12 @@ Route::prefix('v1')
             });
 
             Route::prefix('users')->name('users.')->group(function () {
-                Route::get('/', [UserController::class, 'index'])->name('index')
-                    ->middleware('permission:user read');
-                Route::get('/filters', [UserController::class, 'filters'])->name('filters')
-                    ->middleware('permission:user read');
-                Route::get('/module-data', [UserController::class, 'moduleData'])->name('module-data')
-                    ->middleware('permission:user read');
-                Route::get('/{user}', [UserController::class, 'show'])->name('show')
-                    ->middleware('permission:user read');
+                Route::middleware('permission:user read')->group(function () {
+                    Route::get('/', [UserController::class, 'index'])->name('index');
+                    Route::get('/filters', [UserController::class, 'filters'])->name('filters');
+                    Route::get('/module-data', [UserController::class, 'moduleData'])->name('module-data');
+                    Route::get('/{user}', [UserController::class, 'show'])->name('show');
+                });
                 Route::post('/', [UserController::class, 'store'])->name('store')
                     ->middleware('permission:user create');
                 Route::put('/{user}', [UserController::class, 'update'])->name('update')

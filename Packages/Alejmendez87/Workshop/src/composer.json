@@ -1,0 +1,21 @@
+{
+    "name": "alejmendez87/workshop",
+    "description": "Template-based file generation package",
+    "type": "template",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alejandro Mendez",
+            "email": "alejmendez.87@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.3|^8.0",
+        "illuminate/console": "^6.0|^7.0|^8.0",
+        "illuminate/filesystem": "^6.0|^7.0|^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    }
+}
