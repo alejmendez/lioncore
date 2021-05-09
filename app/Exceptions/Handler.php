@@ -83,29 +83,29 @@ class Handler extends ExceptionHandler
             return $this->convertValidationExceptionToResponse($exception, $request);
         } elseif ($exception instanceof ModelNotFoundException) {
             $modelo = strtolower(class_basename($exception->getModel()));
-            return $this->errorResponse(__('There is no instance of with the specified id', ['name' => $modelo]), 404);
+            return $this->errorResponse(trans('errors.there_is_no_instance_of_with_the_specified_id', ['name' => $modelo]), 404);
         } elseif ($exception instanceof AuthenticationException) {
             return $this->unauthenticated($request, $exception);
         } elseif ($exception instanceof AuthorizationException || $exception instanceof UnauthorizedException || $exception instanceof PermissionDoesNotExist) {
-            return $this->errorResponse(__('You do not have permissions to execute this action'), 403);
+            return $this->errorResponse(trans('errors.you_do_not_have_permissions_to_execute_this_action'), 403);
         } elseif ($exception instanceof NotFoundHttpException) {
-            return $this->errorResponse(__('The specified URL was not found'), 404);
+            return $this->errorResponse(trans('errors.the_specified_url_was_not_found'), 404);
         } elseif ($exception instanceof MethodNotAllowedHttpException) {
-            return $this->errorResponse(__('The method specified in the request is invalid'), 405);
+            return $this->errorResponse(trans('errors.errors.the_method_specified_in_the_request_is_invalid'), 405);
         } elseif ($exception instanceof HttpException) {
             return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
         } elseif ($exception instanceof QueryException) {
             $codigo = $exception->errorInfo[1];
 
             if ($codigo == 1451) {
-                return $this->errorResponse(__('The resource cannot be permanently deleted because it is related to some other'), 409);
+                return $this->errorResponse(trans('errors.the_resource_cannot_be_permanently_deleted_because_it_is_related_to_some_other'), 409);
             }
 
             return $this->errorResponse($exception->getMessage(), 409);
         }
 
         if (!config('app.debug')) {
-            return $this->errorResponse(__('Unexpected failure, try later'), 500);
+            return $this->errorResponse(trans('errors.unexpected_failure_try_later'), 500);
         }
 
         return $this->prepareJsonResponse($request, $exception);
@@ -128,7 +128,7 @@ class Handler extends ExceptionHandler
     protected function invalidJson($request, ValidationException $exception)
     {
         return $this->responseJson([
-            'message' => __('The given data was invalid'),
+            'message' => trans('errors.the_given_data_was_invalid'),
             'errors' => $exception->errors(),
         ], $exception->status);
     }

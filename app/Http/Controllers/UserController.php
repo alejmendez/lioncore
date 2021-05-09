@@ -47,12 +47,12 @@ class UserController extends BaseController
             ];
         })->prepend([
             'value' => '',
-            'label' => __('all')
+            'label' => trans('common.all')
         ]);
 
         $statusOptions = Property::getProperty('userStatus')->prepend([
             'value' => '',
-            'label' => __('all')
+            'label' => trans('common.all')
         ]);
 
         $filters = [

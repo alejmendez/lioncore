@@ -17,5 +17,15 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Alejmendez87\\Workshop\\WorkshopServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }

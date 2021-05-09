@@ -112,14 +112,14 @@ class GeneratorCrud implements Generator
         $files = $this->getAllModelsFiles();
         if (!$nameModel) {
             $filesList = [];
-            $exit = '* ' . __('exit');
+            $exit = '* ' . trans('workshop.exit');
 
             foreach ($files as $file) {
                 $filesList[] = $file->getName();
             }
 
             $filesList[] = $exit;
-            $nameModel = $this->choice(__('What model do I use?'), $filesList);
+            $nameModel = $this->choice(trans('workshop.what_model_do_i_use'), $filesList);
 
             if ($nameModel == $exit) {
                 $this->exit();
@@ -127,12 +127,12 @@ class GeneratorCrud implements Generator
         }
 
         if (!isset($files[$nameModel])) {
-            $this->error(__('The model not exist'));
+            $this->error(trans('workshop.the_model_not_exist'));
             exit();
         }
 
         $model = $files[$nameModel];
-        $this->info(__('Using the model') . ': ' . $model->getName());
+        $this->info(trans('workshop.using_the_model') . ': ' . $model->getName());
 
         $fileSelectContent = $this->loadModel($model);
 
@@ -155,7 +155,7 @@ class GeneratorCrud implements Generator
     protected function generateMigration($json)
     {
         if (!$this->getOption('migration')) return;
-        $this->info(__('Generating Migration'));
+        $this->info(trans('workshop.generating_migration'));
         $generator = new Migration($json);
         $generator->generate();
     }
@@ -163,7 +163,7 @@ class GeneratorCrud implements Generator
     protected function generateModel($json)
     {
         if (!$this->getOption('model')) return;
-        $this->info(__('Generating Model'));
+        $this->info(trans('workshop.generating_model'));
         $generator = new Model($json);
         $generator->generate();
     }
@@ -171,7 +171,7 @@ class GeneratorCrud implements Generator
     protected function generateFormRequest($json)
     {
         if (!$this->getOption('formrequest')) return;
-        $this->info(__('Generating FormRequest'));
+        $this->info(trans('workshop.generating_formrequest'));
         $generator = new FormRequest($json);
         $generator->generate();
     }
@@ -179,7 +179,7 @@ class GeneratorCrud implements Generator
     protected function generateController($json)
     {
         if (!$this->getOption('controller')) return;
-        $this->info(__('Generating Controller'));
+        $this->info(trans('workshop.generating_controller'));
         $generator = new Controller($json);
         $generator->generate();
     }
@@ -187,7 +187,7 @@ class GeneratorCrud implements Generator
     protected function generateRepository($json)
     {
         if (!$this->getOption('repository')) return;
-        $this->info(__('Generating Repository'));
+        $this->info(trans('workshop.generating_repository'));
         $generator = new Repository($json);
         $generator->generate();
     }
@@ -195,7 +195,7 @@ class GeneratorCrud implements Generator
     protected function generatePermissions($json)
     {
         if (!$this->getOption('permissions')) return;
-        $this->info(__('Generating Permissions'));
+        $this->info(trans('workshop.generating_permissions'));
         $generator = new Permission($json);
         $generator->generate();
     }
@@ -203,7 +203,7 @@ class GeneratorCrud implements Generator
     protected function generateViewVue($json)
     {
         if (!$this->getOption('view')) return;
-        $this->info(__('Generating View'));
+        $this->info(trans('workshop.generating_view'));
         $generator = new View($json);
         $generator->generate();
     }
@@ -211,7 +211,7 @@ class GeneratorCrud implements Generator
     protected function generateRoute($json)
     {
         if (!$this->getOption('route')) return;
-        $this->info(__('Generating Routes'));
+        $this->info(trans('workshop.generating_routes'));
         $generator = new Route($json);
         $generator->generate();
     }
@@ -219,7 +219,7 @@ class GeneratorCrud implements Generator
     protected function generateTranslations($json)
     {
         if (!$this->getOption('translations')) return;
-        $this->info(__('Generating Translations'));
+        $this->info(trans('workshop.generating_translations'));
         $generator = new Translation($json);
         $generator->generate();
     }
@@ -227,7 +227,7 @@ class GeneratorCrud implements Generator
     protected function generateFactory($json)
     {
         if (!$this->getOption('factory')) return;
-        $this->info(__('Generating Factory'));
+        $this->info(trans('workshop.generating_factory'));
         $generator = new Factory($json);
         $generator->generate();
     }
@@ -235,7 +235,7 @@ class GeneratorCrud implements Generator
     protected function generateTest($json)
     {
         if (!$this->getOption('test')) return;
-        $this->info(__('Generating Test'));
+        $this->info(trans('workshop.generating_test'));
         $generator = new Test($json);
         $generator->generate();
     }
@@ -281,7 +281,7 @@ class GeneratorCrud implements Generator
 
     public function exit()
     {
-        $this->info(__('goodbye'));
+        $this->info(trans('workshop.goodbye'));
         exit;
     }
 

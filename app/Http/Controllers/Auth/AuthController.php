@@ -38,7 +38,7 @@ class AuthController extends BaseController
             return $this->login();
         } catch (QueryException $e) {
             return response()->json([
-                'error' => __('Error trying to create User')
+                'error' => trans('auth.error_trying_to_create_user')
             ], 401);
         } catch (Exception $e) {
             return response()->json([
@@ -60,7 +60,7 @@ class AuthController extends BaseController
         if (!$jwt_token) {
             return response()->json([
                 'error' => 'Unauthorized',
-                'message' => __('Invalid email or password')
+                'message' => trans('auth.invalid_email_or_password')
             ], 401);
         }
 
@@ -83,12 +83,12 @@ class AuthController extends BaseController
             auth()->logout();
             return response()->json([
                 'status' => 'ok',
-                'message' => __('Successful logout')
+                'message' => trans('auth.successful_logout')
             ]);
         } catch (\Exception $exception) {
             return response()->json([
                 'status' => 'unknown_error',
-                'message' => __('User could not be logged out')
+                'message' => trans('auth.user_could_not_be_logged_out')
             ], 500);
         }
     }

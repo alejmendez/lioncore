@@ -16,5 +16,8 @@ return [
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-
+    'error_trying_to_create_user' => 'Error trying to create user',
+    'invalid_email_or_password' => 'Invalid email or password',
+    'successful_logout' => 'Successful logout',
+    'user_could_not_be_logged_out' => 'User could not be logged out',
 ];
