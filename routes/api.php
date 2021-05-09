@@ -8,6 +8,9 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\RoleController;
 
+Route::pattern('id', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
+
+
 Route::prefix('v1')
     //->domain('{tenant}.lioncore.oo')
     ->group(function () {
@@ -27,13 +30,13 @@ Route::prefix('v1')
             Route::prefix('person')->name('person.')->group(function () {
                 Route::get('/', [PersonController::class, 'index'])->name('index')
                     ->middleware('permission:person read');
-                Route::get('/{person}', [PersonController::class, 'show'])->name('show')
+                Route::get('/{id}', [PersonController::class, 'show'])->name('show')
                     ->middleware('permission:person read');
                 Route::post('/', [PersonController::class, 'store'])->name('store')
                     ->middleware('permission:person create');
-                Route::put('/{person}', [PersonController::class, 'update'])->name('update')
+                Route::put('/{id}', [PersonController::class, 'update'])->name('update')
                     ->middleware('permission:person update');
-                Route::delete('/{person}', [PersonController::class, 'destroy'])->name('destroy')
+                Route::delete('/{id}', [PersonController::class, 'destroy'])->name('destroy')
                     ->middleware('permission:person delete');
             });
 
@@ -42,13 +45,13 @@ Route::prefix('v1')
                     Route::get('/', [UserController::class, 'index'])->name('index');
                     Route::get('/filters', [UserController::class, 'filters'])->name('filters');
                     Route::get('/module-data', [UserController::class, 'moduleData'])->name('module-data');
-                    Route::get('/{user}', [UserController::class, 'show'])->name('show');
+                    Route::get('/{id}', [UserController::class, 'show'])->name('show');
                 });
                 Route::post('/', [UserController::class, 'store'])->name('store')
                     ->middleware('permission:user create');
-                Route::put('/{user}', [UserController::class, 'update'])->name('update')
+                Route::put('/{id}', [UserController::class, 'update'])->name('update')
                     ->middleware('permission:user update');
-                Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy')
+                Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy')
                     ->middleware('permission:user delete');
             });
 
@@ -59,13 +62,13 @@ Route::prefix('v1')
                     ->middleware('permission:property read');
                 Route::get('/module-data', [PropertyController::class, 'moduleData'])->name('module-data')
                     ->middleware('permission:property read');
-                Route::get('/{property}', [PropertyController::class, 'show'])->name('show')
+                Route::get('/{id}', [PropertyController::class, 'show'])->name('show')
                     ->middleware('permission:property read');
                 Route::post('/', [PropertyController::class, 'store'])->name('store')
                     ->middleware('permission:property create');
-                Route::put('/{property}', [PropertyController::class, 'update'])->name('update')
+                Route::put('/{id}', [PropertyController::class, 'update'])->name('update')
                     ->middleware('permission:property update');
-                Route::delete('/{property}', [PropertyController::class, 'destroy'])->name('destroy')
+                Route::delete('/{id}', [PropertyController::class, 'destroy'])->name('destroy')
                     ->middleware('permission:property delete');
             });
 
@@ -91,13 +94,13 @@ Route::prefix('v1')
                     ->middleware('permission:role read');
                 Route::get('/module-data', [RoleController::class, 'moduleData'])->name('module-data')
                     ->middleware('permission:role read');
-                Route::get('/{role}', [RoleController::class, 'show'])->name('show')
+                Route::get('/{id}', [RoleController::class, 'show'])->name('show')
                     ->middleware('permission:role read');
                 Route::post('/', [RoleController::class, 'store'])->name('store')
                     ->middleware('permission:role create');
-                Route::put('/{role}', [RoleController::class, 'update'])->name('update')
+                Route::put('/{id}', [RoleController::class, 'update'])->name('update')
                     ->middleware('permission:role update');
-                Route::delete('/{role}', [RoleController::class, 'destroy'])->name('destroy')
+                Route::delete('/{id}', [RoleController::class, 'destroy'])->name('destroy')
                     ->middleware('permission:role delete');
             });
 
