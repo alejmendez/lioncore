@@ -38,7 +38,7 @@ abstract class Generator
 
     protected function view($view, $data)
     {
-        return view('workshop.' . $view, $data)->render();
+        return view('workshop::' . $view, $data)->render();
     }
 
     protected function addNewContent($routeContent, $search, $newContent, $tabBase = 0, $tabChar = "\t")

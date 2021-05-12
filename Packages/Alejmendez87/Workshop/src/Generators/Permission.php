@@ -20,7 +20,7 @@ class Permission extends Generator
             $permission . ' delete'
         ];
 
-        $roleAdmin = Role::findByName('admin', $guardName);
+        $roleAdmin = Role::findByName('Super Admin', $guardName);
         foreach ($permissions as $permission) {
             PermissionModel::findOrCreate($permission, $guardName);
         }

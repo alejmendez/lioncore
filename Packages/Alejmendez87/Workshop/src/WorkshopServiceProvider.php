@@ -31,7 +31,7 @@ class WorkshopServiceProvider extends ServiceProvider
             ]);
         }
         $this->mergeConfigFrom(__DIR__.'/../config/workshop.php', 'workshop');
-        $this->loadViewsFrom(__DIR__.'/resources/views/scaffolding', 'workshop');
+        $this->loadViewsFrom(__DIR__.'/resources', 'workshop');
     }
 
     /**
