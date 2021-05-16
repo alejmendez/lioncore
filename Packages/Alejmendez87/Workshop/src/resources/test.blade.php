@@ -1,16 +1,29 @@
 namespace App\Tests\Feature;
 
-use App\Models\{{ ucwords($nameModel) }};
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+
 use Tests\TestCase;
+
+use App\Models\{{ ucwords($nameModel) }};
 
 class {{ ucwords($nameModel) }}Test extends TestCase
 {
     protected function generateData()
     {
-        $faker = \Faker\Factory::create();
         return [
 @foreach ($fields as $field)
-            '{!! $field['name'] !!}' => $faker->{!! $field['faker'] !!},
+            '{!! $field['name'] !!}' => $this->faker->{!! $field['faker'] !!},
+@endforeach
+        ];
+    }
+
+    protected function getListElementData()
+    {
+        return [
+            'id',
+@foreach ($fields as $field)
+            '{!! $field['name'] !!}',
 @endforeach
         ];
     }
@@ -22,13 +35,18 @@ class {{ ucwords($nameModel) }}Test extends TestCase
     public function test_can_create_{{ $nameModel }}()
     {
         $data = $this->generateData();
+        Log::debug('[test_can_create_{{ $nameModel }}] Data used for property creation: ');
+        Log::debug(json_encode($data));
 
-        $this->json('POST', route('{{ $nameModel }}s.store'), $data)
-            ->assertStatus(201)
+        $response = $this->postJson(route('{{ $nameModelPlural }}.store'), $data);
+        $response
+            ->assertCreated()
             ->assertJson([
                 'code' => 201,
-                'status' => 'success',
-                'data' => $data
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
             ]);
     }
 
@@ -38,17 +56,29 @@ class {{ ucwords($nameModel) }}Test extends TestCase
      */
     public function test_can_update_{{ $nameModel }}()
     {
-        ${{ $nameModel }} = factory({{ ucwords($nameModel) }}::class)->create();
+        ${{ $nameModel }} = {{ ucwords($nameModel) }}::factory()->create();
 
         $data = $this->generateData();
+        Log::debug('[test_can_update_{{ $nameModel }}] {{ ucwords($nameModel) }} created');
+        Log::debug(json_encode($data));
 
-        $this->json('PUT', route('{{ $nameModel }}s.update', ${{ $nameModel }}->id), $data)
-            ->assertStatus(200)
+        Log::debug('[test_can_update_{{ $nameModel }}] Data used for {{ $nameModel }} update: ');
+        Log::debug(json_encode($data));
+
+        $response = $this->putJson(route('{{ $nameModelPlural }}.update', ${{ $nameModel }}->id), $data);
+        $response
+            ->assertOk()
             ->assertJson([
                 'code' => 200,
-                'status' => 'success',
-                'data' => $data
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
             ]);
+
+        $this->assertDatabaseHas('{{ $nameModelPlural }}', [
+            'name' => $data['name'],
+        ]);
     }
 
     /**
@@ -57,10 +87,22 @@ class {{ ucwords($nameModel) }}Test extends TestCase
      */
     public function test_can_show_{{ $nameModel }}()
     {
-        ${{ $nameModel }} = factory({{ ucwords($nameModel) }}::class)->create();
+        ${{ $nameModel }} = {{ ucwords($nameModel) }}::factory()->create();
 
-        $this->json('GET', route('{{ $nameModel }}s.show', ${{ $nameModel }}->id))
-            ->assertStatus(200);
+        $response = $this->getJson(route('{{ $nameModelPlural }}.show', ${{ $nameModel }}->id));
+        $response
+            ->assertOk()
+            ->assertJson([
+                'code' => 200,
+                'status' => 'success'
+            ])
+            ->assertJsonStructure([
+                'data' => $this->getListElementData(),
+            ]);
+
+        $this->assertDatabaseHas('{{ $nameModelPlural }}', [
+            'name' => ${{ $nameModel }}->name,
+        ]);
     }
 
     /**
@@ -69,33 +111,38 @@ class {{ ucwords($nameModel) }}Test extends TestCase
      */
     public function test_can_delete_{{ $nameModel }}()
     {
-        ${{ $nameModel }} = factory({{ ucwords($nameModel) }}::class)->create();
+        ${{ $nameModel }} = {{ ucwords($nameModel) }}::factory()->create();
 
-        $this->json('DELETE', route('{{ $nameModel }}s.destroy', ${{ $nameModel }}->id))
-            ->assertStatus(200);
+        $response = $this->deleteJson(route('{{ $nameModelPlural }}.destroy', ${{ $nameModel }}->id));
+        $response
+            ->assertOk()
+            ->assertJson([
+                'code'    => 200,
+                'status'  => 'success',
+                'data'    => 'Resource deleted',
+                'message' => 'Deleted'
+            ]);
+
+        $this->assertSoftDeleted(${{ $nameModel }});
     }
 
     /**
      * @group {{ $nameModel }}
      * @test
      */
-    public function test_can_list_{{ $nameModel }}s()
+    public function test_can_list_{{ $nameModelPlural }}()
     {
-        ${{ $nameModel }}s = factory({{ ucwords($nameModel) }}::class, 2)->create()->map(function (${{ $nameModel }}) {
-            return ${{ $nameModel }}->only([{!! $fieldsInList !!}]);
-        });
+        {{ ucwords($nameModel) }}::factory(2)->create();
 
-        $this->json('GET', route('{{ $nameModel }}s.index') . '?page=1&rowsPerPage=5')
-            ->assertStatus(200)
+        $response = $this->getJson(route('{{ $nameModelPlural }}.index') . '?page=1&rowsPerPage=5');
+        // dd($response);
+        $response
+            ->assertOk()
             ->assertJsonStructure([
                 'draw',
                 'recordsTotal',
                 'recordsFiltered',
-                'data' => [
-                    [
-                        {!! $fieldsInList !!}
-                    ]
-                ],
+                'data' => [$this->getListElementData()],
             ]);
     }
 }

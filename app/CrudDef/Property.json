@@ -1,5 +1,6 @@
 {
     "model": "Property",
+    "modelPluralName": "Properties",
     "module": "Property",
     "title": "Property",
     "dateMigration": "2020_06_10_000000",
@@ -26,7 +27,7 @@
             "searchable": true,
             "inForm": true,
             "inList": true,
-            "faker": "unique()->word"
+            "faker": "faker->unique()->word . $this->faker->numberBetween(1, 999999)"
         },
         {
             "name": "value",
@@ -37,7 +38,7 @@
             "searchable": true,
             "inForm": true,
             "inList": true,
-            "faker": "unique()->word"
+            "faker": "Str::slug($property, '-')"
         }
     ]
 }

@@ -1,5 +1,6 @@
 {
     "model": "Role",
+    "modelPluralName": "Roles",
     "module": "Role",
     "title": "Role",
     "dateMigration": "2019_12_11_000000",

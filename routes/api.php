@@ -28,10 +28,12 @@ Route::prefix('v1')
 
         Route::middleware('auth:api')->group(function () {
             Route::prefix('person')->name('person.')->group(function () {
-                Route::get('/', [PersonController::class, 'index'])->name('index')
-                    ->middleware('permission:person read');
-                Route::get('/{id}', [PersonController::class, 'show'])->name('show')
-                    ->middleware('permission:person read');
+                Route::middleware('permission:person read')->group(function () {
+                    Route::get('/', [PersonController::class, 'index'])->name('index');
+                    Route::get('/filters', [PersonController::class, 'filters'])->name('filters');
+                    Route::get('/module-data', [PersonController::class, 'moduleData'])->name('module-data');
+                    Route::get('/{id}', [PersonController::class, 'show'])->name('show');
+                });
                 Route::post('/', [PersonController::class, 'store'])->name('store')
                     ->middleware('permission:person create');
                 Route::put('/{id}', [PersonController::class, 'update'])->name('update')
@@ -56,14 +58,12 @@ Route::prefix('v1')
             });
 
             Route::prefix('properties')->name('properties.')->group(function () {
-                Route::get('/', [PropertyController::class, 'index'])->name('index')
-                    ->middleware('permission:property read');
-                Route::get('/filters', [PropertyController::class, 'filters'])->name('filters')
-                    ->middleware('permission:property read');
-                Route::get('/module-data', [PropertyController::class, 'moduleData'])->name('module-data')
-                    ->middleware('permission:property read');
-                Route::get('/{id}', [PropertyController::class, 'show'])->name('show')
-                    ->middleware('permission:property read');
+                Route::middleware('permission:property read')->group(function () {
+                    Route::get('/', [PropertyController::class, 'index'])->name('index');
+                    Route::get('/filters', [PropertyController::class, 'filters'])->name('filters');
+                    Route::get('/module-data', [PropertyController::class, 'moduleData'])->name('module-data');
+                    Route::get('/{id}', [PropertyController::class, 'show'])->name('show');
+                });
                 Route::post('/', [PropertyController::class, 'store'])->name('store')
                     ->middleware('permission:property create');
                 Route::put('/{id}', [PropertyController::class, 'update'])->name('update')
@@ -88,14 +88,12 @@ Route::prefix('v1')
             });
 
             Route::prefix('roles')->name('roles.')->group(function () {
-                Route::get('/', [RoleController::class, 'index'])->name('index')
-                    ->middleware('permission:role read');
-                Route::get('/filters', [RoleController::class, 'filters'])->name('filters')
-                    ->middleware('permission:role read');
-                Route::get('/module-data', [RoleController::class, 'moduleData'])->name('module-data')
-                    ->middleware('permission:role read');
-                Route::get('/{id}', [RoleController::class, 'show'])->name('show')
-                    ->middleware('permission:role read');
+                Route::middleware('permission:role read')->group(function () {
+                    Route::get('/', [RoleController::class, 'index'])->name('index');
+                    Route::get('/filters', [RoleController::class, 'filters'])->name('filters');
+                    Route::get('/module-data', [RoleController::class, 'moduleData'])->name('module-data');
+                    Route::get('/{id}', [RoleController::class, 'show'])->name('show');
+                });
                 Route::post('/', [RoleController::class, 'store'])->name('store')
                     ->middleware('permission:role create');
                 Route::put('/{id}', [RoleController::class, 'update'])->name('update')

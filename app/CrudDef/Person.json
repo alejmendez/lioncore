@@ -1,5 +1,6 @@
 {
     "model": "Person",
+    "modelPluralName": "People",
     "module": "core",
     "title": "Person",
     "dateMigration": "2019_12_09_000000",

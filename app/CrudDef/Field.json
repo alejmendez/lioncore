@@ -1,7 +1,8 @@
 {
-    "model": "Form",
+    "model": "Field",
+    "modelPluralName": "Fields",
     "module": "core",
-    "title": "Form",
+    "title": "Field",
     "dateMigration": "2019_01_30_000001",
     "inDB": true,
     "fields":[

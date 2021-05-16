@@ -14,7 +14,7 @@ return [
     'generating_view' => 'Generando vista',
     'generating_routes' => 'Generando rutas',
     'generating_translations' => 'Generando Traducciones',
-    'generating_factory' => 'Fábrica generadora',
-    'generating_test' => 'Prueba de generación',
+    'generating_factory' => 'Generando factoría',
+    'generating_test' => 'Generando Pruebas',
     'goodbye' => 'Adiós',
 ];

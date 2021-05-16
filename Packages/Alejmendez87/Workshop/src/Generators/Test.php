@@ -9,6 +9,8 @@ class Test extends Generator
     public function generate()
     {
         $fields = $this->getFieldsWithoutId();
+        $nameModel = strtolower($this->getNameModel());
+        $nameRoutePlural = strtolower($this->getModelPluralName());
 
         $fieldsInList = $fields->reject(function ($field) {
             return !$field['inList'];
@@ -17,10 +19,11 @@ class Test extends Generator
         })->implode(", ");
 
         $contents = $this->view('test', [
-            'nameModel'    => strtolower($this->getNameModel()),
-            'fields'       => $fields,
-            'fieldsInList' => $fieldsInList,
-            'json'         => $this->json,
+            'nameModel'       => $nameModel,
+            'nameModelPlural' => $nameRoutePlural,
+            'fields'          => $fields,
+            'fieldsInList'    => $fieldsInList,
+            'json'            => $this->json,
         ]);
 
         $nameFile = ucwords($this->getNameModel()) . "Test.php";

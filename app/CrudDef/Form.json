@@ -1,5 +1,6 @@
 {
     "model": "Form",
+    "modelPluralName": "Forms",
     "module": "core",
     "title": "Form",
     "dateMigration": "2019_01_30_000000",

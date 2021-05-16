@@ -24,6 +24,11 @@ abstract class Generator
         return $this->json['model'];
     }
 
+    protected function getModelPluralName()
+    {
+        return $this->json['modelPluralName'];
+    }
+
     protected function getFields()
     {
         return collect($this->json['fields']);
@@ -44,7 +49,10 @@ abstract class Generator
     protected function addNewContent($routeContent, $search, $newContent, $tabBase = 0, $tabChar = "\t")
     {
         $tabs = str_repeat($tabChar, $tabBase);
-        $newContent = $tabs . $newContent . "\n" . $tabs . $search;
+        $newContent = collect(explode("\n", $newContent))->map(function($line) use($tabs) {
+            return $tabs . $line;
+        })->join("\n");
+        $newContent = $newContent . "\n" . $tabs . $search;
         return str_replace($tabs . $search, $newContent, $routeContent);
     }
 

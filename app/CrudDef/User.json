@@ -1,5 +1,6 @@
 {
     "model": "User",
+    "modelPluralName": "Users",
     "module": "User",
     "title": "User",
     "dateMigration": "2019_12_10_000000",
