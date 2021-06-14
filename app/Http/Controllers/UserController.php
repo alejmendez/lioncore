@@ -24,12 +24,9 @@ class UserController extends BaseController
 
     public function index()
     {
-        $query = User::with('person', 'roles');
-        return datatables()->eloquent($query)
-            ->setTransformer(function($user){
-                return $user->getAllInformation();
-            })
-            ->make(true);
+        // $query = User::with('person', 'roles');
+        $result = User::filter(request()->all())->paginateFilter()->withQueryString();
+        return $result;
     }
 
     public function show($id)

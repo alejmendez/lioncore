@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Spatie\Permission\Models\Role as RoleBase;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\AutoGenerateUuid;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Models\Role as RoleBase;
+use OwenIt\Auditing\Contracts\Auditable;
+use App\Traits\AutoGenerateUuid;
 
 class Role extends RoleBase implements Auditable
 {

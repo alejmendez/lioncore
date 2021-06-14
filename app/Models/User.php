@@ -8,14 +8,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Spatie\Permission\Traits\HasRoles;
-use OwenIt\Auditing\Contracts\Auditable;
+use EloquentFilter\Filterable;
 use Musonza\Chat\Traits\Messageable;
+use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject, Auditable
 {
-    use HasFactory, Notifiable, \OwenIt\Auditing\Auditable, HasRoles, SoftDeletes, Messageable;
+    use HasFactory, Notifiable, \OwenIt\Auditing\Auditable, HasRoles, SoftDeletes, Messageable, Filterable;
 
     public $incrementing = false;
 
