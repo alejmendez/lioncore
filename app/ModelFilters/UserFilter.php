@@ -47,4 +47,14 @@ class UserFilter extends ModelFilterBase
     {
         return $this->whereLike('status', $value);
     }
+
+    public function allFields($value)
+    {
+        parent::allFields($value);
+
+        $this->leftJoin('people', 'users.person_id', '=', 'people' . '.id');
+        foreach ($this->relations['person'] as $field) {
+            $this->whereLike('people.' . $field, $value, 'or');
+        }
+    }
 }

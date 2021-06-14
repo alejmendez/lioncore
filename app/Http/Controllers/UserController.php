@@ -24,7 +24,6 @@ class UserController extends BaseController
 
     public function index()
     {
-        // $query = User::with('person', 'roles');
         $result = User::filter(request()->all())->paginateFilter()->withQueryString();
         return $result;
     }

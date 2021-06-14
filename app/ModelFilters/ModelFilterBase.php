@@ -14,14 +14,6 @@ class ModelFilterBase extends ModelFilter
         foreach ($this->allFieldsSearch as $field) {
             $this->whereLike($field, $value, 'or');
         }
-
-        foreach ($this->relations as $relationName => $relationFields) {
-            foreach ($relationFields as $field) {
-                $this->related($relationName, function($query) use ($value, $field) {
-                    return $query->whereLike($field, $value, 'or');
-                });
-            }
-        }
         return $this;
     }
 }

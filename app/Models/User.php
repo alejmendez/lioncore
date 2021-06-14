@@ -21,7 +21,7 @@ class User extends Authenticatable implements JWTSubject, Auditable
     public $incrementing = false;
 
     protected $keyType = 'string';
-    protected $with = ['person'];
+    protected $with = ['person', 'roles'];
 
     public static function boot()
     {
