@@ -13,6 +13,7 @@ class View extends Generator
 
     public function generate()
     {
+        return;
         $this->generateRouteVue();
         $this->generateViewList();
         $this->generateViewForm();

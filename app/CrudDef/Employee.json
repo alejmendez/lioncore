@@ -1,0 +1,86 @@
+{
+    "model": "Employee",
+    "modelPluralName": "Employees",
+    "module": "core",
+    "title": "Employee",
+    "dateMigration": "2021_06_16_000000",
+    "inDB": false,
+    "fields": [
+        {
+            "name": "id",
+            "type": "increments",
+            "htmlType": "",
+            "validations": "",
+            "searchable": false,
+            "fillable": false,
+            "primary": true,
+            "inForm": false,
+            "inList": false
+        },
+        {
+            "name": "code",
+            "type": "string",
+            "length": 20,
+            "label" : "Code",
+            "htmlType": "text",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "numberBetween(5000000, 30000000)",
+            "flex": "sm6"
+        },
+        {
+            "name": "position",
+            "type": "string",
+            "length": 50,
+            "label" : "Position",
+            "htmlType": "text",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "numberBetween(5000000, 30000000)",
+            "flex": "sm6"
+        },
+        {
+            "name": "group_id",
+            "type": "string",
+            "length": 36,
+            "label" : "Group",
+            "htmlType": "select",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "numberBetween(5000000, 30000000)",
+            "flex": "sm6"
+        },
+        {
+            "name": "date_admission",
+            "type": "date",
+            "length": 20,
+            "label" : "Date of admission",
+            "htmlType": "text",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "numberBetween(5000000, 30000000)",
+            "flex": "sm6"
+        },
+        {
+            "name": "salary",
+            "type": "decimal",
+            "length": 20,
+            "label" : "Salary",
+            "htmlType": "text",
+            "validations": "",
+            "searchable": true,
+            "inForm": true,
+            "inList": true,
+            "faker": "numberBetween(5000000, 30000000)",
+            "flex": "sm6"
+        }
+    ]
+}

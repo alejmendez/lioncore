@@ -18,11 +18,10 @@ class CreatePeopleTable extends Migration
             $table->string('dni', 15)->nullable();
             $table->string('first_name', 80)->nullable();
             $table->string('last_name', 80)->nullable();
-            $table->string('company', 80)->nullable();
             $table->string('avatar', 200)->nullable();
             $table->date('birthdate')->nullable();
-            $table->string('room_telephone', 15)->nullable();
-            $table->string('mobile_phone', 15)->nullable();
+            $table->string('room_telephone', 100)->nullable();
+            $table->string('mobile_phone', 100)->nullable();
             $table->string('website', 255)->nullable();
             $table->string('languages', 100)->nullable();
             $table->string('email', 80)->nullable();

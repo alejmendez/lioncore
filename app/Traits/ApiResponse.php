@@ -15,12 +15,9 @@ trait ApiResponse
      */
     protected function createdResponse($data)
     {
-        $response = [
-            'code'   => 201,
-            'status' => 'success',
-            'data'   => $data
-        ];
-        return $this->responseJson($response, $response['code']);
+        return $this->responseJson([
+            'data' => $data
+        ], 201);
     }
 
     /**
@@ -30,12 +27,9 @@ trait ApiResponse
      */
     protected function showResponse($data)
     {
-        $response = [
-            'code'   => 200,
-            'status' => 'success',
-            'data'   => $data,
-        ];
-        return $this->responseJson($response, $response['code']);
+        return $this->responseJson([
+            'data' => $data,
+        ]);
     }
 
     /**
@@ -45,9 +39,7 @@ trait ApiResponse
      */
     protected function listResponse(Collection $data)
     {
-        $response = [
-            'code'      => 200,
-            'status'    => 'success',
+        return $this->responseJson([
             'data'      => $data->all(),
             'paginator' => [
                 'pages'        => (int) $data->lastPage(),
@@ -55,8 +47,7 @@ trait ApiResponse
                 'per_page'     => (int) $data->perPage(),
                 'total'        => (int) $data->total(),
             ],
-        ];
-        return $this->responseJson($response, $response['code']);
+        ]);
     }
 
     /**
@@ -65,13 +56,10 @@ trait ApiResponse
      */
     protected function notFoundResponse()
     {
-        $response = [
-            'code'    => 404,
-            'status'  => 'error',
+        return $this->responseJson([
             'data'    => 'Resource Not Found',
             'message' => 'Not Found'
-        ];
-        return $this->responseJson($response, $response['code']);
+        ], 404);
     }
 
     /**
@@ -80,13 +68,10 @@ trait ApiResponse
      */
     protected function deletedResponse()
     {
-        $response = [
-            'code'    => 200,
-            'status'  => 'success',
+        return $this->responseJson([
             'data'    => 'Resource deleted',
             'message' => 'Deleted'
-        ];
-        return $this->responseJson($response, $response['code']);
+        ]);
     }
 
     /**
@@ -96,13 +81,10 @@ trait ApiResponse
      */
     protected function clientErrorResponse($data)
     {
-        $response = [
-            'code'    => 422,
-            'status'  => 'error',
+        return $this->responseJson([
             'data'    => $data,
             'message' => 'Unprocessable entity'
-        ];
-        return $this->responseJson($response, $response['code']);
+        ], 422);
     }
 
     /**
@@ -112,13 +94,10 @@ trait ApiResponse
      */
     protected function clientUnauthorizedResponse($data = [])
     {
-        $response = [
-            'code'    => 401,
-            'status'  => 'unauthenticated',
+        return $this->responseJson([
             'data'    => $data,
             'message' => 'unauthorized action'
-        ];
-        return $this->responseJson($response, $response['code']);
+        ], 401);
     }
 
     /**

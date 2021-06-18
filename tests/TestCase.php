@@ -15,10 +15,7 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $userAdmin = User::whereEmail('admin@test.cl')->first();
-        $this->actingAs($userAdmin);
     }
-
 
     /**
      * Call protected/private method of a class.
@@ -36,19 +33,5 @@ abstract class TestCase extends BaseTestCase
         $method->setAccessible(true);
 
         return $method->invokeArgs($object, $parameters);
-    }
-
-    /**
-     * Set the currently logged in user for the application.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  string|null                                $driver
-     * @return $this
-     */
-    public function actingAs($user, $driver = null)
-    {
-        $token = JWTAuth::fromUser($user);
-        $this->withToken($token);
-        return parent::actingAs($user, $driver);
     }
 }

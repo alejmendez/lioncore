@@ -13,6 +13,7 @@ Route::pattern('id', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{1
 
 Route::prefix('v1')
     //->domain('{tenant}.lioncore.oo')
+    ->name('api.v1.')
     ->group(function () {
         Route::prefix('auth')->name('auth.')->group(function () {
             Route::post('login', [AuthController::class, 'login'])->name('login');
@@ -102,6 +103,20 @@ Route::prefix('v1')
                     ->middleware('permission:role delete');
             });
 
+            Route::prefix('employees')->name('employees.')->group(function () {
+                Route::middleware('permission:employee read')->group(function () {
+                    Route::get('/', [EmployeeController::class, 'index'])->name('index');
+                    Route::get('/filters', [EmployeeController::class, 'filters'])->name('filters');
+                    Route::get('/module-data', [EmployeeController::class, 'moduleData'])->name('module-data');
+                    Route::get('/{id}', [EmployeeController::class, 'show'])->name('show');
+                });
+                Route::post('/', [EmployeeController::class, 'store'])->name('store')
+                    ->middleware('permission:employee create');
+                Route::put('/{id}', [EmployeeController::class, 'update'])->name('update')
+                    ->middleware('permission:employee update');
+                Route::delete('/{id}', [EmployeeController::class, 'destroy'])->name('destroy')
+                    ->middleware('permission:employee delete');
+            });
             // add router
         });
     });

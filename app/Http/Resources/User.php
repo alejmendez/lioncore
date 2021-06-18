@@ -7,17 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class User extends JsonResource
 {
     /**
-     * Create a new resource instance.
-     *
-     * @param  mixed  $resource
-     * @return void
-     */
-    public function __construct($resource)
-    {
-        $this->resource = $resource;
-    }
-
-    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request

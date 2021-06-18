@@ -10,13 +10,13 @@ use App\Traits\ApiResponse;
 
 // Request
 use App\Http\Requests\UserRequest;
-
+use App\Http\Resources\UserCollection;
+use App\Http\Resources\UserResource;
 // Modelos
 use App\Models\User;
 use App\Models\Person;
 use App\Models\Role;
 use App\Models\Property;
-use App\Http\Resources\User as UserResource;
 
 class UserController extends BaseController
 {
@@ -24,14 +24,15 @@ class UserController extends BaseController
 
     public function index()
     {
-        $result = User::filter(request()->all())->paginateFilter()->withQueryString();
+        $perPage = request('per_page', 15);
+        $result = User::filter(request()->all())->paginateFilter($perPage)->withQueryString();
+        // UserCollection::make($user);
         return $result;
     }
 
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::with('person', 'roles')->findOrFail($id);
-        return $this->showResponse($user->getAllInformation());
+        return UserResource::make($user);
     }
 
     public function filters()

@@ -13,6 +13,7 @@ class Translation extends Generator
 
     public function generate()
     {
+        return;
         $this->tr = new GoogleTranslate();
         $this->tr->setSource();
 
