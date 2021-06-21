@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use CloudCreativity\LaravelJsonApi\LaravelJsonApi;
 use Illuminate\Support\ServiceProvider;
 
 use Illuminate\Support\Facades\Blade;
@@ -60,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        LaravelJsonApi::defaultApi('v1');
         Blade::component('select', SelectComponent::class);
         Blade::component('input', InputComponent::class);
     }

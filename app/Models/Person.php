@@ -38,4 +38,14 @@ class Person extends ModelBase
             $this->attributes['email'] = strtolower($email);
         }
     }
+
+    public function user()
+    {
+        return $this->hasOne('App\Models\User');
+    }
+
+    public function employee()
+    {
+        return $this->hasOne('App\Models\Employee');
+    }
 }
