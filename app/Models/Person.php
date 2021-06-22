@@ -9,7 +9,6 @@ class Person extends ModelBase
         'dni',
         'first_name',
         'last_name',
-        'company',
         'avatar',
         'birthdate',
         'room_telephone',

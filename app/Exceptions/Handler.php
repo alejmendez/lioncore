@@ -69,9 +69,6 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof Responsable) {
-            $response = $exception->render($request);
-            return Router::toResponse($request, $response);
-        } elseif ($exception instanceof Responsable) {
             return $exception->toResponse($request);
         }
 

@@ -53,6 +53,6 @@ class FormRequest extends BaseFormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return true;
     }
 }

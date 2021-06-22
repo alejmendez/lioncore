@@ -4,6 +4,8 @@ namespace App\Tests\Feature;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
 
@@ -11,6 +13,10 @@ use App\Models\User;
 
 class UserTest extends TestCase
 {
+    use WithoutMiddleware, RefreshDatabase;
+
+    public $seed = true;
+
     protected function generateData()
     {
         $firstName = $this->faker->firstName;
@@ -72,7 +78,6 @@ class UserTest extends TestCase
             'id',
             'displayName',
             'about',
-            'photoURL',
             'role',
             'permissions',
             'username',
@@ -112,18 +117,14 @@ class UserTest extends TestCase
      */
     public function test_can_create_user()
     {
-        $this->withoutMiddleware();
         $data = $this->generateData();
         Log::debug('[test_can_create_user] Data used for user creation: ');
         Log::debug(json_encode($data));
 
         $response = $this->postJson(route('api.v1.users.store'), $data);
+        // $response->dump();
         $response
             ->assertCreated()
-            ->assertJson([
-                'code' => 201,
-                'status' => 'success'
-            ])
             ->assertJsonStructure([
                 'data' => $this->getListElementData(),
             ]);
@@ -135,7 +136,6 @@ class UserTest extends TestCase
      */
     public function test_can_update_user()
     {
-        $this->withoutMiddleware();
         $user = User::factory()->create();
 
         $data = $this->generateData();
@@ -145,13 +145,13 @@ class UserTest extends TestCase
         Log::debug('[test_can_update_user] Data used for user update: ');
         Log::debug(json_encode($data));
 
+        Log::debug('[test_can_update_user] Url');
+        Log::debug(route('api.v1.users.update', $user->id));
+
         $response = $this->putJson(route('api.v1.users.update', $user->id), $data);
+        // $response->dump();
         $response
             ->assertOk()
-            ->assertJson([
-                'code' => 200,
-                'status' => 'success'
-            ])
             ->assertJsonStructure([
                 'data' => $this->getListElementData(),
             ]);
@@ -168,17 +168,14 @@ class UserTest extends TestCase
     public function test_can_fetch_single_user()
     {
         // $this->withoutExceptionHandling();
-        $this->withoutMiddleware();
         $user = User::factory()->create();
+        Log::debug('[test_can_fetch_single_user] Url');
+        Log::debug(route('api.v1.users.show', $user->getRouteKey()));
 
         $response = $this->getJson(route('api.v1.users.show', $user->getRouteKey()));
         // $response->dump();
         $response
             ->assertOk()
-            ->assertJson([
-                'code' => 200,
-                'status' => 'success'
-            ])
             ->assertJsonStructure([
                 'data' => $this->getListElementData(),
             ]);
@@ -194,18 +191,12 @@ class UserTest extends TestCase
      */
     public function test_can_delete_user()
     {
-        $this->withoutMiddleware();
         $user = User::factory()->create();
-
-        $response = $this->deleteJson(route('api.v1.users.destroy', $user->id));
-        $response
-            ->assertOk()
-            ->assertJson([
-                'code'    => 200,
-                'status'  => 'success',
-                'data'    => 'Resource deleted',
-                'message' => 'Deleted'
-            ]);
+        Log::debug('[test_can_delete_user] Url');
+        Log::debug(route('api.v1.users.destroy', $user->getRouteKey()));
+        $response = $this->deleteJson(route('api.v1.users.destroy', $user->getRouteKey()));
+        // $response->dump();
+        $response->assertOk();
 
         $this->assertSoftDeleted($user);
     }
@@ -216,17 +207,18 @@ class UserTest extends TestCase
      */
     public function test_can_list_users()
     {
-        $this->withoutMiddleware();
         User::factory()->times(3)->create();
+        Log::debug('[test_can_list_users] Url');
+        Log::debug(route('api.v1.users.index') . '?page=1&per_page=5');
 
-        $response = $this->getJson(route('api.v1.users.index') . '?page=1&per_page=5');
-        $response->dump();
+        $response = $this->getJson(route('api.v1.users.index') . '?page=1&per_page=5&email=alejmendez');
+        // $response->dump();
         $response
             ->assertOk()
             ->assertJsonStructure([
-                'draw',
-                'recordsTotal',
-                'recordsFiltered',
+                'self',
+                'links',
+                'meta',
                 'data' => [$this->getListElementData()],
             ]);
     }

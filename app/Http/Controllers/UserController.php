@@ -24,14 +24,18 @@ class UserController extends BaseController
 
     public function index()
     {
+        $data = request()->all();
         $perPage = request('per_page', 15);
-        $result = User::filter(request()->all())->paginateFilter($perPage)->withQueryString();
-        // UserCollection::make($user);
-        return $result;
+        $users = User::with(['person', 'roles'])
+            ->filter($data)
+            ->paginateFilter($perPage)
+            ->withQueryString();
+        return UserCollection::make($users);
     }
 
-    public function show(User $user)
+    public function show($id)
     {
+        $user = User::with(['person', 'roles'])->findOrFail($id);
         return UserResource::make($user);
     }
 
@@ -92,7 +96,7 @@ class UserController extends BaseController
 
         $role = Role::findByName($data['role']);
         $user->assignRole($role);
-        return $this->createdResponse($user->getAllInformation());
+        return $this->createdResponse(UserResource::make($user));
     }
 
     public function getDataFromRequest(UserRequest $request)
@@ -130,7 +134,7 @@ class UserController extends BaseController
         $person->fill($data);
         $person->save();
 
-        return $this->showResponse($user->getAllInformation());
+        return $this->showResponse(UserResource::make($user));
     }
 
     public function destroy($id)
