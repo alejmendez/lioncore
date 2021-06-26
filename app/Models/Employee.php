@@ -15,4 +15,9 @@ class Employee extends ModelBase
         'date_admission',
         'salary',
     ];
+
+    public function person()
+    {
+        return $this->belongsTo(Person::class);
+    }
 }

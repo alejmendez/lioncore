@@ -2,20 +2,25 @@
 
 namespace App\Repositories\Eloquent;
 
-use Illuminate\Support\Facades\Config;
 use App\Repositories\Eloquent\EloquentBaseRepository;
-use App\Models\Person;
 use App\Repositories\PersonRepository;
 
 class EloquentPersonRepository extends EloquentBaseRepository implements PersonRepository
 {
-    public function findByName($name)
+    public function getData(array $data)
     {
-        return $this->model->where('name', $name)->first();
-    }
+        $languages = $data['languages'] ?? [];
+        if (!is_array($languages)) {
+            $languages = [$languages];
+        }
 
-    public function findByEmail($email)
-    {
-        return $this->model->where('email', $email)->first();
+        $contact_options = $data['contact_options'] ?? [];
+        if (!is_array($contact_options)) {
+            $contact_options = [$contact_options];
+        }
+
+        $data['languages'] = implode(',', $languages);
+        $data['contact_options'] = implode(',', $contact_options);
+        return $data;
     }
 }

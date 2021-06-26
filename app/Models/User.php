@@ -96,6 +96,6 @@ class User extends Authenticatable implements JWTSubject, Auditable
 
     public function person()
     {
-        return $this->belongsTo('App\Models\Person');
+        return $this->belongsTo(Person::class);
     }
 }

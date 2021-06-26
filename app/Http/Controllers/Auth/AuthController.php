@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\BaseController;
-use App\Repositories\UserRepository;
-use Illuminate\Database\QueryException;
 use Exception;
+use Illuminate\Database\QueryException;
+
+use App\Http\Controllers\BaseController;
+use App\Http\Resources\UserResource;
+use App\Repositories\UserRepository;
 
 class AuthController extends BaseController
 {
@@ -127,7 +129,7 @@ class AuthController extends BaseController
             'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => $user->getAllInformation(),
+            'user' => UserResource::make($user),
         ], $code)
         ->header('Authorization', $token);
     }

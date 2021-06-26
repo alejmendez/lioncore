@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-// Control Base
+// Controllers
 use App\Http\Controllers\Controller as BaseController;
 
 // Traits
@@ -12,30 +12,34 @@ use App\Traits\ApiResponse;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
-// Modelos
+
+// Models
 use App\Models\User;
 use App\Models\Person;
 use App\Models\Role;
 use App\Models\Property;
 
+// Repositories
+use App\Repositories\UserRepository;
+
 class UserController extends BaseController
 {
     use ApiResponse;
 
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function index()
     {
-        $data = request()->all();
-        $perPage = request('per_page', 15);
-        $users = User::with(['person', 'roles'])
-            ->filter($data)
-            ->paginateFilter($perPage)
-            ->withQueryString();
+        $users = $this->userRepository->paginate(request()->all());
         return UserCollection::make($users);
     }
 
     public function show($id)
     {
-        $user = User::with(['person', 'roles'])->findOrFail($id);
+        $user = $this->userRepository->find($id);
         return UserResource::make($user);
     }
 
@@ -87,59 +91,19 @@ class UserController extends BaseController
 
     public function store(UserRequest $request)
     {
-        $data = $this->getDataFromRequest($request);
-
-        $person = Person::create($data);
-        $data['person_id'] = $person->id;
-
-        $user = User::create($data);
-
-        $role = Role::findByName($data['role']);
-        $user->assignRole($role);
-        return $this->createdResponse(UserResource::make($user));
-    }
-
-    public function getDataFromRequest(UserRequest $request)
-    {
-        $data = $request->all();
-
-        $languages = $data['languages'] ?? [];
-        if (!is_array($languages)) {
-            $languages = [$languages];
-        }
-
-        $contact_options = $data['contact_options'] ?? [];
-        if (!is_array($contact_options)) {
-            $contact_options = [$contact_options];
-        }
-
-        $data['languages'] = implode(',', $languages);
-        // $data['gender'] = implode(',', $data['gender'] ?? []);
-        $data['contact_options'] = implode(',', $contact_options);
-        return $data;
+        $user = $this->userRepository->create($request->all());
+        return UserResource::make($user);
     }
 
     public function update(UserRequest $request, $id)
     {
-        $data = $this->getDataFromRequest($request);
-
-        $user = User::findOrFail($id);
-        $user->fill($data);
-        $user->save();
-
-        $role = Role::findByName($data['role']);
-        $user->assignRole($role);
-
-        $person = $user->person;
-        $person->fill($data);
-        $person->save();
-
-        return $this->showResponse(UserResource::make($user));
+        $user = $this->userRepository->update($id, $request->all());
+        return UserResource::make($user);
     }
 
     public function destroy($id)
     {
-        User::findOrFail($id)->delete();
-        return $this->deletedResponse();
+        $user = $this->userRepository->destroy($id);
+        return $user;
     }
 }

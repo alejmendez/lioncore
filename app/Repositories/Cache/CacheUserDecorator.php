@@ -13,16 +13,4 @@ class CacheUserDecorator extends BaseCacheDecorator implements UserRepository
         $this->entityName = 'User.Users';
         $this->repository = $user;
     }
-
-    /**
-     * Find a User by its name
-     * @param $userName
-     * @return mixed
-     */
-    public function findByName($userName)
-    {
-        return $this->remember(function () use ($userName) {
-            return $this->repository->findByName($userName);
-        });
-    }
 }

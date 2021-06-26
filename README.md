@@ -22,12 +22,12 @@ $ php artisan jwt:secret
 ```
 
 ```sh
-$ php artisan migrate --seed
+$ php artisan migrate:refresh --seed
 ```
 
 Para la migracion en un ambiente de prueba se ejecuta lo siguiente (se debe tener un archivo .env.testing en la raiz del proyecto)
 ```sh
-$ php artisan migrate --seed --env=testing
+$ php artisan migrate:refresh --seed --env=testing
 ```
 
 Para cambiar la dirección del puerto, ejecute el siguiente comando:

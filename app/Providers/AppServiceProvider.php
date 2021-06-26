@@ -2,21 +2,13 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 use Illuminate\Support\Facades\Blade;
 use App\View\Components\InputComponent;
 use App\View\Components\SelectComponent;
-
-use App\Models\Person;
-use App\Repositories\PersonRepository;
-use App\Repositories\Eloquent\EloquentPersonRepository;
-use App\Repositories\Cache\CachePersonDecorator;
-
-use App\Models\User;
-use App\Repositories\UserRepository;
-use App\Repositories\Eloquent\EloquentUserRepository;
-use App\Repositories\Cache\CacheUserDecorator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,30 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerBindings();
-    }
-
-    private function registerBindings()
-    {
-        $this->app->bind(UserRepository::class, function () {
-            $repository = new EloquentUserRepository(new User());
-
-            if (!config('app.cache')) {
-                return $repository;
-            }
-
-            return new CacheUserDecorator($repository);
-        });
-
-        $this->app->bind(PersonRepository::class, function () {
-            $repository = new EloquentPersonRepository(new Person());
-
-            if (!config('app.cache')) {
-                return $repository;
-            }
-
-            return new CachePersonDecorator($repository);
-        });
+        //
     }
 
     /**
@@ -60,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
+
+        Carbon::setLocale(config('app.locale'));
+
         Blade::component('select', SelectComponent::class);
         Blade::component('input', InputComponent::class);
     }

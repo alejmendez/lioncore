@@ -3,13 +3,13 @@
 namespace App\Tests\Feature;
 
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
 
 use App\Models\User;
+use App\Models\Person;
 
 class UserTest extends TestCase
 {
@@ -61,17 +61,6 @@ class UserTest extends TestCase
         ];
     }
 
-    protected function processData($data)
-    {
-        $data['email'] = strtolower($data['email']);
-        $data['dni'] = (string) $data['dni'];
-        $data['languages'] = [$data['languages']];
-        $data['contact_options'] = [$data['contact_options']];
-        unset($data['password']);
-        unset($data['verification_token']);
-        return $data;
-    }
-
     protected function getListElementData()
     {
         return [
@@ -111,15 +100,9 @@ class UserTest extends TestCase
         ];
     }
 
-    /**
-     * @group  user
-     * @test
-     */
     public function test_can_create_user()
     {
         $data = $this->generateData();
-        Log::debug('[test_can_create_user] Data used for user creation: ');
-        Log::debug(json_encode($data));
 
         $response = $this->postJson(route('api.v1.users.store'), $data);
         // $response->dump();
@@ -130,23 +113,11 @@ class UserTest extends TestCase
             ]);
     }
 
-    /**
-     * @group  user
-     * @test
-     */
     public function test_can_update_user()
     {
         $user = User::factory()->create();
 
         $data = $this->generateData();
-        Log::debug('[test_can_update_user] User created');
-        Log::debug(json_encode($data));
-
-        Log::debug('[test_can_update_user] Data used for user update: ');
-        Log::debug(json_encode($data));
-
-        Log::debug('[test_can_update_user] Url');
-        Log::debug(route('api.v1.users.update', $user->id));
 
         $response = $this->putJson(route('api.v1.users.update', $user->id), $data);
         // $response->dump();
@@ -161,16 +132,10 @@ class UserTest extends TestCase
         ]);
     }
 
-    /**
-     * @group  user
-     * @test
-     */
     public function test_can_fetch_single_user()
     {
         // $this->withoutExceptionHandling();
         $user = User::factory()->create();
-        Log::debug('[test_can_fetch_single_user] Url');
-        Log::debug(route('api.v1.users.show', $user->getRouteKey()));
 
         $response = $this->getJson(route('api.v1.users.show', $user->getRouteKey()));
         // $response->dump();
@@ -185,15 +150,9 @@ class UserTest extends TestCase
         ]);
     }
 
-    /**
-     * @group  user
-     * @test
-     */
     public function test_can_delete_user()
     {
         $user = User::factory()->create();
-        Log::debug('[test_can_delete_user] Url');
-        Log::debug(route('api.v1.users.destroy', $user->getRouteKey()));
         $response = $this->deleteJson(route('api.v1.users.destroy', $user->getRouteKey()));
         // $response->dump();
         $response->assertOk();
@@ -201,15 +160,9 @@ class UserTest extends TestCase
         $this->assertSoftDeleted($user);
     }
 
-    /**
-     * @group  user
-     * @test
-     */
     public function test_can_list_users()
     {
         User::factory()->times(3)->create();
-        Log::debug('[test_can_list_users] Url');
-        Log::debug(route('api.v1.users.index') . '?page=1&per_page=5');
 
         $response = $this->getJson(route('api.v1.users.index') . '?page=1&per_page=5&email=alejmendez');
         // $response->dump();
