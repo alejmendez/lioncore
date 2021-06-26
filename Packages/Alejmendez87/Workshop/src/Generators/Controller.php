@@ -7,7 +7,7 @@ class Controller extends Generator
     public function generate()
     {
         $fields = $this->getFieldsWithoutId();
-
+        $nameRoutePlural = strtolower($this->getModelPluralName());
         $fieldsInList = $fields->reject(function ($field) {
             return !$field['inList'];
         })->map(function ($field) {
@@ -15,9 +15,11 @@ class Controller extends Generator
         })->implode(", ");
 
         $contents = $this->view('controller', [
-            'nameModel'    => $this->getNameModel(),
-            'fieldsInList' => $fieldsInList,
-            'json'         => $this->json,
+            'nameModel'       => $this->getNameModel(),
+            'nameModelLower'  => strtolower($this->getNameModel()),
+            'nameRoutePlural' => $nameRoutePlural,
+            'fieldsInList'    => $fieldsInList,
+            'json'            => $this->json,
         ]);
 
         $nameFile = ucwords($this->getNameModel()) . "Controller.php";

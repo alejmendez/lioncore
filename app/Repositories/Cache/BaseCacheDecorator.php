@@ -9,26 +9,11 @@ use App\Repositories\BaseRepository;
 
 abstract class BaseCacheDecorator implements BaseRepository
 {
-    /**
-     * @var \App\Repositories\BaseRepository
-     */
     protected $repository;
-    /**
-     * @var Repository
-     */
     protected $cache;
-    /**
-     * @var string The entity name
-     */
     protected $entityName;
-    /**
-     * @var string The application locale
-     */
     protected $locale;
 
-    /**
-     * @var int caching time
-     */
     protected $cacheTime;
 
     public function __construct()
@@ -38,9 +23,11 @@ abstract class BaseCacheDecorator implements BaseRepository
         $this->locale = app()->getLocale();
     }
 
-    /**
-     * @inheritdoc
-     */
+    public function getModel()
+    {
+        return $this->repository->getModel();
+    }
+
     public function find($id)
     {
         return $this->remember(function () use ($id) {
@@ -48,9 +35,6 @@ abstract class BaseCacheDecorator implements BaseRepository
         });
     }
 
-    /**
-     * @inheritdoc
-     */
     public function all()
     {
         return $this->remember(function () {
@@ -58,9 +42,6 @@ abstract class BaseCacheDecorator implements BaseRepository
         });
     }
 
-    /**
-     * @inheritdoc
-     */
     public function allWithBuilder() : Builder
     {
         return $this->remember(function () {
@@ -68,39 +49,18 @@ abstract class BaseCacheDecorator implements BaseRepository
         });
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function paginate($perPage = 15)
+    public function paginate(Array $data)
     {
-        return $this->remember(function () use ($perPage) {
-            return $this->repository->paginate($perPage);
+        return $this->remember(function () use ($data) {
+            return $this->repository->paginate($data);
         });
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function allTranslatedIn($lang)
+    public function getData(array $data)
     {
-        return $this->remember(function () use ($lang) {
-            return $this->repository->allTranslatedIn($lang);
-        });
+        return $this->repository->getData($data);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function findBySlug($slug)
-    {
-        return $this->remember(function () use ($slug) {
-            return $this->repository->findBySlug($slug);
-        });
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function create($data)
     {
         $this->cache->tags($this->entityName)->flush();
@@ -108,9 +68,6 @@ abstract class BaseCacheDecorator implements BaseRepository
         return $this->repository->create($data);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function update($model, $data)
     {
         $this->cache->tags($this->entityName)->flush();
@@ -118,9 +75,6 @@ abstract class BaseCacheDecorator implements BaseRepository
         return $this->repository->update($model, $data);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function destroy($model)
     {
         $this->cache->tags($this->entityName)->flush();
@@ -128,9 +82,6 @@ abstract class BaseCacheDecorator implements BaseRepository
         return $this->repository->destroy($model);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function findByAttributes(array $attributes)
     {
         return $this->remember(function () use ($attributes) {
@@ -138,9 +89,6 @@ abstract class BaseCacheDecorator implements BaseRepository
         });
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getByAttributes(array $attributes, $orderBy = null, $sortOrder = 'asc')
     {
         return $this->remember(function () use ($attributes, $orderBy, $sortOrder) {
@@ -148,9 +96,6 @@ abstract class BaseCacheDecorator implements BaseRepository
         });
     }
 
-    /**
-     * @inheritdoc
-     */
     public function findByMany(array $ids)
     {
         return $this->remember(function () use ($ids) {
@@ -158,9 +103,6 @@ abstract class BaseCacheDecorator implements BaseRepository
         });
     }
 
-    /**
-     * @inheritdoc
-     */
     public function clearCache()
     {
         $store = $this->cache;
@@ -172,11 +114,6 @@ abstract class BaseCacheDecorator implements BaseRepository
         return $store->flush();
     }
 
-    /**
-     * @param \Closure $callback
-     * @param null|string $key
-     * @return mixed
-     */
     protected function remember(\Closure $callback, $key = null)
     {
         $cacheKey = $this->makeCacheKey($key);
@@ -190,12 +127,6 @@ abstract class BaseCacheDecorator implements BaseRepository
         return $store->remember($cacheKey, $this->cacheTime, $callback);
     }
 
-    /**
-     * Generate a cache key with the called method name and its arguments
-     * If a key is provided, use that instead
-     * @param null|string $key
-     * @return string
-     */
     private function makeCacheKey($key = null): string
     {
         if ($key !== null) {
@@ -209,13 +140,10 @@ abstract class BaseCacheDecorator implements BaseRepository
         return sprintf("$cacheKey %s %s", $backtrace['function'], \serialize($backtrace['args']));
     }
 
-    /**
-     * @return string
-     */
     protected function getBaseKey(): string
     {
         return sprintf(
-            'asgardcms -locale:%s -entity:%s',
+            'lioncore -locale:%s -entity:%s',
             $this->locale,
             $this->entityName
         );

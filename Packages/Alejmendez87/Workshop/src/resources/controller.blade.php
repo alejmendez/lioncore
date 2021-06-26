@@ -1,27 +1,33 @@
 
 namespace App\Http\Controllers;
 
-// Control Base
 use App\Http\Controllers\Controller as BaseController;
-
-// Traits
 use App\Traits\ApiResponse;
+use App\Http\Requests\{{ $nameModel }}Request;
+use App\Http\Resources\{{ $nameModel }}Collection;
+use App\Http\Resources\{{ $nameModel }}Resource;
+use App\Models\{{ $nameModel }};
+use App\Repositories\{{ $nameModel }}Repository;
 
-// Request
-use Illuminate\Http\Request;
-use App\Http\Requests\{{ ucwords($nameModel) }}Request;
-
-// Modelos
-use App\Models\{{ ucwords($nameModel) }};
-
-class {{ ucwords($nameModel) }}Controller extends BaseController
+class {{ $nameModel }}Controller extends BaseController
 {
     use ApiResponse;
 
+    public function __construct({{ $nameModel }}Repository ${{ $nameModelLower }}Repository)
+    {
+        $this->{{ $nameModelLower }}Repository = ${{ $nameModelLower }}Repository;
+    }
+
     public function index()
     {
-        $query = {{ ucwords($nameModel) }}::select('id', {!! $fieldsInList !!});
-        return datatables()->of($query)->make(true);
+        ${{ $nameRoutePlural }} = $this->{{ $nameModelLower }}Repository->paginate(request()->all());
+        return {{ $nameModel }}Collection::make(${{ $nameRoutePlural }});
+    }
+
+    public function show($id)
+    {
+        ${{ $nameModelLower }} = $this->{{ $nameModelLower }}Repository->find($id);
+        return {{ $nameModel }}Resource::make(${{ $nameModelLower }});
     }
 
     public function filters()
@@ -38,30 +44,21 @@ class {{ ucwords($nameModel) }}Controller extends BaseController
         return $this->showResponse($moduleData);
     }
 
-    public function show($id)
+    public function store({{ $nameModel }}Request $request)
     {
-        $instance = {{ ucwords($nameModel) }}::findOrFail($id);
-        return $this->showResponse($instance);
+        ${{ $nameModelLower }} = $this->{{ $nameModelLower }}Repository->create($request->all());
+        return {{ $nameModel }}Resource::make(${{ $nameModelLower }});
     }
 
-    public function store({{ ucwords($nameModel) }}Request $request)
+    public function update({{ $nameModel }}Request $request, $id)
     {
-        $instance = {{ ucwords($nameModel) }}::create($request->all());
-        return $this->createdResponse($instance);
-    }
-
-    public function update({{ ucwords($nameModel) }}Request $request, $id)
-    {
-        $instance = {{ ucwords($nameModel) }}::findOrFail($id);
-        $instance->fill($request->all());
-        $instance->save();
-        return $this->showResponse($instance);
+        ${{ $nameModelLower }} = $this->{{ $nameModelLower }}Repository->update($id, $request->all());
+        return {{ $nameModel }}Resource::make(${{ $nameModelLower }});
     }
 
     public function destroy($id)
     {
-        $instance = {{ ucwords($nameModel) }}::findOrFail($id);
-        $instance->delete();
-        return $this->deletedResponse();
+        ${{ $nameModelLower }} = $this->{{ $nameModelLower }}Repository->destroy($id);
+        return ${{ $nameModelLower }};
     }
 }
