@@ -55,21 +55,9 @@
             "faker": "lastName"
         },
         {
-            "name": "company",
-            "type": "string",
-            "length": 80,
-            "label" : "Company",
-            "htmlType": "text",
-            "validations": "",
-            "searchable": true,
-            "inForm": true,
-            "inList": false,
-            "faker": "company"
-        },
-        {
             "name": "avatar",
             "type": "string",
-            "length": 80,
+            "length": 200,
             "label" : "Avatar",
             "htmlType": "text",
             "validations": "",
@@ -87,7 +75,7 @@
             "searchable": true,
             "inForm": true,
             "inList": false,
-            "faker": "date('Y-m-d', '-18 years') "
+            "faker": "date('Y-m-d', '-18 years')"
         },
         {
             "name": "room_telephone",
@@ -116,7 +104,7 @@
         {
             "name": "website",
             "type": "string",
-            "length": 100,
+            "length": 250,
             "label" : "Web site",
             "htmlType": "text",
             "validations": "",
@@ -128,7 +116,7 @@
         {
             "name": "languages",
             "type": "string",
-            "length": 15,
+            "length": 100,
             "label" : "Languages",
             "htmlType": "text",
             "validations": "",
@@ -188,7 +176,7 @@
         {
             "name": "contact_options",
             "type": "string",
-            "length": 50,
+            "length": 100,
             "label" : "Contact Options",
             "htmlType": "text",
             "validations": "",
@@ -200,7 +188,7 @@
         {
             "name": "address",
             "type": "string",
-            "length": 80,
+            "length": 200,
             "label" : "AddressAddress Line 1",
             "htmlType": "text",
             "validations": "",
@@ -212,7 +200,7 @@
         {
             "name": "address2",
             "type": "string",
-            "length": 80,
+            "length": 200,
             "label" : "AddressAddress Line 2",
             "htmlType": "text",
             "validations": "",

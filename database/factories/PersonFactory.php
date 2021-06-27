@@ -1,9 +1,8 @@
 <?php
-
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 use App\Models\Person;
 
@@ -41,6 +40,7 @@ class PersonFactory extends Factory
             'country'         => $this->faker->country,
             'number_children' => $this->faker->numberBetween(0, 5),
             'observation'     => $this->faker->text(250),
+            'about'           => $this->faker->text(250),
             'blood_type'      => $this->faker->text(5),
         ];
     }

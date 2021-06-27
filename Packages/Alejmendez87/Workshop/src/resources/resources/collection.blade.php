@@ -1,18 +1,17 @@
-<?php
 
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class UserCollection extends ResourceCollection
+class {{ $nameModel }}Collection extends ResourceCollection
 {
-    public $collects = UserResource::class;
+    public $collects = {{ $nameModel }}Resource::class;
 
     public function toArray($request)
     {
         return [
             'data' => $this->collection,
-            'self' => route('api.v1.users.index')
+            'self' => route('api.v1.{{ strtolower($nameRoutePlural) }}.index')
         ];
     }
 }

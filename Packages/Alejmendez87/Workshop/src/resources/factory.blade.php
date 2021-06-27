@@ -1,9 +1,9 @@
 namespace Database\Factories;
 
-use App\Models\{{ ucwords($nameModel) }};
-
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+
+use App\Models\{{ ucwords($nameModel) }};
 
 class {{ ucwords($nameModel) }}Factory extends Factory
 {

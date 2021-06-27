@@ -68,7 +68,7 @@ class Repository extends Generator
         $content = file_get_contents($pathFile);
 
         if (Str::contains($content, $stringSearch)) {
-            // return;
+            return;
         }
 
         $stringImport =

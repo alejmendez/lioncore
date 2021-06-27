@@ -2,9 +2,12 @@
 namespace App\Models;
 
 use App\Models\ModelBase;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Person extends ModelBase
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'dni',
         'first_name',
@@ -28,6 +31,7 @@ class Person extends ModelBase
         'country',
         'number_children',
         'observation',
+        'about',
         'blood_type',
     ];
 

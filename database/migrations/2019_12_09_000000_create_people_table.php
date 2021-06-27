@@ -22,7 +22,7 @@ class CreatePeopleTable extends Migration
             $table->date('birthdate')->nullable();
             $table->string('room_telephone', 100)->nullable();
             $table->string('mobile_phone', 100)->nullable();
-            $table->string('website', 255)->nullable();
+            $table->string('website', 250)->nullable();
             $table->string('languages', 100)->nullable();
             $table->string('email', 80)->nullable();
             $table->string('nationality', 80)->nullable();

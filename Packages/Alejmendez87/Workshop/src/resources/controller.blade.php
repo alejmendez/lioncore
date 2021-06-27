@@ -6,7 +6,6 @@ use App\Traits\ApiResponse;
 use App\Http\Requests\{{ $nameModel }}Request;
 use App\Http\Resources\{{ $nameModel }}Collection;
 use App\Http\Resources\{{ $nameModel }}Resource;
-use App\Models\{{ $nameModel }};
 use App\Repositories\{{ $nameModel }}Repository;
 
 class {{ $nameModel }}Controller extends BaseController
@@ -58,7 +57,7 @@ class {{ $nameModel }}Controller extends BaseController
 
     public function destroy($id)
     {
-        ${{ $nameModelLower }} = $this->{{ $nameModelLower }}Repository->destroy($id);
-        return ${{ $nameModelLower }};
+        $this->{{ $nameModelLower }}Repository->destroy($id);
+        return $this->deletedResponse();
     }
 }

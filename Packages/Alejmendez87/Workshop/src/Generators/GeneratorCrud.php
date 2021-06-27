@@ -8,15 +8,6 @@ use Alejmendez87\Workshop\Console\GenerateGrud;
 use Alejmendez87\Workshop\Generators\Interfaces\Generator;
 use Alejmendez87\Workshop\Generators\Entities\ModelCrud;
 
-use Alejmendez87\Workshop\Generators\Migration;
-use Alejmendez87\Workshop\Generators\Model;
-use Alejmendez87\Workshop\Generators\FormRequest;
-use Alejmendez87\Workshop\Generators\Controller;
-use Alejmendez87\Workshop\Generators\Permission;
-use Alejmendez87\Workshop\Generators\View;
-use Alejmendez87\Workshop\Generators\Route;
-use Alejmendez87\Workshop\Generators\Translation;
-
 class GeneratorCrud implements Generator
 {
     protected $models;
@@ -34,6 +25,7 @@ class GeneratorCrud implements Generator
         'translations',
         'factory',
         'repository',
+        'resource',
         'test',
     ];
 
@@ -190,6 +182,14 @@ class GeneratorCrud implements Generator
         if (!$this->getOption('repository')) return;
         $this->info(trans('workshop.generating_repository'));
         $generator = new Repository($json);
+        $generator->generate();
+    }
+
+    protected function generateResource($json)
+    {
+        if (!$this->getOption('resource')) return;
+        $this->info(trans('workshop.generating_resource'));
+        $generator = new Resource($json);
         $generator->generate();
     }
 

@@ -2,8 +2,6 @@
 
 namespace Alejmendez87\Workshop\Generators;
 
-use Illuminate\Support\Str;
-
 class Factory extends Generator
 {
     public function generate()

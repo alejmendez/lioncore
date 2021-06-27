@@ -1,53 +1,63 @@
 <?php
 namespace App\Http\Controllers;
 
-// Control Base
 use App\Http\Controllers\Controller as BaseController;
-
-// Traits
 use App\Traits\ApiResponse;
-
-// Request
-use Illuminate\Http\Request;
 use App\Http\Requests\PersonRequest;
-
-// Modelos
-use App\Models\Person;
+use App\Http\Resources\PersonCollection;
+use App\Http\Resources\PersonResource;
+use App\Repositories\PersonRepository;
 
 class PersonController extends BaseController
 {
     use ApiResponse;
 
+    public function __construct(PersonRepository $personRepository)
+    {
+        $this->personRepository = $personRepository;
+    }
+
     public function index()
     {
-        $query = Person::query();
-        return datatables()->of($query)->make(true);
+        $people = $this->personRepository->paginate(request()->all());
+        return PersonCollection::make($people);
     }
 
     public function show($id)
     {
-        $instance = Person::findOrFail($id);
-        return $this->showResponse($instance);
+        $person = $this->personRepository->find($id);
+        return PersonResource::make($person);
+    }
+
+    public function filters()
+    {
+        $filters = [];
+
+        return $this->showResponse($filters);
+    }
+
+    public function moduleData()
+    {
+        $moduleData = [];
+
+        return $this->showResponse($moduleData);
     }
 
     public function store(PersonRequest $request)
     {
-        $instance = Person::create($request->all());
-        return $this->createdResponse($instance);
+        $person = $this->personRepository->create($request->all());
+        return PersonResource::make($person);
     }
 
     public function update(PersonRequest $request, $id)
     {
-        $instance = Person::findOrFail($id);
-        $instance->fill($request->all());
-        $instance->save();
-        return $this->showResponse($instance);
+        $person = $this->personRepository->update($id, $request->all());
+        return PersonResource::make($person);
     }
 
     public function destroy($id)
     {
-        $instance = Person::findOrFail($id);
-        $instance->delete();
+        $this->personRepository->destroy($id);
         return $this->deletedResponse();
     }
 }

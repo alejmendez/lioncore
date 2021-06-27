@@ -28,7 +28,7 @@ Route::prefix('v1')
         });
 
         Route::middleware('auth:api')->group(function () {
-            Route::prefix('person')->name('person.')->group(function () {
+            Route::prefix('person')->name('people.')->group(function () {
                 Route::middleware('permission:person read')->group(function () {
                     Route::get('/', [PersonController::class, 'index'])->name('index');
                     Route::get('/filters', [PersonController::class, 'filters'])->name('filters');
@@ -73,7 +73,7 @@ Route::prefix('v1')
                     ->middleware('permission:property delete');
             });
 
-            Route::prefix('chat')->name('chat.')->group(function () {
+            Route::prefix('chat')->name('chats.')->group(function () {
                 Route::post('msg', [ChatController::class, 'msg'])->name('msg')
                     ->middleware('permission:chat read');
                 Route::get('contacts', [ChatController::class, 'contacts'])->name('contacts')

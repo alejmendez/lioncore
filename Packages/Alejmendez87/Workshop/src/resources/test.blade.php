@@ -1,6 +1,5 @@
 namespace App\Tests\Feature;
 
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

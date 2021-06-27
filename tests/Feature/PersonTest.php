@@ -1,21 +1,24 @@
 <?php
-
 namespace App\Tests\Feature;
 
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
+
 use App\Models\Person;
 
 class PersonTest extends TestCase
 {
+    use WithoutMiddleware, RefreshDatabase;
+
     protected function generateData()
     {
         return [
             'dni' => $this->faker->numberBetween(5000000, 30000000),
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
-            'company' => $this->faker->company,
             'avatar' => $this->faker->imageUrl(500, 500, 'people', true, 'Faker'),
             'birthdate' => $this->faker->date('Y-m-d', '-18 years'),
             'room_telephone' => $this->faker->phoneNumber,
@@ -24,9 +27,9 @@ class PersonTest extends TestCase
             'languages' => $this->faker->randomElement(['english', 'spanish', 'french', 'russian', 'german', 'arabic', 'sanskrit']),
             'email' => $this->faker->unique()->safeEmail,
             'nationality' => $this->faker->randomElement(['C', 'E']),
-            'gender' => $this->faker->randomElement(['M', 'F']),
+            'gender' => $this->faker->randomElement(['male', 'female', 'other']),
             'civil_status' => $this->faker->randomElement(['C', 'S', 'D', 'V']),
-            'contact_options' => $this->faker->randomElement(['C', 'S', 'D', 'V']),
+            'contact_options' => $this->faker->randomElement(['email', 'message', 'phone']),
             'address' => $this->faker->address,
             'address2' => $this->faker->secondaryAddress,
             'postcode' => $this->faker->postcode,
@@ -35,6 +38,7 @@ class PersonTest extends TestCase
             'country' => $this->faker->country,
             'number_children' => $this->faker->numberBetween(0, 5),
             'observation' => $this->faker->text(250),
+            'about' => $this->faker->text(250),
             'blood_type' => $this->faker->text(5),
         ];
     }
@@ -46,7 +50,6 @@ class PersonTest extends TestCase
             'dni',
             'first_name',
             'last_name',
-            'company',
             'avatar',
             'birthdate',
             'room_telephone',
@@ -66,54 +69,34 @@ class PersonTest extends TestCase
             'country',
             'number_children',
             'observation',
-            'blood_type'
+            'about',
+            'blood_type',
         ];
     }
 
-    /**
-     * @group  person
-     * @test
-     */
     public function test_can_create_person()
     {
         $data = $this->generateData();
-        Log::debug('[test_can_create_person] Data used for person creation: ');
-        Log::debug(json_encode($data));
 
-        $response = $this->postJson(route('person.store'), $data);
+        $response = $this->postJson(route('api.v1.people.store'), $data);
+        // $response->dump();
         $response
             ->assertCreated()
-            ->assertJson([
-                'code' => 201,
-                'status' => 'success'
-            ])
             ->assertJsonStructure([
                 'data' => $this->getListElementData(),
             ]);
     }
 
-    /**
-     * @group  person
-     * @test
-     */
     public function test_can_update_person()
     {
         $person = Person::factory()->create();
 
         $data = $this->generateData();
-        Log::debug('[test_can_update_person] Person created');
-        Log::debug(json_encode($data));
 
-        Log::debug('[test_can_update_person] Data used for person update: ');
-        Log::debug(json_encode($data));
-
-        $response = $this->putJson(route('person.update', $person->id), $data);
+        $response = $this->putJson(route('api.v1.people.update', $person->id), $data);
+        // $response->dump();
         $response
             ->assertOk()
-            ->assertJson([
-                'code' => 200,
-                'status' => 'success'
-            ])
             ->assertJsonStructure([
                 'data' => $this->getListElementData(),
             ]);
@@ -123,70 +106,42 @@ class PersonTest extends TestCase
         ]);
     }
 
-    /**
-     * @group  person
-     * @test
-     */
-    public function test_can_show_person()
+    public function test_can_fetch_single_person()
     {
         $person = Person::factory()->create();
 
-        $response = $this->getJson(route('person.show', $person->id));
+        $response = $this->getJson(route('api.v1.people.show', $person->getRouteKey()));
+        // $response->dump();
         $response
             ->assertOk()
-            ->assertJson([
-                'code' => 200,
-                'status' => 'success'
-            ])
             ->assertJsonStructure([
                 'data' => $this->getListElementData(),
             ]);
-
-        $this->assertDatabaseHas('people', [
-            'dni' => $person->dni,
-        ]);
     }
 
-    /**
-     * @group  person
-     * @test
-     */
     public function test_can_delete_person()
     {
         $person = Person::factory()->create();
 
-        $response = $this->deleteJson(route('person.destroy', $person->id));
-        $response
-            ->assertOk()
-            ->assertJson([
-                'code'    => 200,
-                'status'  => 'success',
-                'data'    => 'Resource deleted',
-                'message' => 'Deleted'
-            ]);
+        $response = $this->deleteJson(route('api.v1.people.destroy', $person->getRouteKey()));
+        // $response->dump();
+        $response->assertOk();
 
-        //$this->assertSoftDeleted($person);
-        $this->assertDatabaseMissing('people', [
-            'dni' => $person->dni,
-        ]);
+        $this->assertSoftDeleted($person);
     }
 
-    /**
-     * @group  person
-     * @test
-     */
-    public function test_can_list_person()
+    public function test_can_list_people()
     {
-        Person::factory(2)->create();
+        Person::factory()->times(3)->create();
 
-        $response = $this->getJson(route('person.index') . '?page=1&rowsPerPage=5');
-        // dd($response);
+        $response = $this->getJson(route('api.v1.people.index') . '?page=1&per_page=5');
+        // $response->dump();
         $response
             ->assertOk()
             ->assertJsonStructure([
-                'draw',
-                'recordsTotal',
-                'recordsFiltered',
+                'self',
+                'links',
+                'meta',
                 'data' => [$this->getListElementData()],
             ]);
     }
