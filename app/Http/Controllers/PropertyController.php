@@ -1,29 +1,32 @@
 <?php
 namespace App\Http\Controllers;
 
-// Control Base
 use App\Http\Controllers\Controller as BaseController;
-
-// Traits
 use App\Traits\ApiResponse;
-
-// Request
-use Illuminate\Http\Request;
 use App\Http\Requests\PropertyRequest;
-
-// Modelos
-use App\Models\Property;
+use App\Http\Resources\PropertyCollection;
+use App\Http\Resources\PropertyResource;
+use App\Repositories\PropertyRepository;
 
 class PropertyController extends BaseController
 {
     use ApiResponse;
 
+    public function __construct(PropertyRepository $propertyRepository)
+    {
+        $this->propertyRepository = $propertyRepository;
+    }
+
     public function index()
     {
-        $query = Property::select('id', 'name', 'value');
-        return datatables()->of($query)
-            ->rawColumns(['value'])
-            ->make(true);
+        $properties = $this->propertyRepository->paginate(request()->all());
+        return PropertyCollection::make($properties);
+    }
+
+    public function show($id)
+    {
+        $property = $this->propertyRepository->find($id);
+        return PropertyResource::make($property);
     }
 
     public function filters()
@@ -40,30 +43,21 @@ class PropertyController extends BaseController
         return $this->showResponse($moduleData);
     }
 
-    public function show($id)
-    {
-        $instance = Property::findOrFail($id);
-        return $this->showResponse($instance);
-    }
-
     public function store(PropertyRequest $request)
     {
-        $instance = Property::create($request->all());
-        return $this->createdResponse($instance);
+        $property = $this->propertyRepository->create($request->all());
+        return PropertyResource::make($property);
     }
 
     public function update(PropertyRequest $request, $id)
     {
-        $instance = Property::findOrFail($id);
-        $instance->fill($request->all());
-        $instance->save();
-        return $this->showResponse($instance);
+        $property = $this->propertyRepository->update($id, $request->all());
+        return PropertyResource::make($property);
     }
 
     public function destroy($id)
     {
-        $instance = Property::findOrFail($id);
-        $instance->delete();
+        $this->propertyRepository->destroy($id);
         return $this->deletedResponse();
     }
 }

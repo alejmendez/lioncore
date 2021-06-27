@@ -14,6 +14,11 @@ use App\Repositories\UserRepository;
 use App\Repositories\Eloquent\EloquentUserRepository;
 use App\Repositories\Cache\CacheUserDecorator;
 
+use App\Models\Property;
+use App\Repositories\PropertyRepository;
+use App\Repositories\Eloquent\EloquentPropertyRepository;
+use App\Repositories\Cache\CachePropertyDecorator;
+
 // add class
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -43,6 +48,16 @@ class RepositoryServiceProvider extends ServiceProvider
             }
 
             return new CachePersonDecorator($repository);
+        });
+
+        $this->app->bind(PropertyRepository::class, function () {
+            $repository = new EloquentPropertyRepository(new Property());
+
+            if (!config('app.cache')) {
+                return $repository;
+            }
+
+            return new CachePropertyDecorator($repository);
         });
 
         // add bind

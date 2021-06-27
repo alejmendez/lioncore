@@ -3,15 +3,15 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class PersonCollection extends ResourceCollection
+class PropertyCollection extends ResourceCollection
 {
-    public $collects = personResource::class;
+    public $collects = PropertyResource::class;
 
     public function toArray($request)
     {
         return [
             'data' => $this->collection,
-            'self' => route('api.v1.people.index')
+            'self' => route('api.v1.properties.index')
         ];
     }
 }

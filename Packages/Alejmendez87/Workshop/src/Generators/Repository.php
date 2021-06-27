@@ -88,7 +88,7 @@ class Repository extends Generator
             "    }\n" .
             "\n" .
             "    return new Cache" . $nameModel . "Decorator(\$repository);\n" .
-        "}\n";
+        "});\n";
 
         $content = $this->addNewContent($content, '// add bind', $stringImport, 2, "    ");
         $this->writeFile($pathFile, $content);

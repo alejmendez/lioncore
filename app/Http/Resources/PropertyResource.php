@@ -1,16 +1,18 @@
-
+<?php
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class {{ ucwords($nameModel) }}Resource extends JsonResource
+class PropertyResource extends JsonResource
 {
     public function toArray($request)
     {
         $resource = $this->resource;
 
         return [
-{!! $fields !!}
+            'id' => $resource->id,
+            'name' => $resource->name,
+            'value' => $resource->value
         ];
     }
 }
