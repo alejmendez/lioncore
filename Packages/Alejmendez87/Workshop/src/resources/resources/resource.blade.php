@@ -10,7 +10,7 @@ class {{ $nameModel }}Resource extends JsonResource
         $resource = $this->resource;
 
         return [
-{{ $fields }}
+{!! $fields !!}
         ];
     }
 }

@@ -6,7 +6,7 @@ class Resource extends Generator
 {
     public function generate()
     {
-        $fields = $this->getFieldsWithoutId();
+        $fields = $this->getFields();
         $nameRoutePlural = strtolower($this->getModelPluralName());
         $fields = $fields->map(function ($field) {
             return "            '" . $field['name'] . "' => \$resource->" . $field['name'];

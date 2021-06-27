@@ -67,6 +67,7 @@ class GeneratorCrud implements Generator
             $this->generateFormRequest($json);
             $this->generateController($json);
             $this->generateRepository($json);
+            $this->generateResource($json);
             $this->generatePermissions($json);
             $this->generateViewVue($json);
             $this->generateRoute($json);
