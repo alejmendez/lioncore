@@ -33,6 +33,7 @@ class GeneratorCrud implements Generator
         'route',
         'translations',
         'factory',
+        'repository',
         'test',
     ];
 

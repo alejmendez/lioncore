@@ -14,6 +14,8 @@ use App\Repositories\UserRepository;
 use App\Repositories\Eloquent\EloquentUserRepository;
 use App\Repositories\Cache\CacheUserDecorator;
 
+// add class
+
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -42,6 +44,8 @@ class RepositoryServiceProvider extends ServiceProvider
 
             return new CachePersonDecorator($repository);
         });
+
+        // add bind
     }
 
     /**
