@@ -23,7 +23,7 @@
             "length": 80,
             "label" : "Name",
             "htmlType": "input",
-            "validations": "name|min:3|max:80",
+            "validations": "required|min:3|max:80",
             "searchable": true,
             "inForm": true,
             "inList": true,

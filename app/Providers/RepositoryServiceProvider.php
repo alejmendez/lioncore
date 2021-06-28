@@ -19,6 +19,11 @@ use App\Repositories\PropertyRepository;
 use App\Repositories\Eloquent\EloquentPropertyRepository;
 use App\Repositories\Cache\CachePropertyDecorator;
 
+use App\Models\Role;
+use App\Repositories\RoleRepository;
+use App\Repositories\Eloquent\EloquentRoleRepository;
+use App\Repositories\Cache\CacheRoleDecorator;
+
 // add class
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -60,6 +65,16 @@ class RepositoryServiceProvider extends ServiceProvider
             return new CachePropertyDecorator($repository);
         });
 
+        $this->app->bind(RoleRepository::class, function () {
+            $repository = new EloquentRoleRepository(new Role());
+        
+            if (!config('app.cache')) {
+                return $repository;
+            }
+        
+            return new CacheRoleDecorator($repository);
+        });
+        
         // add bind
     }
 

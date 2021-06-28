@@ -1,27 +1,33 @@
 <?php
 namespace App\Http\Controllers;
 
-// Control Base
 use App\Http\Controllers\Controller as BaseController;
-
-// Traits
 use App\Traits\ApiResponse;
-
-// Request
 use App\Http\Requests\RoleRequest;
-
-// Modelos
-use App\Models\Role;
+use App\Http\Resources\RoleCollection;
+use App\Http\Resources\RoleResource;
+use App\Repositories\RoleRepository;
 use App\Models\Permission;
 
 class RoleController extends BaseController
 {
     use ApiResponse;
 
+    public function __construct(RoleRepository $roleRepository)
+    {
+        $this->roleRepository = $roleRepository;
+    }
+
     public function index()
     {
-        $query = Role::select('id', 'name');
-        return datatables()->of($query)->make(true);
+        $roles = $this->roleRepository->paginate(request()->all());
+        return RoleCollection::make($roles);
+    }
+
+    public function show($id)
+    {
+        $role = $this->roleRepository->find($id);
+        return RoleResource::make($role);
     }
 
     public function filters()
@@ -56,46 +62,21 @@ class RoleController extends BaseController
         return $this->showResponse($moduleData);
     }
 
-    public function show($id)
-    {
-        $instance = Role::with('permissions')->findOrFail($id)->toArray();
-        $permissions = [];
-        foreach ($instance['permissions'] as $permission) {
-            $permissions[] = $permission['id'];
-        }
-        $instance['permissions'] = $permissions;
-
-        return $this->showResponse($instance);
-    }
-
     public function store(RoleRequest $request)
     {
-        $instance = Role::create([
-            'name' => $request->name
-        ]);
-
-        $permissions = Permission::whereIn('id', $request->permissions)->get();
-        $instance->syncPermissions($permissions);
-
-        return $this->createdResponse($instance);
+        $role = $this->roleRepository->create($request->all());
+        return RoleResource::make($role);
     }
 
     public function update(RoleRequest $request, $id)
     {
-        $instance = Role::findOrFail($id);
-        $instance->name = $request->name;
-        $instance->save();
-
-        $permissions = Permission::whereIn('id', $request->permissions)->get();
-        $instance->syncPermissions($permissions);
-
-        return $this->showResponse($instance);
+        $role = $this->roleRepository->update($id, $request->all());
+        return RoleResource::make($role);
     }
 
     public function destroy($id)
     {
-        $instance = Role::findOrFail($id);
-        $instance->delete();
+        $this->roleRepository->destroy($id);
         return $this->deletedResponse();
     }
 }

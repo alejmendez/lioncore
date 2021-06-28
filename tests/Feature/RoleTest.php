@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Tests\Feature;
 
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
 use App\Models\Role;
@@ -11,9 +11,12 @@ use App\Models\Permission;
 
 class RoleTest extends TestCase
 {
+    use WithoutMiddleware, RefreshDatabase;
+
+    public $seed = true;
+
     protected function generateData()
     {
-
         $permissions = Permission::all()->map(function ($permission) {
             return $permission->id;
         });
@@ -35,55 +38,33 @@ class RoleTest extends TestCase
         return [
             'id',
             'name',
-            'guard_name',
             'permissions' => [],
         ];
     }
 
-    /**
-     * @group  role
-     * @test
-     */
     public function test_can_create_role()
     {
         $data = $this->generateData();
-        Log::debug('[test_can_create_role] Data used for role creation: ');
-        Log::debug(json_encode($data));
 
-        $response = $this->postJson(route('roles.store'), $data);
+        $response = $this->postJson(route('api.v1.roles.store'), $data);
+        // $response->dump();
         $response
             ->assertCreated()
-            ->assertJson([
-                'code' => 201,
-                'status' => 'success'
-            ])
             ->assertJsonStructure([
                 'data' => $this->getListElementData(),
             ]);
     }
 
-    /**
-     * @group  role
-     * @test
-     */
     public function test_can_update_role()
     {
         $role = Role::factory()->create();
 
         $data = $this->generateData();
-        Log::debug('[test_can_update_role] Role created');
-        Log::debug(json_encode($data));
 
-        Log::debug('[test_can_update_role] Data used for role update: ');
-        Log::debug(json_encode($data));
-
-        $response = $this->putJson(route('roles.update', $role->id), $data);
+        $response = $this->putJson(route('api.v1.roles.update', $role->id), $data);
+        // $response->dump();
         $response
             ->assertOk()
-            ->assertJson([
-                'code' => 200,
-                'status' => 'success'
-            ])
             ->assertJsonStructure([
                 'data' => $this->getListElementData(),
             ]);
@@ -93,73 +74,43 @@ class RoleTest extends TestCase
         ]);
     }
 
-    /**
-     * @group  role
-     * @test
-     */
-    public function test_can_show_role()
+    public function test_can_fetch_single_role()
     {
         $role = Role::factory()->create();
 
-        $response = $this->getJson(route('roles.show', $role->id));
+        $response = $this->getJson(route('api.v1.roles.show', $role->getRouteKey()));
+        // $response->dump();
         $response
             ->assertOk()
-            ->assertJson([
-                'code' => 200,
-                'status' => 'success'
-            ])
             ->assertJsonStructure([
                 'data' => $this->getListElementData(),
             ]);
-
-        $this->assertDatabaseHas('roles', [
-            'name' => $role->name,
-        ]);
     }
 
-    /**
-     * @group  role
-     * @test
-     */
     public function test_can_delete_role()
     {
         $role = Role::factory()->create();
 
-        $response = $this->deleteJson(route('roles.destroy', $role->id));
-        $response
-            ->assertOk()
-            ->assertJson([
-                'code'    => 200,
-                'status'  => 'success',
-                'data'    => 'Resource deleted',
-                'message' => 'Deleted'
-            ]);
+        $response = $this->deleteJson(route('api.v1.roles.destroy', $role->getRouteKey()));
+        // $response->dump();
+        $response->assertOk();
 
         $this->assertSoftDeleted($role);
     }
 
-    /**
-     * @group  role
-     * @test
-     */
     public function test_can_list_roles()
     {
-        Role::factory(2)->create();
+        Role::factory()->times(3)->create();
 
-        $response = $this->getJson(route('roles.index') . '?page=1&rowsPerPage=5');
-        //dd($response);
+        $response = $this->getJson(route('api.v1.roles.index') . '?page=1&per_page=5');
+        // $response->dump();
         $response
             ->assertOk()
             ->assertJsonStructure([
-                'draw',
-                'recordsTotal',
-                'recordsFiltered',
-                'data' => [
-                    [
-                        'id',
-                        'name'
-                    ]
-                ],
+                'self',
+                'links',
+                'meta',
+                'data' => [$this->getListElementData()],
             ]);
     }
 }
