@@ -14,6 +14,7 @@ class Employee extends ModelBase
         'group_id',
         'date_admission',
         'salary',
+        'person_id'
     ];
 
     public function person()

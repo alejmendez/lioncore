@@ -18,7 +18,7 @@ class CreateEmployeesTable extends Migration
             $table->uuid('person_id')->unique();
             $table->string('code', 20)->nullable();
             $table->string('position', 50)->nullable();
-            $table->string('group_id', 36)->nullable();
+            $table->uuid('group_id')->nullable();
             $table->date('date_admission', 20)->nullable();
             $table->decimal('salary', 20)->nullable();
 

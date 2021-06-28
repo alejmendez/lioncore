@@ -1,39 +1,28 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class EmployeeResource extends JsonResource
 {
-
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
     public function toArray($request)
     {
-        $roles = $this->getRoles();
-        $permissions = $this->getPermissions();
-
         $resource = $this->resource;
         $person = $resource->person;
 
         return [
             'id'              => $resource->id,
-            'displayName'     => $resource->getFullNameAttribute(),
-            'username'        => $resource->username,
-            'status'          => $resource->status,
-            'full_name'       => $resource->full_name,
-            'role'            => $roles,
-            'permissions'     => $permissions,
+            'code'            => $resource->code,
+            'position'        => $resource->position,
+            'group_id'        => $resource->group_id,
+            'date_admission'  => $resource->date_admission,
+            'salary'          => $resource->salary,
             'person_id'       => $person->id,
             'dni'             => $person->dni,
             'about'           => $person->about,
             'first_name'      => $person->first_name,
             'last_name'       => $person->last_name,
+            'full_name'       => $person->full_name,
             'company'         => $person->company,
             'avatar'          => $person->avatar,
             'birthdate'       => $person->birthdate,
@@ -56,28 +45,5 @@ class UserResource extends JsonResource
             'observation'     => $person->observation,
             'blood_type'      => $person->blood_type,
         ];
-    }
-
-    public function getRoles()
-    {
-        return $this->roles->map(function($role) {
-            return [
-                $role->id,
-                $role->name
-            ];
-        });
-    }
-
-    public function getPermissions()
-    {
-        $permissions = collect();
-
-        $this->roles->each(function($role) use($permissions) {
-            $role->permissions->each(function($permission) use($permissions) {
-                $permissions->push($permission->name);
-            });
-        });
-
-        return $permissions->unique()->sort()->values();
     }
 }

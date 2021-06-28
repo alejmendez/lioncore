@@ -24,6 +24,11 @@ use App\Repositories\RoleRepository;
 use App\Repositories\Eloquent\EloquentRoleRepository;
 use App\Repositories\Cache\CacheRoleDecorator;
 
+use App\Models\Employee;
+use App\Repositories\EmployeeRepository;
+use App\Repositories\Eloquent\EloquentEmployeeRepository;
+use App\Repositories\Cache\CacheEmployeeDecorator;
+
 // add class
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -67,14 +72,24 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(RoleRepository::class, function () {
             $repository = new EloquentRoleRepository(new Role());
-        
+
             if (!config('app.cache')) {
                 return $repository;
             }
-        
+
             return new CacheRoleDecorator($repository);
         });
-        
+
+        $this->app->bind(EmployeeRepository::class, function () {
+            $repository = new EloquentEmployeeRepository(new Employee());
+
+            if (!config('app.cache')) {
+                return $repository;
+            }
+
+            return new CacheEmployeeDecorator($repository);
+        });
+
         // add bind
     }
 

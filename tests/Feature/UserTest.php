@@ -9,7 +9,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 use App\Models\User;
-use App\Models\Person;
 
 class UserTest extends TestCase
 {
@@ -37,7 +36,6 @@ class UserTest extends TestCase
             'dni'                => $this->faker->numberBetween(5000000, 30000000),
             'first_name'         => $firstName,
             'last_name'          => $lastName,
-            'company'            => $this->faker->company,
             'avatar'             => $this->faker->imageUrl(500, 500, 'people', true, 'Faker'),
             'birthdate'          => $this->faker->date('Y-m-d', '-18 years'),
             'room_telephone'     => $this->faker->phoneNumber,

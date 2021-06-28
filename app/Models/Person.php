@@ -42,6 +42,11 @@ class Person extends ModelBase
         }
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
     public function user()
     {
         return $this->hasOne(User::class);

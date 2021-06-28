@@ -1,10 +1,10 @@
 <?php
 namespace Database\Factories;
 
-use App\Models\Employee;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+
+use App\Models\Employee;
+use App\Models\Person;
 
 class EmployeeFactory extends Factory
 {
@@ -12,12 +12,15 @@ class EmployeeFactory extends Factory
 
     public function definition()
     {
+        $person = Person::factory()->create();
+
         return [
-            'code' => $this->faker->numberBetween(5000000, 30000000),
-            'position' => $this->faker->numberBetween(5000000, 30000000),
-            'group_id' => $this->faker->numberBetween(5000000, 30000000),
-            'date_admission' => $this->faker->numberBetween(5000000, 30000000),
-            'salary' => $this->faker->numberBetween(5000000, 30000000),
+            'code' => $this->faker->randomLetter . $this->faker->numberBetween(1, 500),
+            'position' => $this->faker->word(),
+            'group_id' => $this->faker->Uuid(),
+            'date_admission' => $this->faker->date('Y-m-d', '-5 years'),
+            'salary' => $this->faker->numberBetween(500000, 3000000),
+            'person_id' => $person->id,
         ];
     }
 }

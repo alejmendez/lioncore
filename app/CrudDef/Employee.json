@@ -27,7 +27,7 @@
             "searchable": true,
             "inForm": true,
             "inList": true,
-            "faker": "numberBetween(5000000, 30000000)",
+            "faker": "randomLetter . $this->faker->numberBetween(1, 500)",
             "flex": "sm6"
         },
         {
@@ -40,20 +40,19 @@
             "searchable": true,
             "inForm": true,
             "inList": true,
-            "faker": "numberBetween(5000000, 30000000)",
+            "faker": "word()",
             "flex": "sm6"
         },
         {
             "name": "group_id",
-            "type": "string",
-            "length": 36,
+            "type": "uuid",
             "label" : "Group",
             "htmlType": "select",
             "validations": "",
             "searchable": true,
             "inForm": true,
             "inList": true,
-            "faker": "numberBetween(5000000, 30000000)",
+            "faker": "Uuid()",
             "flex": "sm6"
         },
         {
@@ -66,7 +65,7 @@
             "searchable": true,
             "inForm": true,
             "inList": true,
-            "faker": "numberBetween(5000000, 30000000)",
+            "faker": "date('Y-m-d', '-5 years')",
             "flex": "sm6"
         },
         {
@@ -79,7 +78,7 @@
             "searchable": true,
             "inForm": true,
             "inList": true,
-            "faker": "numberBetween(5000000, 30000000)",
+            "faker": "numberBetween(500000, 3000000)",
             "flex": "sm6"
         }
     ]
