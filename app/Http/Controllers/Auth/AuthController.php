@@ -108,10 +108,7 @@ class AuthController extends BaseController
     {
         $user = auth()->user();
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $user
-        ]);
+        return response()->json(UserResource::make($user));
     }
     /**
      * Get the token array structure.

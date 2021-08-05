@@ -19,7 +19,7 @@ Route::prefix('v1')
         Route::prefix('auth')->name('auth.')->group(function () {
             Route::post('login', [AuthController::class, 'login'])->name('login');
             Route::post('register', [AuthController::class, 'register'])->name('register');
-            Route::post('refresh', [AuthController::class, 'refresh'])->name('refresh');
+            Route::post('refresh-access-token', [AuthController::class, 'refresh'])->name('refresh');
             Route::get('current/user', [AuthController::class, 'currentUser'])->name('current.user');
 
             Route::group(['middleware' => 'auth:api'], function () {
