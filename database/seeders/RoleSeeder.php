@@ -37,6 +37,10 @@ class RoleSeeder extends Seeder
             'property read',
             'property update',
             'property delete',
+            'navigation create',
+            'navigation read',
+            'navigation update',
+            'navigation delete',
             'dashboard read',
             'chat read',
         ];

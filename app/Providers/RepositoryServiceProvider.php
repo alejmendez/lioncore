@@ -29,6 +29,11 @@ use App\Repositories\EmployeeRepository;
 use App\Repositories\Eloquent\EloquentEmployeeRepository;
 use App\Repositories\Cache\CacheEmployeeDecorator;
 
+use App\Models\Navigation;
+use App\Repositories\NavigationRepository;
+use App\Repositories\Eloquent\EloquentNavigationRepository;
+use App\Repositories\Cache\CacheNavigationDecorator;
+
 // add class
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -90,6 +95,16 @@ class RepositoryServiceProvider extends ServiceProvider
             return new CacheEmployeeDecorator($repository);
         });
 
+        $this->app->bind(NavigationRepository::class, function () {
+            $repository = new EloquentNavigationRepository(new Navigation());
+        
+            if (!config('app.cache')) {
+                return $repository;
+            }
+        
+            return new CacheNavigationDecorator($repository);
+        });
+        
         // add bind
     }
 

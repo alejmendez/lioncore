@@ -8,6 +8,7 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\NavigationController;
 
 Route::pattern('id', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
 
@@ -117,6 +118,23 @@ Route::prefix('v1')
                     ->middleware('permission:employee update');
                 Route::delete('/{id}', [EmployeeController::class, 'destroy'])->name('destroy')
                     ->middleware('permission:employee delete');
+            });
+            Route::prefix('navigations')->name('navigations.')->group(function () {
+                Route::middleware('permission:navigation read')->group(function () {
+                    Route::get('/', [NavigationController::class, 'index'])->name('index');
+                    Route::get('/filters', [NavigationController::class, 'filters'])->name('filters');
+                    Route::get('/module-data', [NavigationController::class, 'moduleData'])->name('module-data');
+                    Route::get('/{id}', [NavigationController::class, 'show'])->name('show');
+
+                    Route::get('/getMenu', [NavigationController::class, 'getMenu'])->name('getMenu')
+                        ->middleware('permission:navigation delete');
+                });
+                Route::post('/', [NavigationController::class, 'store'])->name('store')
+                    ->middleware('permission:navigation create');
+                Route::put('/{id}', [NavigationController::class, 'update'])->name('update')
+                    ->middleware('permission:navigation update');
+                Route::delete('/{id}', [NavigationController::class, 'destroy'])->name('destroy')
+                    ->middleware('permission:navigation delete');
             });
             // add router
         });
