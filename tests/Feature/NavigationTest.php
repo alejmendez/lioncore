@@ -112,4 +112,73 @@ class NavigationTest extends TestCase
                 'data' => [$this->getListElementData()],
             ]);
     }
+
+    public function test_you_can_get_the_navigation_menu()
+    {
+        $elements = $this->generate_data_for_you_can_get_the_navigation_menu();
+        $response = $this->getJson(route('api.v1.navigations.getMenu'));
+        // $response->dump();
+        $response
+            ->assertOk()
+            ->assertJson([
+                [
+                    'id'       => $elements[0]->id,
+                    'title'    => 'Admin',
+                    'subtitle' => 'Admin',
+                    'type'     => 'group',
+                    'icon'     => 'heroicons_outline:home',
+                    'order'    => 0,
+                    'children' => [
+                        [
+                            'id'       => $elements[1]->id,
+                            'title'    => 'Usuarios',
+                            'type'     => 'basic',
+                            'icon'     => 'heroicons_outline:clipboard-check',
+                            'link'     => '/admin/users',
+                            'order'    => 0
+                        ],
+                        [
+                            'id'       => $elements[2]->id,
+                            'title'    => 'Perfiles',
+                            'type'     => 'basic',
+                            'icon'     => 'heroicons_outline:clipboard-check',
+                            'link'     => '/admin/roles',
+                            'order'    => 1
+                        ]
+                    ]
+                ]
+            ]);
+    }
+
+    public function generate_data_for_you_can_get_the_navigation_menu()
+    {
+        $elements = [];
+        $elements[] = Navigation::create([
+            'title'    => 'Admin',
+            'subtitle' => 'Admin',
+            'type'     => 'group',
+            'order'    => 0,
+            'icon'     => 'heroicons_outline:home'
+        ]);
+
+        $elements[] = Navigation::create([
+            'title'    => 'Usuarios',
+            'type'     => 'basic',
+            'icon'     => 'heroicons_outline:clipboard-check',
+            'link'     => '/admin/users',
+            'order'    => 0,
+            'parent'   => $elements[0]->id
+        ]);
+
+        $elements[] = Navigation::create([
+            'title'    => 'Perfiles',
+            'type'     => 'basic',
+            'icon'     => 'heroicons_outline:clipboard-check',
+            'link'     => '/admin/roles',
+            'order'    => 1,
+            'parent'   => $elements[0]->id
+        ]);
+
+        return $elements;
+    }
 }
