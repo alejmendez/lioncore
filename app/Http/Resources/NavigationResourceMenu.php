@@ -11,7 +11,12 @@ class NavigationResourceMenu extends JsonResource
     public function toArray($request)
     {
         $menu = $this->generateMenu($this->resource);
-        return $menu;
+        return [
+            'compact' => $menu,
+            'default' => $menu,
+            'futuristic' => $menu,
+            'horizontal' => $menu,
+        ];
     }
 
     protected function generateMenu($resource, $parentId = null)
@@ -23,7 +28,6 @@ class NavigationResourceMenu extends JsonResource
             return $this->elementFromMenuToArray($ele);
         })->toArray();
     }
-
 
     public function elementFromMenuToArray($ele)
     {
