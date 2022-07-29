@@ -13,15 +13,15 @@ class NavigationFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->text(120),
-            'subtitle' => $this->faker->text(120),
-            'type' => $this->faker->randomElement(['aside', 'basic', 'collapsable', 'divider', 'group', 'spacer']),
-            'tooltip' => $this->faker->text(120),
-            'link' => $this->faker->text(120),
-            'icon' => $this->faker->text(120),
-            'parent' => $this->faker->uuid,
-            'order' => $this->faker->numberBetween(0, 30),
-            'meta' => $this->faker->text(120),
+            'title' => fake()->text(120),
+            'subtitle' => fake()->text(120),
+            'type' => fake()->randomElement(['aside', 'basic', 'collapsable', 'divider', 'group', 'spacer']),
+            'tooltip' => fake()->text(120),
+            'link' => fake()->text(120),
+            'icon' => fake()->text(120),
+            'parent' => fake()->uuid,
+            'order' => fake()->numberBetween(0, 30),
+            'meta' => fake()->text(120),
         ];
     }
 }

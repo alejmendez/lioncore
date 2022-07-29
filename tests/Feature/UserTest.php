@@ -100,6 +100,7 @@ class UserTest extends TestCase
 
     public function test_can_create_user()
     {
+        $this->seed();
         $data = $this->generateData();
 
         $response = $this->postJson(route('api.v1.users.store'), $data);
@@ -113,6 +114,7 @@ class UserTest extends TestCase
 
     public function test_can_update_user()
     {
+        $this->seed();
         $user = User::factory()->create();
 
         $data = $this->generateData();
@@ -160,7 +162,8 @@ class UserTest extends TestCase
 
     public function test_can_list_users()
     {
-        User::factory()->times(3)->create();
+        $this->seed();
+        User::factory()->count(3)->create();
 
         $response = $this->getJson(route('api.v1.users.index') . '?page=1&per_page=5&email=alejmendez');
         // $response->dump();

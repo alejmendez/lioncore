@@ -7,7 +7,7 @@ class RoleRequest extends FormRequest
 {
     protected $fieldId = 'id';
     protected $rules = [
-        'name' => 'required|min:3|max:80',
+        'name' => ['required', 'min:3', 'max:80'],
         'permissions.*' => 'uuid',
     ];
 }

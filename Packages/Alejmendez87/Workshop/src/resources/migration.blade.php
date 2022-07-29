@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Create{{ ucwords(Illuminate\Support\Str::plural($nameModel)) }}Table extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -33,4 +33,4 @@ class Create{{ ucwords(Illuminate\Support\Str::plural($nameModel)) }}Table exten
     {
         Schema::dropIfExists('{{ Illuminate\Support\Str::plural(strtolower($nameModel)) }}');
     }
-}
+};

@@ -99,7 +99,7 @@ class NavigationTest extends TestCase
 
     public function test_can_list_navigations()
     {
-        Navigation::factory()->times(3)->create();
+        Navigation::factory()->count(3)->create();
 
         $response = $this->getJson(route('api.v1.navigations.index') . '?page=1&per_page=5');
         // $response->dump();

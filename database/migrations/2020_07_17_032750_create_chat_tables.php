@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Musonza\Chat\ConfigurationManager;
 
-class CreateChatTables extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -101,4 +101,4 @@ class CreateChatTables extends Migration
         Schema::dropIfExists(ConfigurationManager::PARTICIPATION_TABLE);
         Schema::dropIfExists(ConfigurationManager::CONVERSATIONS_TABLE);
     }
-}
+};

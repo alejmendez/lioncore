@@ -150,7 +150,7 @@ class EmployeeTest extends TestCase
 
     public function test_can_list_employees()
     {
-        Employee::factory()->times(3)->create();
+        Employee::factory()->count(3)->create();
 
         $response = $this->getJson(route('api.v1.employees.index') . '?page=1&per_page=5');
         // $response->dump();

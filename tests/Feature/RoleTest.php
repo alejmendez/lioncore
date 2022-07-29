@@ -13,8 +13,6 @@ class RoleTest extends TestCase
 {
     use WithoutMiddleware, RefreshDatabase;
 
-    public $seed = true;
-
     protected function generateData()
     {
         $permissions = Permission::all()->map(function ($permission) {
@@ -44,6 +42,7 @@ class RoleTest extends TestCase
 
     public function test_can_create_role()
     {
+        $this->seed();
         $data = $this->generateData();
 
         $response = $this->postJson(route('api.v1.roles.store'), $data);
@@ -57,6 +56,7 @@ class RoleTest extends TestCase
 
     public function test_can_update_role()
     {
+        $this->seed();
         $role = Role::factory()->create();
 
         $data = $this->generateData();
@@ -100,7 +100,7 @@ class RoleTest extends TestCase
 
     public function test_can_list_roles()
     {
-        Role::factory()->times(3)->create();
+        Role::factory()->count(3)->create();
 
         $response = $this->getJson(route('api.v1.roles.index') . '?page=1&per_page=5');
         // $response->dump();

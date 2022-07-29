@@ -132,7 +132,7 @@ class PersonTest extends TestCase
 
     public function test_can_list_people()
     {
-        Person::factory()->times(3)->create();
+        Person::factory()->count(3)->create();
 
         $response = $this->getJson(route('api.v1.people.index') . '?page=1&per_page=5');
         // $response->dump();

@@ -15,11 +15,11 @@ class EmployeeFactory extends Factory
         $person = Person::factory()->create();
 
         return [
-            'code' => $this->faker->randomLetter . $this->faker->numberBetween(1, 500),
-            'position' => $this->faker->word(),
-            'group_id' => $this->faker->Uuid(),
-            'date_admission' => $this->faker->date('Y-m-d', '-5 years'),
-            'salary' => $this->faker->numberBetween(500000, 3000000),
+            'code' => fake()->randomLetter . fake()->numberBetween(1, 500),
+            'position' => fake()->word(),
+            'group_id' => fake()->uuid(),
+            'date_admission' => fake()->date('Y-m-d', '-5 years'),
+            'salary' => fake()->numberBetween(500000, 3000000),
             'person_id' => $person->id,
         ];
     }

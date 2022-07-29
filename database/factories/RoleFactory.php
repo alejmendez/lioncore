@@ -28,10 +28,10 @@ class RoleFactory extends Factory
             return $permission->id;
         });
 
-        $len = $this->faker->numberBetween(1, 5);
+        $len = fake()->numberBetween(1, 5);
         $permissionsArr = [];
         for ($i=0; $i < $len; $i++) {
-            $permissionsArr[] = $this->faker->randomElement($permissions);
+            $permissionsArr[] = fake()->randomElement($permissions);
         }
 
         return [
