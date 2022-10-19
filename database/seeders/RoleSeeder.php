@@ -9,6 +9,30 @@ use App\Models\Role;
 
 class RoleSeeder extends Seeder
 {
+    protected $permissions = [
+        'person create',
+        'person read',
+        'person update',
+        'person delete',
+        'user create',
+        'user read',
+        'user update',
+        'user delete',
+        'role create',
+        'role read',
+        'role update',
+        'role delete',
+        'property create',
+        'property read',
+        'property update',
+        'property delete',
+        'navigation create',
+        'navigation read',
+        'navigation update',
+        'navigation delete',
+        'dashboard read',
+        'chat read',
+    ];
     /**
      * Run the database seeds.
      *
@@ -20,32 +44,10 @@ class RoleSeeder extends Seeder
 
         app()['cache']->forget('spatie.permission.cache');
 
-        $permissions = [
-            'person create',
-            'person read',
-            'person update',
-            'person delete',
-            'user create',
-            'user read',
-            'user update',
-            'user delete',
-            'role create',
-            'role read',
-            'role update',
-            'role delete',
-            'property create',
-            'property read',
-            'property update',
-            'property delete',
-            'navigation create',
-            'navigation read',
-            'navigation update',
-            'navigation delete',
-            'dashboard read',
-            'chat read',
-        ];
+        Permission::truncate();
+        Role::truncate();
 
-        foreach ($permissions as $permission) {
+        foreach ($this->permissions as $permission) {
             Permission::create(['name' => $permission]);
         }
 
@@ -59,6 +61,6 @@ class RoleSeeder extends Seeder
             'guard_name' => 'api'
         ]);
 
-        $roleAdmin->givePermissionTo($permissions);
+        $roleAdmin->givePermissionTo($this->permissions);
     }
 }

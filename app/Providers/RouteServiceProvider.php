@@ -41,12 +41,12 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () {
             foreach (self::API_ROUTES_FILES as $file) {
-                $this->registerRouteFile($file);
+                $this->registerApiRouteFile($file);
             }
         });
     }
 
-    protected function registerRouteFile($file)
+    protected function registerApiRouteFile($file)
     {
         Route::prefix('api')
             ->middleware('api')

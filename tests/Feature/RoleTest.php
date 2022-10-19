@@ -44,7 +44,6 @@ class RoleTest extends TestCase
     {
         $this->seed();
         $data = $this->generateData();
-
         $response = $this->postJson(route('api.v1.roles.store'), $data);
         // $response->dump();
         $response
@@ -58,7 +57,6 @@ class RoleTest extends TestCase
     {
         $this->seed();
         $role = Role::factory()->create();
-
         $data = $this->generateData();
 
         $response = $this->putJson(route('api.v1.roles.update', $role->id), $data);

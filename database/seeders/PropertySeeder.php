@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 use App\Models\Property;
 
@@ -22,54 +23,34 @@ class PropertySeeder extends Seeder
 
         Property::create([
             'name'  => 'userStatus',
-            'value' => json_encode([
-                [
-                    'value' => 'active',
-                    'label' => 'Active'
-                ],
-                [
-                    'value' => 'blocked',
-                    'label' => 'Blocked'
-                ],
-                [
-                    'value' => 'deactivated',
-                    'label' => 'Deactivated'
-                ]
+            'value' => $this->toValueLabel([
+                'active',
+                'blocked',
+                'deactivated',
             ])
         ]);
 
         Property::create([
             'name'  => 'userLangs',
-            'value' => json_encode([
-                [
-                    'value' => 'english',
-                    'label' => 'English'
-                ],
-                [
-                    'value' => 'spanish',
-                    'label' => 'Spanish'
-                ],
-                [
-                    'value' => 'french',
-                    'label' => 'French'
-                ],
-                [
-                    'value' => 'russian',
-                    'label' => 'Russian'
-                ],
-                [
-                    'value' => 'german',
-                    'label' => 'German'
-                ],
-                [
-                    'value' => 'arabic',
-                    'label' => 'Arabic'
-                ],
-                [
-                    'value' => 'sanskrit',
-                    'label' => 'Sanskrit'
-                ]
+            'value' => $this->toValueLabel([
+                'english',
+                'spanish',
+                'french',
+                'russian',
+                'german',
+                'arabic',
+                'sanskrit',
             ])
         ]);
+    }
+
+    public function toValueLabel($arr)
+    {
+        return collect($arr)->map(function ($element, $key) {
+            return [
+                'value' => $element,
+                'label' => Str::ucfirst($element),
+            ];
+        })->toJson();
     }
 }
