@@ -7,18 +7,18 @@ Route::prefix('v1')
     ->name('api.v1.')
     ->group(function () {
         Route::middleware('auth:api')->group(function () {
-            Route::prefix('person')->name('people.')->group(function () {
+            Route::prefix('person')->controller(PersonController::class)->name('people.')->group(function () {
                 Route::middleware('permission:person read')->group(function () {
-                    Route::get('/', [PersonController::class, 'index'])->name('index');
-                    Route::get('/filters', [PersonController::class, 'filters'])->name('filters');
-                    Route::get('/module-data', [PersonController::class, 'moduleData'])->name('module-data');
-                    Route::get('/{id}', [PersonController::class, 'show'])->name('show');
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/filters', 'filters')->name('filters');
+                    Route::get('/module-data', 'moduleData')->name('module-data');
+                    Route::get('/{id}', 'show')->name('show');
                 });
-                Route::post('/', [PersonController::class, 'store'])->name('store')
+                Route::post('/', 'store')->name('store')
                     ->middleware('permission:person create');
-                Route::put('/{id}', [PersonController::class, 'update'])->name('update')
+                Route::put('/{id}', 'update')->name('update')
                     ->middleware('permission:person update');
-                Route::delete('/{id}', [PersonController::class, 'destroy'])->name('destroy')
+                Route::delete('/{id}', 'destroy')->name('destroy')
                     ->middleware('permission:person delete');
             });
         });
